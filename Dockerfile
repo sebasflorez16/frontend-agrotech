@@ -1,14 +1,17 @@
 # Dockerfile simple para servir frontend estático con nginx
 FROM nginx:alpine
 
-# Copiar configuración nginx que ya maneja CSP para Cesium
+# Elimina la configuración por defecto
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copia tu configuración personalizada
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copiar archivos estáticos del frontend
+# Copia todos los archivos estáticos
 COPY . /public
 
-# Exponer puerto 8080 (Railway lo requiere)
+# Expone el puerto 8080
 EXPOSE 8080
 
-# Comando por defecto
+# Ejecuta nginx
 CMD ["nginx", "-g", "daemon off;"]
