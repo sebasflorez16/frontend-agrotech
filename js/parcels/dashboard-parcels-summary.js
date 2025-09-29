@@ -7,13 +7,12 @@ async function fetchParcelSummary() {
         const token = localStorage.getItem("accessToken");
         if (!token) {
             console.error("Token no encontrado. Redirigiendo al login.");
-            window.location.href = "/login/";
+            window.location.href = "https://agrotechcolombia.netlify.app/templates/authentication/login.html";
             return;
         }
 
-        // NOTA: Usamos window.location.origin para que la URL sea dinámica y soporte multi-tenant.
-        // Así, cada tenant accede a su propio subdominio/API sin hardcodear el host.
-        const url = `${window.location.origin}/api/parcels/parcel/summary/`;
+        // Apuntar al backend correcto, no al frontend de Netlify
+        const url = `https://agrotechcolombia.com/api/parcels/parcel/summary/`;
         const resp = await fetch(url, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -111,11 +110,11 @@ async function fetchParcels() {
         const token = localStorage.getItem("accessToken");
         if (!token) {
             console.error("Token no encontrado. Redirigiendo al login.");
-            window.location.href = "/login/";
+            window.location.href = "https://agrotechcolombia.netlify.app/templates/authentication/login.html";
             return;
         }
 
-        const url = `${window.location.origin}/api/parcels/parcel/list-parcels/`;
+        const url = `https://agrotechcolombia.com/api/parcels/parcel/list/`;
         const resp = await fetch(url, {
             headers: {
                 'Authorization': `Bearer ${token}`,
