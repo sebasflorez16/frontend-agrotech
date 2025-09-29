@@ -16,4 +16,4 @@
     connect-src 'self' https://*.cesium.com;
     worker-src 'self' blob: https://cesium.com https://*.cesium.com;
     child-src 'self' blob: https://cesium.com https://*.cesium.com;
-*/
+
