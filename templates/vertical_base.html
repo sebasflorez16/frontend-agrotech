@@ -21,7 +21,7 @@
             const token = localStorage.getItem("accessToken");
             console.log("Token encontrado:", token ? "SÍ" : "NO");
             
-            if (!token || token === "null" || token === "undefined") {
+            if (!token || token === "null" || token === "undefined" || token.trim() === "") {
                 console.log("Redirigiendo al login...");
                 window.location.href = "https://agrotechcolombia.netlify.app/templates/authentication/login.html";
             } else {
