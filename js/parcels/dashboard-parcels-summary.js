@@ -11,8 +11,8 @@ async function fetchParcelSummary() {
             return;
         }
 
-        // Apuntar al backend correcto, no al frontend de Netlify
-        const url = `https://agrotechcolombia.com/api/parcels/parcel/summary/`;
+        // Usar sistema multi-tenant ApiUrls
+        const url = window.ApiUrls ? window.ApiUrls.parcels() + '/parcel/summary/' : 'https://agrotechcolombia.com/api/parcels/parcel/summary/';
         const resp = await fetch(url, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -114,7 +114,7 @@ async function fetchParcels() {
             return;
         }
 
-        const url = `https://agrotechcolombia.com/api/parcels/parcel/list/`;
+        const url = window.ApiUrls ? window.ApiUrls.parcels() + '/parcel/list/' : 'https://agrotechcolombia.com/api/parcels/parcel/list/';
         const resp = await fetch(url, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -226,7 +226,7 @@ function renderChart(chartElementId, chartTitle, dataValues, dataLabels, color) 
 
 async function updateNDVIChart(polygon) {
     const token = localStorage.getItem("accessToken");
-    const url = `${window.location.origin}/api/parcels/parcel/ndvi-historical/`;
+    const url = window.ApiUrls ? window.ApiUrls.parcels() + '/parcel/ndvi-historical/' : 'https://agrotechcolombia.com/api/parcels/parcel/ndvi-historical/';
 
     const ndviData = await fetchChartData(url, polygon, token);
     if (ndviData) {
@@ -238,7 +238,7 @@ async function updateNDVIChart(polygon) {
 
 async function updateWaterStressChart(polygon) {
     const token = localStorage.getItem("accessToken");
-    const url = `${window.location.origin}/api/parcels/parcel/water-stress-historical/`;
+    const url = window.ApiUrls ? window.ApiUrls.parcels() + '/parcel/water-stress-historical/' : 'https://agrotechcolombia.com/api/parcels/parcel/water-stress-historical/';
 
     const waterStressData = await fetchChartData(url, polygon, token);
     if (waterStressData) {
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function updateTable(parcelId) {
         try {
             const token = localStorage.getItem("accessToken");
-            const url = `${window.location.origin}/api/parcels/parcel/${parcelId}/`;
+            const url = window.ApiUrls ? window.ApiUrls.parcels() + `/parcel/${parcelId}/` : `https://agrotechcolombia.com/api/parcels/parcel/${parcelId}/`;
             const resp = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
