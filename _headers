@@ -1,14 +1,9 @@
-/*
-  Content-Security-Policy: default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.cesium.com https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com;
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://unpkg.com;
-    font-src 'self' data: https://fonts.gstatic.com https://*.cesium.com;
-    img-src 'self' data: blob: https://*.cesium.com https://cdn.jsdelivr.net;
-    connect-src 'self' https://*.cesium.com https://cdn.jsdelivr.net https://unpkg.com;
-    worker-src 'self' blob: https://*.cesium.com;
-    child-src 'self' blob: https://*.cesium.com;
-  X-Frame-Options: SAMEORIGIN
-  X-Content-Type-Options: nosniff
 
-/*.css
-  Content-Type: text/css
+/*
+	Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.cesium.com 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; worker-src 'self' blob: https://cdn.cesium.com; connect-src 'self' https://api.cesium.com https://*.cesium.com https://*.tiles.cesium.com https://*.amazonaws.com https://*.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https://cdn.cesium.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://*.amazonaws.com https://*.googleapis.com;
+	X-Frame-Options: SAMEORIGIN
+	X-Content-Type-Options: nosniff
+	Referrer-Policy: strict-origin-when-cross-origin
+	Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+	X-XSS-Protection: 1; mode=block
+
