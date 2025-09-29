@@ -437,32 +437,6 @@ function initializeCesium() {
         }
     });
 
-    // ===== FORZAR MODO 3D PERMANENTEMENTE =====
-    // Agregar listener para mantener SIEMPRE el modo 3D
-    viewer.scene.morphComplete.addEventListener(function() {
-        if (viewer.scene.mode !== Cesium.SceneMode.SCENE3D) {
-            console.log("Forzando regreso a modo 3D...");
-            viewer.scene.mode = Cesium.SceneMode.SCENE3D;
-        }
-    });
-    
-    // Escuchar cambios en el modo de escena y forzar 3D
-    Object.defineProperty(viewer.scene, 'mode', {
-        get: function() { return Cesium.SceneMode.SCENE3D; },
-        set: function(value) {
-            if (value !== Cesium.SceneMode.SCENE3D) {
-                console.log("Bloqueando cambio a modo:", value, "- forzando 3D");
-                // No permitir cambios que no sean 3D
-                return;
-            }
-        }
-    });
-    
-    // Deshabilitar el picker de modo de escena para evitar cambios accidentales
-    if (viewer.sceneModePicker) {
-        viewer.sceneModePicker.destroy();
-    }
-
     console.log("Cesium cargado correctamente con configuración optimizada.");
 
     // 🔹 Agregar controles de dibujo
