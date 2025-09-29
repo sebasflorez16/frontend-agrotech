@@ -1,13 +1,13 @@
 // 🔹 Solo función para redirigir al login desde index.html
 export function redirectToLogin() {
-    window.location.href = "https://site-production-208b.up.railway.app/templates/authentication/login.html";
+    window.location.href = "https://agrotechcolombia.netlify.app/templates/vertical_base.html";
 }
 
 // 🔹 Función para logout
 export function logout() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    window.location.href = "https://site-production-208b.up.railway.app/templates/authentication/login.html";
+    window.location.href = "https://agrotechcolombia.netlify.app/templates/authentication/login.html";
 }window.ApiUrls ? window.ApiUrls.auth() : `${window.location.origin}/api/authentication`;
 
 console.log("BASE_URL:", BASE_URL);
