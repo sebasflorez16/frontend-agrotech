@@ -296,7 +296,7 @@ function initializeCesium() {
         // Configuración de interfaz optimizada para agricultura
         baseLayerPicker: true, // Habilitar selector de capas nativo de Cesium (incluye las mejores opciones gratuitas)
         shouldAnimate: true, // Habilita animaciones suaves
-        sceneMode: Cesium.SceneMode.SCENE2D, // Modo 3D por defecto para mejor visualización satelital
+        sceneMode: Cesium.SceneMode.SCENE3D, // Modo 3D para mejor visualización satelital y dibujo de polígonos
         timeline: false, // Oculta el timeline (no necesario para agricultura)
         animation: false, // Oculta controles de animación
         geocoder: true, // Mantener búsqueda geográfica
@@ -359,15 +359,21 @@ function initializeCesium() {
         originalLogError.apply(console, args);
     };
 
-    // Configurar controles de cámara optimizados
+    // Configurar controles de cámara optimizados para agricultura
     const controller = viewer.scene.screenSpaceCameraController;
     controller.enableZoom = true;
-    controller.enableRotate = true;
+    controller.enableRotate = true; // Importante para vista 3D
     controller.enableTranslate = true;
-    controller.enableTilt = true;
+    controller.enableTilt = true; // Permite inclinar la vista para mejor perspectiva de parcelas
     controller.enableLook = true;
     
-    // Configurar límites de zoom para mejor rendimiento y calidad
+    // Configurar límites de zoom optimizados para visualización agrícola
+    controller.minimumZoomDistance = 10; // Permite zoom muy cercano para detalles de parcelas
+    controller.maximumZoomDistance = 20000000; // Vista amplia para regiones grandes
+    
+    // Mejorar la experiencia de navegación 3D
+    viewer.scene.globe.enableLighting = false; // Iluminación simple para mejor rendimiento
+    viewer.scene.globe.depthTestAgainstTerrain = false; // Mejor rendimiento sin terreno 3D complejo
     controller.minimumZoomDistance = 1000; // Mínimo 1km de altitud
     controller.maximumZoomDistance = 50000000; // Máximo ~50,000km de altitud
     
@@ -410,12 +416,12 @@ function initializeCesium() {
             viewer.scene.globe.dynamicAtmosphereLighting = false;
             viewer.scene.globe.showGroundAtmosphere = false;
 
-            // Centrar el mapa en Colombia con vista optimizada
+            // Centrar el mapa en Colombia con vista optimizada para agricultura 3D
             viewer.scene.camera.setView({
-                destination: Cesium.Cartesian3.fromDegrees(-74.0817, 4.6097, 2000000), // Aumentar altura inicial
+                destination: Cesium.Cartesian3.fromDegrees(-74.0817, 4.6097, 1500000), // Colombia, altura moderada
                 orientation: {
                     heading: 0.0,
-                    pitch: -Cesium.Math.PI_OVER_TWO, // Vista directa hacia abajo
+                    pitch: -Cesium.Math.PI_OVER_FOUR, // Inclinación de 45° para mejor perspectiva 3D
                     roll: 0.0
                 }
             });
@@ -472,9 +478,11 @@ function setupDrawingTools(viewer) {
                         hierarchy: new Cesium.CallbackProperty(() => {
                             return new Cesium.PolygonHierarchy(positions);
                         }, false),
-                        material: Cesium.Color.RED.withAlpha(0.5), // Pintar de rojo con transparencia
+                        material: Cesium.Color.LIME.withAlpha(0.4), // Verde lima con transparencia para mejor visibilidad en 3D
                         outline: true,
-                        outlineColor: Cesium.Color.RED
+                        outlineColor: Cesium.Color.DARKGREEN,
+                        height: 0, // Altura del polígono sobre el terreno
+                        extrudedHeight: 5 // Altura de extrusión para mejor visualización 3D (5 metros)
                     }
                 });
             }
