@@ -268,8 +268,9 @@ let viewerReady = true;
 // Inicializar el mapa de Cesium
 function initializeCesium() {
 
-    // Token de Cesium hardcodeado - Agrotech
-    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MDYwOTcwMy1mMTRlLTQxMTYtYWRmNi02OTY4YjZkNjI0YWQiLCJpZCI6MjkwMzgyLCJpYXQiOjE3NTM1NDAzNTJ9.qZvwbfLRYsWlXHqxsePXVRfv87tF_0IIr6_Ch6efdF8';
+    // Token de Cesium Ion deshabilitado temporalmente (expirado)
+    // Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MDYwOTcwMy1mMTRlLTQxMTYtYWRmNi02OTY4YjZkNjI0YWQiLCJpZCI6MjkwMzgyLCJpYXQiOjE3NTM1NDAzNTJ9.qZvwbfLRYsWlXHqxsePXVRfv87tF_0IIr6_Ch6efdF8';
+    console.log("Usando Cesium sin token Ion - solo recursos gratuitos disponibles");
 
     // Configurar axios (mantener para el resto de la app)
     const token = localStorage.getItem("accessToken");
@@ -310,29 +311,13 @@ function initializeCesium() {
         creditContainer: document.createElement('div') // Ocultar créditos para UI más limpia
     });
 
-    // Configurar terreno de alta calidad después de la inicialización
+    // Configurar terreno básico sin requerir token Ion
     try {
-        // Verificar que Cesium.createWorldTerrain esté disponible
-        if (typeof Cesium.createWorldTerrain === 'function') {
-            const terrainProvider = Cesium.createWorldTerrain({
-                requestWaterMask: true, // Incluir máscara de agua para mejor contexto agrícola
-                requestVertexNormals: true // Mejor iluminación del terreno
-            });
-            viewer.terrainProvider = terrainProvider;
-            console.log("Terreno de alta calidad habilitado para visualización agrícola.");
-        } else {
-            // Usar CesiumTerrainProvider como alternativa
-            console.warn("createWorldTerrain no disponible, usando CesiumTerrainProvider");
-            const terrainProvider = new Cesium.CesiumTerrainProvider({
-                url: 'https://assets.cesium.com/1/'
-            });
-            viewer.terrainProvider = terrainProvider;
-            console.log("Terreno básico de Cesium cargado.");
-        }
-    } catch (error) {
-        console.warn("No se pudo cargar terreno de alta calidad, usando terreno básico:", error);
-        // Mantener terreno básico (EllipsoidTerrainProvider) si hay problemas
+        // Usar terreno elipsoidal básico (gratuito, sin token requerido)
         viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider();
+        console.log("Terreno básico elipsoidal configurado (sin token Ion requerido).");
+    } catch (error) {
+        console.warn("Error al configurar terreno básico:", error);
     }
 
     // Configurar manejo de errores para tiles fallidos
