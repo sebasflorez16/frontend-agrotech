@@ -312,15 +312,27 @@ function initializeCesium() {
 
     // Configurar terreno de alta calidad después de la inicialización
     try {
-        const terrainProvider = Cesium.createWorldTerrain({
-            requestWaterMask: true, // Incluir máscara de agua para mejor contexto agrícola
-            requestVertexNormals: true // Mejor iluminación del terreno
-        });
-        viewer.terrainProvider = terrainProvider;
-        console.log("Terreno de alta calidad habilitado para visualización agrícola.");
+        // Verificar que Cesium.createWorldTerrain esté disponible
+        if (typeof Cesium.createWorldTerrain === 'function') {
+            const terrainProvider = Cesium.createWorldTerrain({
+                requestWaterMask: true, // Incluir máscara de agua para mejor contexto agrícola
+                requestVertexNormals: true // Mejor iluminación del terreno
+            });
+            viewer.terrainProvider = terrainProvider;
+            console.log("Terreno de alta calidad habilitado para visualización agrícola.");
+        } else {
+            // Usar CesiumTerrainProvider como alternativa
+            console.warn("createWorldTerrain no disponible, usando CesiumTerrainProvider");
+            const terrainProvider = new Cesium.CesiumTerrainProvider({
+                url: 'https://assets.cesium.com/1/'
+            });
+            viewer.terrainProvider = terrainProvider;
+            console.log("Terreno básico de Cesium cargado.");
+        }
     } catch (error) {
         console.warn("No se pudo cargar terreno de alta calidad, usando terreno básico:", error);
-        // Mantener terreno básico si hay problemas
+        // Mantener terreno básico (EllipsoidTerrainProvider) si hay problemas
+        viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider();
     }
 
     // Configurar manejo de errores para tiles fallidos
@@ -330,7 +342,22 @@ function initializeCesium() {
     // Suprimir errores de tiles para mejorar UX
     viewer.cesiumWidget.creditContainer.style.display = "none";
     
-    // Configurar manejo de errores silencioso
+    // Configurar manejo de errores silencioso para tiles
+    viewer.scene.globe.tileLoadProgressEvent.addEventListener(function(queuedTileCount) {
+        // Silenciar errores de tiles para evitar spam en consola
+    });
+    
+    // Configurar provider de imagen más confiable
+    try {
+        const imageryProvider = new Cesium.OpenStreetMapImageryProvider({
+            url: 'https://a.tile.openstreetmap.org/'
+        });
+        viewer.imageryLayers.removeAll();
+        viewer.imageryLayers.addImageryProvider(imageryProvider);
+        console.log("Imagery provider OpenStreetMap configurado exitosamente.");
+    } catch (error) {
+        console.warn("Error al configurar imagery provider:", error);
+    }
     const originalLogError = console.error;
     console.error = function(...args) {
         const errorStr = args.join(' ');
