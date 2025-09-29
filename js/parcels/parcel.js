@@ -302,14 +302,52 @@ function initializeCesium() {
         geocoder: true, // Mantener búsqueda geográfica
         homeButton: true, // Mantener botón home para navegación rápida
         infoBox: true, // Habilitar infoBox para información de parcelas
-        sceneModePicker: true, // Permitir cambio entre 2D/3D/Columbus
+        sceneModePicker: false, // Deshabilitar para forzar 3D siempre
         selectionIndicator: true, // Mostrar indicador de selección
         navigationHelpButton: true, // Mantener ayuda de navegación
         navigationInstructionsInitiallyVisible: false, // No mostrar instrucciones inicialmente
         fullscreenButton: true, // Habilitar pantalla completa
         vrButton: false, // Deshabilitar VR (no relevante para agricultura)
-        creditContainer: document.createElement('div') // Ocultar créditos para UI más limpia
+        creditContainer: document.createElement('div'), // Ocultar créditos para UI más limpia
+        // Configuraciones adicionales para asegurar compatibilidad móvil
+        requestRenderMode: true, // Renderizar solo cuando sea necesario (mejor rendimiento en móvil)
+        maximumRenderTimeChange: Infinity, // Evitar timeouts en móviles lentos
+        scene3DOnly: true // Forzar que SOLO funcione en 3D
     });
+
+    // ===== CONFIGURACIÓN FORZADA PARA 3D Y COMPATIBILIDAD MÓVIL =====
+    
+    // Forzar modo 3D inmediatamente después de la inicialización
+    viewer.scene.mode = Cesium.SceneMode.SCENE3D;
+    
+    // Configuración específica para asegurar compatibilidad móvil
+    if (viewer.scene.screenSpaceCameraController) {
+        viewer.scene.screenSpaceCameraController.enableTilt = true;
+        viewer.scene.screenSpaceCameraController.enableRotate = true;
+        viewer.scene.screenSpaceCameraController.enableZoom = true;
+        viewer.scene.screenSpaceCameraController.enableTranslate = true;
+        
+        // Configuración táctil mejorada para móviles
+        viewer.scene.screenSpaceCameraController.touchControls.maximumMovementRatio = 0.1;
+        viewer.scene.screenSpaceCameraController.zoomEventTypes = [
+            Cesium.CameraEventType.WHEEL,
+            Cesium.CameraEventType.PINCH
+        ];
+        viewer.scene.screenSpaceCameraController.tiltEventTypes = [
+            Cesium.CameraEventType.PINCH,
+            Cesium.CameraEventType.RIGHT_DRAG
+        ];
+    }
+    
+    // Configuración de rendimiento optimizada para móviles
+    if (viewer.scene.globe) {
+        viewer.scene.globe.maximumScreenSpaceError = 4; // Reducir calidad para mejor rendimiento en móvil
+        viewer.scene.globe.tileCacheSize = 50; // Reducir cache para dispositivos con poca memoria
+    }
+    
+    // Deshabilitar funciones que pueden causar problemas en móviles
+    viewer.scene.fog.enabled = false;
+    viewer.scene.skyAtmosphere.show = false;
 
     // Configurar terreno básico sin requerir token Ion
     try {
@@ -398,6 +436,32 @@ function initializeCesium() {
             roll: 0.0
         }
     });
+
+    // ===== FORZAR MODO 3D PERMANENTEMENTE =====
+    // Agregar listener para mantener SIEMPRE el modo 3D
+    viewer.scene.morphComplete.addEventListener(function() {
+        if (viewer.scene.mode !== Cesium.SceneMode.SCENE3D) {
+            console.log("Forzando regreso a modo 3D...");
+            viewer.scene.mode = Cesium.SceneMode.SCENE3D;
+        }
+    });
+    
+    // Escuchar cambios en el modo de escena y forzar 3D
+    Object.defineProperty(viewer.scene, 'mode', {
+        get: function() { return Cesium.SceneMode.SCENE3D; },
+        set: function(value) {
+            if (value !== Cesium.SceneMode.SCENE3D) {
+                console.log("Bloqueando cambio a modo:", value, "- forzando 3D");
+                // No permitir cambios que no sean 3D
+                return;
+            }
+        }
+    });
+    
+    // Deshabilitar el picker de modo de escena para evitar cambios accidentales
+    if (viewer.sceneModePicker) {
+        viewer.sceneModePicker.destroy();
+    }
 
     console.log("Cesium cargado correctamente con configuración optimizada.");
 
