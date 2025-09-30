@@ -316,8 +316,8 @@ function initializeCesium() {
 
     // Configurar terreno realista gratuito de Cesium Ion
     try {
-        // Forma recomendada por Cesium para terreno Ion gratuito
-        viewer.terrainProvider = Cesium.CesiumTerrainProvider.fromIonAssetId(1);
+        // Forma oficial para Cesium v1.118 y posteriores
+        viewer.terrainProvider = Cesium.createWorldTerrain();
         console.log("Terreno 3D de Cesium Ion configurado correctamente.");
     } catch (error) {
         console.warn("Error al configurar terreno 3D Cesium Ion:", error);
