@@ -290,24 +290,53 @@ function initializeCesium() {
 
     // Inicializar el visor de Cesium inmediatamente
     viewer = new Cesium.Viewer('cesiumContainer', {
-        // Usar el mejor mapa base disponible para agricultura (Cesium Ion incluye opciones gratuitas excelentes)
-        // El BaseLayerPicker nativo incluye: Bing Maps Aerial, Esri World Imagery, OpenStreetMap, etc.
-        baseLayerPicker: true, // Habilitar selector de capas nativo de Cesium
-        shouldAnimate: true, // Habilita animaciones suaves
-        sceneMode: Cesium.SceneMode.SCENE3D, // SIEMPRE iniciar en 3D
-        scene3DOnly: true, // SOLO permitir 3D
-        sceneModePicker: false, // OCULTAR el selector de modo
-        timeline: false, // Oculta el timeline
-        animation: false, // Oculta controles de animación
-        geocoder: true, // Mantener búsqueda geográfica
-        homeButton: true, // Mantener botón home
-        infoBox: true, // Habilitar infoBox
-        selectionIndicator: true, // Mostrar indicador de selección
-        navigationHelpButton: true, // Mantener ayuda de navegación
-        navigationInstructionsInitiallyVisible: false, // No mostrar instrucciones inicialmente
-        fullscreenButton: true, // Habilitar pantalla completa
-        vrButton: false, // Deshabilitar VR
-        creditContainer: document.createElement('div') // Ocultar créditos
+        baseLayerPicker: true,
+        shouldAnimate: true,
+        sceneMode: Cesium.SceneMode.SCENE3D,
+        scene3DOnly: true,
+        sceneModePicker: false,
+        timeline: false,
+        animation: false,
+        geocoder: true,
+        homeButton: true,
+        infoBox: true,
+        selectionIndicator: true,
+        navigationHelpButton: true,
+        navigationInstructionsInitiallyVisible: false,
+        fullscreenButton: true,
+        vrButton: false,
+        creditContainer: document.createElement('div'),
+        imageryProvider: new Cesium.BingMapsImageryProvider({
+            url: 'https://dev.virtualearth.net',
+            mapStyle: Cesium.BingMapsStyle.AERIAL,
+            key: '' // Si tienes una API key de Bing, colócala aquí
+        }),
+        baseLayerPickerViewModels: [
+            new Cesium.ProviderViewModel({
+                name: 'Bing Maps Aerial',
+                iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerial.png'),
+                tooltip: 'Bing Maps Aerial',
+                creationFunction: function() {
+                    return new Cesium.BingMapsImageryProvider({
+                        url: 'https://dev.virtualearth.net',
+                        mapStyle: Cesium.BingMapsStyle.AERIAL,
+                        key: '' // Si tienes una API key de Bing, colócala aquí
+                    });
+                }
+            }),
+            new Cesium.ProviderViewModel({
+                name: 'Bing Maps Aerial with Labels',
+                iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerialLabels.png'),
+                tooltip: 'Bing Maps Aerial with Labels',
+                creationFunction: function() {
+                    return new Cesium.BingMapsImageryProvider({
+                        url: 'https://dev.virtualearth.net',
+                        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
+                        key: '' // Si tienes una API key de Bing, colócala aquí
+                    });
+                }
+            })
+        ]
     });
 
     // Configurar terreno básico sin requerir token Ion
