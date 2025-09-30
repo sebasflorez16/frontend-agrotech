@@ -314,10 +314,16 @@ function initializeCesium() {
 
     // Configurar terreno realista gratuito de Cesium Ion
     try {
-        viewer.terrainProvider = Cesium.createWorldTerrain();
+        // Forma recomendada por Cesium para terreno Ion gratuito
+        viewer.terrainProvider = Cesium.CesiumTerrainProvider.fromIonAssetId(1);
         console.log("Terreno 3D de Cesium Ion configurado correctamente.");
     } catch (error) {
         console.warn("Error al configurar terreno 3D Cesium Ion:", error);
+        // Mostrar advertencia visual si el terreno falla
+        const cesiumContainer = document.getElementById('cesiumContainer');
+        if (cesiumContainer) {
+            cesiumContainer.innerHTML = '<div style="color: white; background: #c00; padding: 1em; text-align: center;">No se pudo cargar el terreno 3D de Cesium Ion. Verifica tu conexión y el token.</div>';
+        }
     }
 
     // Configurar manejo de errores para tiles fallidos
