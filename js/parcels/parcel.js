@@ -429,6 +429,9 @@ function initializeCesium() {
 
     console.log("Cesium cargado correctamente con configuración optimizada.");
 
+    // Forzar transición a modo 3D inmediatamente después de inicializar
+    viewer.scene.morphTo3D(0);
+
     // 🔹 Agregar controles de dibujo
     setupDrawingTools(viewer);
     
