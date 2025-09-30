@@ -268,9 +268,9 @@ let viewerReady = true;
 // Inicializar el mapa de Cesium
 function initializeCesium() {
 
-    // Token de Cesium Ion deshabilitado temporalmente (expirado)
-    // Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MDYwOTcwMy1mMTRlLTQxMTYtYWRmNi02OTY4YjZkNjI0YWQiLCJpZCI6MjkwMzgyLCJpYXQiOjE3NTM1NDAzNTJ9.qZvwbfLRYsWlXHqxsePXVRfv87tF_0IIr6_Ch6efdF8';
-    console.log("Usando Cesium sin token Ion - solo recursos gratuitos disponibles");
+    // Activar el token de Cesium Ion para recursos gratuitos y terreno
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MDYwOTcwMy1mMTRlLTQxMTYtYWRmNi02OTY4YjZkNjI0YWQiLCJpZCI6MjkwMzgyLCJpYXQiOjE3NTM1NDAzNTJ9.qZvwbfLRYsWlXHqxsePXVRfv87tF_0IIr6_Ch6efdF8';
+    console.log("Token Cesium Ion activado correctamente");
 
     // Configurar axios (mantener para el resto de la app)
     const token = localStorage.getItem("accessToken");
@@ -288,8 +288,7 @@ function initializeCesium() {
     });
     window.axiosInstance = axiosInstance;
 
-    // Inicializar el visor de Cesium inmediatamente
-    // Vista fija Bing Maps Aerial en 3D
+    // Inicializar el visor de Cesium con mapa base satelital Esri World Imagery
     viewer = new Cesium.Viewer('cesiumContainer', {
         baseLayerPicker: false,
         shouldAnimate: true,
@@ -307,21 +306,18 @@ function initializeCesium() {
         fullscreenButton: true,
         vrButton: false,
         creditContainer: document.createElement('div'),
-        imageryProvider: new Cesium.BingMapsImageryProvider({
-            url: 'https://dev.virtualearth.net',
-            mapStyle: Cesium.BingMapsStyle.AERIAL,
-            // Si tienes un token de Bing, agrégalo aquí
-            // key: 'TU_BING_MAPS_KEY'
+        imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
+            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+            credit: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
         })
     });
 
-    // Configurar terreno básico sin requerir token Ion
+    // Configurar terreno realista gratuito de Cesium Ion
     try {
-        // Usar terreno elipsoidal básico (gratuito, sin token requerido)
-        viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider();
-        console.log("Terreno básico elipsoidal configurado (sin token Ion requerido).");
+        viewer.terrainProvider = Cesium.createWorldTerrain();
+        console.log("Terreno 3D de Cesium Ion configurado correctamente.");
     } catch (error) {
-        console.warn("Error al configurar terreno básico:", error);
+        console.warn("Error al configurar terreno 3D Cesium Ion:", error);
     }
 
     // Configurar manejo de errores para tiles fallidos
