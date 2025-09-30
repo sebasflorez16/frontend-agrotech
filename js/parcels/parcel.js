@@ -289,11 +289,9 @@ function initializeCesium() {
     window.axiosInstance = axiosInstance;
 
     // Inicializar el visor de Cesium inmediatamente
-    // Solo una vista fija, sin widget de selección de mapas base
-    // Si se quiere reactivar el widget, descomentar las líneas siguientes
-    /*
+    // Vista fija Bing Maps Aerial en 3D
     viewer = new Cesium.Viewer('cesiumContainer', {
-        baseLayerPicker: true,
+        baseLayerPicker: false,
         shouldAnimate: true,
         sceneMode: Cesium.SceneMode.SCENE3D,
         scene3DOnly: true,
@@ -312,31 +310,8 @@ function initializeCesium() {
         imageryProvider: new Cesium.BingMapsImageryProvider({
             url: 'https://dev.virtualearth.net',
             mapStyle: Cesium.BingMapsStyle.AERIAL,
-            key: ''
-        })
-    });
-    */
-    // Vista fija tipo Esri World Imagery en 3D
-    viewer = new Cesium.Viewer('cesiumContainer', {
-        baseLayerPicker: false,
-        shouldAnimate: true,
-        sceneMode: Cesium.SceneMode.SCENE3D,
-        scene3DOnly: true,
-        sceneModePicker: false,
-        timeline: false,
-        animation: false,
-        geocoder: true,
-        homeButton: true,
-        infoBox: true,
-        selectionIndicator: true,
-        navigationHelpButton: true,
-        navigationInstructionsInitiallyVisible: false,
-        fullscreenButton: true,
-        vrButton: false,
-        creditContainer: document.createElement('div'),
-        imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
-            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
-            credit: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
+            // Si tienes un token de Bing, agrégalo aquí
+            // key: 'TU_BING_MAPS_KEY'
         })
     });
 
