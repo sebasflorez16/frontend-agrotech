@@ -289,6 +289,9 @@ function initializeCesium() {
     window.axiosInstance = axiosInstance;
 
     // Inicializar el visor de Cesium inmediatamente
+    // Solo una vista fija, sin widget de selección de mapas base
+    // Si se quiere reactivar el widget, descomentar las líneas siguientes
+    /*
     viewer = new Cesium.Viewer('cesiumContainer', {
         baseLayerPicker: true,
         shouldAnimate: true,
@@ -309,34 +312,32 @@ function initializeCesium() {
         imageryProvider: new Cesium.BingMapsImageryProvider({
             url: 'https://dev.virtualearth.net',
             mapStyle: Cesium.BingMapsStyle.AERIAL,
-            key: '' // Si tienes una API key de Bing, colócala aquí
-        }),
-        baseLayerPickerViewModels: [
-            new Cesium.ProviderViewModel({
-                name: 'Bing Maps Aerial',
-                iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerial.png'),
-                tooltip: 'Bing Maps Aerial',
-                creationFunction: function() {
-                    return new Cesium.BingMapsImageryProvider({
-                        url: 'https://dev.virtualearth.net',
-                        mapStyle: Cesium.BingMapsStyle.AERIAL,
-                        key: '' // Si tienes una API key de Bing, colócala aquí
-                    });
-                }
-            }),
-            new Cesium.ProviderViewModel({
-                name: 'Bing Maps Aerial with Labels',
-                iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerialLabels.png'),
-                tooltip: 'Bing Maps Aerial with Labels',
-                creationFunction: function() {
-                    return new Cesium.BingMapsImageryProvider({
-                        url: 'https://dev.virtualearth.net',
-                        mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
-                        key: '' // Si tienes una API key de Bing, colócala aquí
-                    });
-                }
-            })
-        ]
+            key: ''
+        })
+    });
+    */
+    // Vista fija tipo Esri World Imagery en 3D
+    viewer = new Cesium.Viewer('cesiumContainer', {
+        baseLayerPicker: false,
+        shouldAnimate: true,
+        sceneMode: Cesium.SceneMode.SCENE3D,
+        scene3DOnly: true,
+        sceneModePicker: false,
+        timeline: false,
+        animation: false,
+        geocoder: true,
+        homeButton: true,
+        infoBox: true,
+        selectionIndicator: true,
+        navigationHelpButton: true,
+        navigationInstructionsInitiallyVisible: false,
+        fullscreenButton: true,
+        vrButton: false,
+        creditContainer: document.createElement('div'),
+        imageryProvider: new Cesium.ArcGisMapServerImageryProvider({
+            url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+            credit: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
+        })
     });
 
     // Configurar terreno básico sin requerir token Ion
@@ -360,17 +361,8 @@ function initializeCesium() {
         // Silenciar errores de tiles para evitar spam en consola
     });
     
-    // Configurar provider de imagen más confiable
-    try {
-        const imageryProvider = new Cesium.OpenStreetMapImageryProvider({
-            url: 'https://a.tile.openstreetmap.org/'
-        });
-        viewer.imageryLayers.removeAll();
-        viewer.imageryLayers.addImageryProvider(imageryProvider);
-        console.log("Imagery provider OpenStreetMap configurado exitosamente.");
-    } catch (error) {
-        console.warn("Error al configurar imagery provider:", error);
-    }
+    // El mapa base es fijo (Esri World Imagery), no se cambia dinámicamente
+    // Si se quiere cambiar el proveedor, hacerlo en la inicialización arriba
     const originalLogError = console.error;
     console.error = function(...args) {
         const errorStr = args.join(' ');
