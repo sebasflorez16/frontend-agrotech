@@ -292,23 +292,22 @@ function initializeCesium() {
     viewer = new Cesium.Viewer('cesiumContainer', {
         // Usar el mejor mapa base disponible para agricultura (Cesium Ion incluye opciones gratuitas excelentes)
         // El BaseLayerPicker nativo incluye: Bing Maps Aerial, Esri World Imagery, OpenStreetMap, etc.
-        
-        // Configuración de interfaz optimizada para agricultura
-        baseLayerPicker: true, // Habilitar selector de capas nativo de Cesium (incluye las mejores opciones gratuitas)
+        baseLayerPicker: true, // Habilitar selector de capas nativo de Cesium
         shouldAnimate: true, // Habilita animaciones suaves
-        sceneMode: Cesium.SceneMode.SCENE3D, // Modo 3D para mejor visualización satelital y dibujo de polígonos
-        timeline: false, // Oculta el timeline (no necesario para agricultura)
+        sceneMode: Cesium.SceneMode.SCENE3D, // SIEMPRE iniciar en 3D
+        scene3DOnly: true, // SOLO permitir 3D
+        sceneModePicker: false, // OCULTAR el selector de modo
+        timeline: false, // Oculta el timeline
         animation: false, // Oculta controles de animación
         geocoder: true, // Mantener búsqueda geográfica
-        homeButton: true, // Mantener botón home para navegación rápida
-        infoBox: true, // Habilitar infoBox para información de parcelas
-        sceneModePicker: true, // Permitir cambio entre 2D/3D/Columbus
+        homeButton: true, // Mantener botón home
+        infoBox: true, // Habilitar infoBox
         selectionIndicator: true, // Mostrar indicador de selección
         navigationHelpButton: true, // Mantener ayuda de navegación
         navigationInstructionsInitiallyVisible: false, // No mostrar instrucciones inicialmente
         fullscreenButton: true, // Habilitar pantalla completa
-        vrButton: false, // Deshabilitar VR (no relevante para agricultura)
-        creditContainer: document.createElement('div') // Ocultar créditos para UI más limpia
+        vrButton: false, // Deshabilitar VR
+        creditContainer: document.createElement('div') // Ocultar créditos
     });
 
     // Configurar terreno básico sin requerir token Ion
