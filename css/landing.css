@@ -261,6 +261,13 @@ a:hover {
   color: var(--text-primary);
 }
 
+.nav-logo-image {
+  height: 45px;
+  width: 45px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(76, 175, 80, 0.3));
+}
+
 .nav-logo img {
   height: 50px;
   width: auto;
@@ -505,13 +512,15 @@ a:hover {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   display: block;
+  letter-spacing: 0.05em;
 }
 
 .hero-stat-label {
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-weight: 500;
 }
 
 /* ============================================
