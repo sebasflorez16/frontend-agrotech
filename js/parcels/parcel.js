@@ -339,28 +339,10 @@ function initializeCesium() {
         }
     }
 
-    // Configurar terreno realista gratuito de Cesium Ion, con fallback a terreno plano si falla
-    try {
-        // Usar CesiumTerrainProvider directamente con el asset ID de World Terrain
-        Cesium.CesiumTerrainProvider.fromIonAssetId(1, {
-            requestVertexNormals: true,
-            requestWaterMask: true
-        }).then(terrainProvider => {
-            viewer.terrainProvider = terrainProvider;
-            console.log("Terreno 3D de Cesium Ion configurado correctamente.");
-        }).catch(error => {
-            console.warn("Error al cargar terreno 3D, usando terreno plano:", error);
-            viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider();
-        });
-    } catch (error) {
-        console.warn("Error al configurar terreno 3D Cesium Ion, usando terreno plano:", error);
-        viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider();
-        // Mostrar advertencia visual si el terreno falla
-        const cesiumContainer = document.getElementById('cesiumContainer');
-        if (cesiumContainer) {
-            cesiumContainer.insertAdjacentHTML('afterbegin', '<div style="color: white; background: #c00; padding: 1em; text-align: center;">No se pudo cargar el terreno 3D de Cesium Ion. Mostrando terreno plano.</div>');
-        }
-    }
+    // Usar terreno plano simple para evitar errores de carga en Netlify
+    // El terreno 3D de Cesium Ion requiere configuración compleja y puede fallar
+    viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider();
+    console.log("Terreno plano configurado correctamente.");
 
     // Configurar manejo de errores para tiles fallidos
     viewer.scene.globe.tileCacheSize = 100; // Reducir cache para mejor rendimiento
@@ -395,75 +377,46 @@ function initializeCesium() {
     // Configurar controles de cámara optimizados para agricultura
     const controller = viewer.scene.screenSpaceCameraController;
     controller.enableZoom = true;
-    controller.enableRotate = true; // Importante para vista 3D
+    controller.enableRotate = true;
     controller.enableTranslate = true;
-    controller.enableTilt = true; // Permite inclinar la vista para mejor perspectiva de parcelas
+    controller.enableTilt = true;
     controller.enableLook = true;
     
-    // Configurar límites de zoom optimizados para visualización agrícola
-    controller.minimumZoomDistance = 10; // Permite zoom muy cercano para detalles de parcelas
-    controller.maximumZoomDistance = 20000000; // Vista amplia para regiones grandes
-    
-    // Mejorar la experiencia de navegación 3D
-    viewer.scene.globe.enableLighting = false; // Iluminación simple para mejor rendimiento
-    viewer.scene.globe.depthTestAgainstTerrain = false; // Mejor rendimiento sin terreno 3D complejo
+    // Configurar límites de zoom
     controller.minimumZoomDistance = 1000; // Mínimo 1km de altitud
-    controller.maximumZoomDistance = 50000000; // Máximo ~50,000km de altitud
+    controller.maximumZoomDistance = 20000000; // Máximo ~20,000km de altitud
     
     // Configurar calidad de renderizado
-    viewer.scene.globe.maximumScreenSpaceError = 2; // Reducir para mejor calidad (default: 2)
-    viewer.scene.globe.tileCacheSize = 200; // Aumentar cache para mejor rendimiento
+    viewer.scene.globe.maximumScreenSpaceError = 2;
+    viewer.scene.globe.tileCacheSize = 200;
+    viewer.resolutionScale = 1.0;
     
-    // Configurar resolución de texturas
-    viewer.resolutionScale = 1.0; // Usar resolución completa
-    
-    // Deshabilitar efectos que pueden afectar el rendimiento
+    // Deshabilitar efectos para mejor rendimiento
     viewer.scene.globe.enableLighting = false;
     viewer.scene.globe.dynamicAtmosphereLighting = false;
     viewer.scene.globe.showGroundAtmosphere = false;
+    viewer.scene.globe.depthTestAgainstTerrain = false;
 
-    // Centrar el mapa en Colombia con vista optimizada
+    // Centrar el mapa en Colombia
     viewer.scene.camera.setView({
-        destination: Cesium.Cartesian3.fromDegrees(-74.0817, 4.6097, 2000000), // Aumentar altura inicial
+        destination: Cesium.Cartesian3.fromDegrees(-74.0817, 4.6097, 2000000),
         orientation: {
             heading: 0.0,
-            pitch: -Cesium.Math.PI_OVER_TWO, // Vista directa hacia abajo
+            pitch: -Cesium.Math.PI_OVER_TWO,
             roll: 0.0
         }
     });
 
     console.log("Cesium cargado correctamente con configuración optimizada.");
 
-    // Forzar transición a modo 3D inmediatamente después de inicializar
+    // Forzar transición a modo 3D
     viewer.scene.morphTo3D(0);
 
-    // 🔹 Agregar controles de dibujo
+    // Agregar controles de dibujo
     setupDrawingTools(viewer);
     
-    // Cargar parcelas después de inicializar Cesium
+    // Cargar parcelas
     loadParcels();
-            viewer.scene.globe.tileCacheSize = 200; // Aumentar cache para mejor rendimiento
-            
-            // Configurar resolución de texturas
-            viewer.resolutionScale = 1.0; // Usar resolución completa
-            
-            // Deshabilitar efectos que pueden afectar el rendimiento
-            viewer.scene.globe.enableLighting = false;
-            viewer.scene.globe.dynamicAtmosphereLighting = false;
-            viewer.scene.globe.showGroundAtmosphere = false;
-
-            // Centrar el mapa en Colombia con vista optimizada
-            viewer.scene.camera.setView({
-                destination: Cesium.Cartesian3.fromDegrees(-74.0817, 4.6097, 2000000), // Aumentar altura inicial
-                orientation: {
-                    heading: 0.0,
-                    pitch: -Cesium.Math.PI_OVER_TWO, // Vista directa hacia abajo
-                    roll: 0.0
-                }
-            });
-
-            console.log("Cesium cargado correctamente con configuración optimizada.");
-
 }
 
 // 🔹 Función separada para manejar el dibujo
