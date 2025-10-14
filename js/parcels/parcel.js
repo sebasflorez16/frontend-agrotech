@@ -319,6 +319,24 @@ function initializeCesium() {
     });
     window.axiosInstance = axiosInstance;
 
+    // Crear un contenedor de créditos en el DOM para evitar errores de isIon
+    const cesiumContainer = document.getElementById('cesiumContainer');
+    let creditContainer = document.getElementById('cesiumCreditContainer');
+    
+    if (!creditContainer) {
+        creditContainer = document.createElement('div');
+        creditContainer.id = 'cesiumCreditContainer';
+        creditContainer.style.position = 'absolute';
+        creditContainer.style.bottom = '0';
+        creditContainer.style.left = '0';
+        creditContainer.style.fontSize = '10px';
+        creditContainer.style.color = '#fff';
+        creditContainer.style.padding = '2px';
+        creditContainer.style.backgroundColor = 'rgba(0,0,0,0.5)';
+        creditContainer.style.zIndex = '1000';
+        cesiumContainer.appendChild(creditContainer);
+    }
+
     // Inicializar el visor de Cesium con configuración mínima y robusta
     viewer = new Cesium.Viewer('cesiumContainer', {
         // Opciones de interfaz
@@ -341,8 +359,9 @@ function initializeCesium() {
         // Configuración de terreno e imágenes (se configura después)
         baseLayer: false,  // Importante: deshabilitar capa base para configurarla manualmente
         
-        // Créditos - usar contenedor por defecto de Cesium (evita el error islon)
-        // creditContainer se omite intencionalmente para usar el predeterminado
+        // Créditos - usar el contenedor que acabamos de crear en el DOM
+        creditContainer: creditContainer,
+        creditViewport: creditContainer
     });
 
     // Agregar la capa satelital Esri World Imagery manualmente, con fallback a OpenStreetMap si falla
@@ -385,8 +404,10 @@ function initializeCesium() {
     viewer.scene.globe.tileCacheSize = 100; // Reducir cache para mejor rendimiento
     viewer.scene.globe.enableLighting = false; // Deshabilitar iluminación para mejor rendimiento
 
-    // Suprimir errores de tiles para mejorar UX
-    viewer.cesiumWidget.creditContainer.style.display = "none";
+    // Ocultar el contenedor de créditos para UX limpia
+    if (creditContainer) {
+        creditContainer.style.display = "none";
+    }
     
     // Configurar manejo de errores silencioso para tiles
     viewer.scene.globe.tileLoadProgressEvent.addEventListener(function(queuedTileCount) {
