@@ -300,6 +300,39 @@ function initializeCesium() {
         return;
     }
 
+    // 🔧 PARCHE QUIRÚRGICO: Sobrescribir métodos problemáticos de Cesium.Credit ANTES de crear el Viewer
+    if (Cesium.Credit && Cesium.Credit.prototype) {
+        // Parchear isIon()
+        const originalIsIon = Cesium.Credit.prototype.isIon;
+        Cesium.Credit.prototype.isIon = function() {
+            try {
+                if (typeof originalIsIon === 'function') {
+                    return originalIsIon.call(this);
+                }
+                return false; // Default seguro si no existe
+            } catch (error) {
+                console.debug('[CESIUM_PATCH] Error en isIon(), retornando false');
+                return false;
+            }
+        };
+        
+        // Parchear addCreditToNextFrame() si existe
+        if (Cesium.Credit.prototype.addCreditToNextFrame) {
+            const originalAddCredit = Cesium.Credit.prototype.addCreditToNextFrame;
+            Cesium.Credit.prototype.addCreditToNextFrame = function() {
+                try {
+                    if (typeof originalAddCredit === 'function') {
+                        return originalAddCredit.call(this);
+                    }
+                } catch (error) {
+                    console.debug('[CESIUM_PATCH] Error en addCreditToNextFrame(), ignorado');
+                }
+            };
+        }
+        
+        console.log('[CESIUM_PATCH] ✅ Métodos de Cesium.Credit parcheados exitosamente');
+    }
+
     try {
         // Activar el token de Cesium Ion para recursos gratuitos y terreno
         Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MDYwOTcwMy1mMTRlLTQxMTYtYWRmNi02OTY4YjZkNjI0YWQiLCJpZCI6MjkwMzgyLCJpYXQiOjE3NTM1NDAzNTJ9.qZvwbfLRYsWlXHqxsePXVRfv87tF_0IIr6_Ch6efdF8';
