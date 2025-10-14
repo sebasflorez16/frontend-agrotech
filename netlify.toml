@@ -3,7 +3,7 @@
 
 [build]
   # ⚡ Servir desde metrica/static (carpeta con todos los recursos frontend)
-  publish = "metrica/static"
+  publish = "static"
   command = "echo 'Desplegando archivos estáticos'"
 
 [build.environment]
