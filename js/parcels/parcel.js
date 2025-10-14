@@ -36,6 +36,7 @@ function crearModalEscenasEOSDA() {
     return modal;
 }
 
+
 // Función para abrir el modal y mostrar las escenas
 window.mostrarModalEscenasEOSDA = async function(parcelId) {
     const modal = crearModalEscenasEOSDA();
