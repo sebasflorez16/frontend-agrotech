@@ -303,6 +303,22 @@ function initializeCesium() {
         // Activar el token de Cesium Ion para recursos gratuitos y terreno
         Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MDYwOTcwMy1mMTRlLTQxMTYtYWRmNi02OTY4YjZkNjI0YWQiLCJpZCI6MjkwMzgyLCJpYXQiOjE3NTM1NDAzNTJ9.qZvwbfLRYsWlXHqxsePXVRfv87tF_0IIr6_Ch6efdF8';
         console.log('[CESIUM] Token activado correctamente');
+        
+        // PARCHE CRÍTICO: Sobrescribir addCreditToNextFrame para evitar isIon error
+        if (Cesium.Scene && Cesium.Scene.prototype.addCreditToNextFrame) {
+            const originalAddCredit = Cesium.Scene.prototype.addCreditToNextFrame;
+            Cesium.Scene.prototype.addCreditToNextFrame = function(credit) {
+                try {
+                    // Intentar el método original solo si el crédito es válido
+                    if (credit && typeof credit === 'object') {
+                        originalAddCredit.call(this, credit);
+                    }
+                } catch (e) {
+                    // Silenciar errores de créditos - no afectan la funcionalidad del mapa
+                    console.debug('[CESIUM_CREDIT_SUPPRESSED]', e.message);
+                }
+            };
+        }
 
         // Configurar axios (mantener para el resto de la app)
         const token = localStorage.getItem("accessToken");
@@ -320,8 +336,11 @@ function initializeCesium() {
     });
     window.axiosInstance = axiosInstance;
 
+    // WORKAROUND: Deshabilitar el CreditDisplay para evitar errores de isIon
+    // Esto evita que Cesium intente renderizar créditos que causan el error
+    Cesium.CreditDisplay.cesiumCredit = undefined;
+    
     // Inicializar el visor de Cesium con configuración mínima y robusta
-    // NO pasar creditContainer manualmente - Cesium lo maneja internamente
     viewer = new Cesium.Viewer('cesiumContainer', {
         // Opciones de interfaz
         animation: false,
@@ -341,10 +360,11 @@ function initializeCesium() {
         shouldAnimate: false,
         
         // Configuración de terreno e imágenes (se configura después)
-        baseLayer: false  // Importante: deshabilitar capa base para configurarla manualmente
+        baseLayer: false,  // Importante: deshabilitar capa base para configurarla manualmente
         
-        // ⚠️ NO configurar creditContainer/creditViewport manualmente
-        // Cesium los crea automáticamente y evita errores de isIon
+        // CRÍTICO: Usar un contenedor de créditos ficticio para evitar isIon
+        creditContainer: document.createElement('div'),
+        creditViewport: document.createElement('div')
     });
 
     // Agregar la capa satelital Esri World Imagery manualmente, con fallback a OpenStreetMap si falla
@@ -387,10 +407,20 @@ function initializeCesium() {
     viewer.scene.globe.tileCacheSize = 100; // Reducir cache para mejor rendimiento
     viewer.scene.globe.enableLighting = false; // Deshabilitar iluminación para mejor rendimiento
 
-    // Ocultar el contenedor de créditos que Cesium creó automáticamente
-    const creditDisplay = viewer.cesiumWidget.creditContainer;
-    if (creditDisplay) {
-        creditDisplay.style.display = "none";
+    // WORKAROUND CRÍTICO: Deshabilitar el sistema de créditos completamente
+    // Esto previene el error isIon al evitar que Cesium intente renderizar créditos
+    try {
+        viewer.scene.frameState.creditDisplay = {
+            beginFrame: () => {},
+            endFrame: () => {},
+            addCredit: () => {},
+            addDefaultCredit: () => {},
+            removeDefaultCredit: () => {},
+            update: () => {},
+            destroy: () => {}
+        };
+    } catch (e) {
+        console.debug('[CESIUM] No se pudo sobrescribir creditDisplay:', e);
     }
     
     // Configurar manejo de errores silencioso para tiles
