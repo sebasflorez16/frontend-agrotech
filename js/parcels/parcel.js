@@ -299,7 +299,8 @@ function initializeLeaflet() {
             center: [4.6097, -74.0817], // Colombia
             zoom: 6,
             zoomControl: true,
-            attributionControl: true
+            attributionControl: true,
+            fullscreenControl: false // Lo agregamos manualmente después
         });
 
         // Agregar la capa satelital Esri World Imagery
@@ -320,6 +321,50 @@ function initializeLeaflet() {
                 opacity: 0.7
             }
         ).addTo(map);
+
+        // 🔍 Agregar control de búsqueda de geocodificación (lupa)
+        // Usando Nominatim (OpenStreetMap) - gratis y sin límites estrictos
+        L.Control.geocoder({
+            defaultMarkGeocode: false,
+            placeholder: 'Buscar ubicación...',
+            errorMessage: 'No se encontró la ubicación',
+            position: 'topright',
+            geocoder: L.Control.Geocoder.nominatim({
+                geocodingQueryParams: {
+                    countrycodes: 'co', // Priorizar resultados en Colombia
+                    limit: 5
+                }
+            })
+        }).on('markgeocode', function(e) {
+            const bbox = e.geocode.bbox;
+            const poly = L.polygon([
+                bbox.getSouthEast(),
+                bbox.getNorthEast(),
+                bbox.getNorthWest(),
+                bbox.getSouthWest()
+            ]);
+            map.fitBounds(poly.getBounds());
+            
+            // Agregar marcador temporal en la ubicación encontrada
+            const marker = L.marker(e.geocode.center).addTo(map)
+                .bindPopup(e.geocode.name)
+                .openPopup();
+            
+            // Remover marcador después de 5 segundos
+            setTimeout(() => {
+                map.removeLayer(marker);
+            }, 5000);
+        }).addTo(map);
+
+        // 📺 Agregar control de pantalla completa
+        map.addControl(new L.Control.Fullscreen({
+            title: {
+                'false': 'Pantalla completa',
+                'true': 'Salir de pantalla completa'
+            }
+        }));
+
+        console.log('[LEAFLET] Controles de búsqueda y pantalla completa agregados');
 
         console.log('[LEAFLET] Mapa satelital Esri World Imagery cargado correctamente');
 
@@ -739,29 +784,25 @@ function flyToParcel(parcelId) {
             
             console.log(`[FLY_TO_PARCEL] Vista centrada en parcela ${parcelId}`);
             
-            // Resaltar en amarillo temporalmente
-            const highlighted = L.polygon(coordinates, {
+            // Eliminar cualquier resaltado previo
+            if (window.selectedParcelLayer) {
+                map.removeLayer(window.selectedParcelLayer);
+            }
+            
+            // Crear resaltado amarillo PERMANENTE para la parcela seleccionada
+            window.selectedParcelLayer = L.polygon(coordinates, {
                 color: '#FFFF00', // Amarillo
                 weight: 4,
                 fillColor: '#FFFF00',
                 fillOpacity: 0.3,
-                className: 'highlighted-parcel'
+                className: 'selected-parcel-highlight',
+                interactive: false // No interfiere con clics en el mapa
             }).addTo(map);
             
-            // Quitar resaltado después de 3 segundos y volver a verde
-            setTimeout(() => {
-                map.removeLayer(highlighted);
-                
-                // Encontrar el polígono original y resaltarlo brevemente
-                map.eachLayer(function (layer) {
-                    if (layer.parcelId === parcelId) {
-                        layer.setStyle({
-                            color: '#145A32',
-                            weight: 2
-                        });
-                    }
-                });
-            }, 3000);
+            // Guardar referencia del ID de parcela seleccionada
+            window.selectedParcelId = parcelId;
+            
+            console.log(`[FLY_TO_PARCEL] Parcela ${parcelId} seleccionada y resaltada permanentemente`);
 
             // Actualizar estado global EOSDA
             window.EOSDA_STATE.selectedParcelId = parcelId;
