@@ -336,8 +336,8 @@ function initializeCesium() {
             navigationHelpButton: false,
             scene3DOnly: true,
             shouldAnimate: false,
-            baseLayer: false // Importante: deshabilitar capa base para configurarla manualmente
-            // No modificar ni crear creditContainer ni creditViewport
+            baseLayer: false // Deshabilitar capa base para configurarla manualmente
+            // Inicialización estándar, no modificar ni crear creditContainer ni creditViewport
         });
 
     // Agregar la capa satelital Esri World Imagery manualmente, con fallback a OpenStreetMap si falla
