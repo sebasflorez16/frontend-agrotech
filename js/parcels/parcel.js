@@ -324,47 +324,54 @@ function initializeLeaflet() {
 
         // 🔍 Agregar control de búsqueda de geocodificación (lupa)
         // Usando Nominatim (OpenStreetMap) - gratis y sin límites estrictos
-        L.Control.geocoder({
-            defaultMarkGeocode: false,
-            placeholder: 'Buscar ubicación...',
-            errorMessage: 'No se encontró la ubicación',
-            position: 'topright',
-            geocoder: L.Control.Geocoder.nominatim({
-                geocodingQueryParams: {
-                    countrycodes: 'co', // Priorizar resultados en Colombia
-                    limit: 5
-                }
-            })
-        }).on('markgeocode', function(e) {
-            const bbox = e.geocode.bbox;
-            const poly = L.polygon([
-                bbox.getSouthEast(),
-                bbox.getNorthEast(),
-                bbox.getNorthWest(),
-                bbox.getSouthWest()
-            ]);
-            map.fitBounds(poly.getBounds());
-            
-            // Agregar marcador temporal en la ubicación encontrada
-            const marker = L.marker(e.geocode.center).addTo(map)
-                .bindPopup(e.geocode.name)
-                .openPopup();
-            
-            // Remover marcador después de 5 segundos
-            setTimeout(() => {
-                map.removeLayer(marker);
-            }, 5000);
-        }).addTo(map);
+        if (typeof L.Control.Geocoder !== 'undefined') {
+            L.Control.geocoder({
+                defaultMarkGeocode: false,
+                placeholder: 'Buscar ubicación...',
+                errorMessage: 'No se encontró la ubicación',
+                position: 'topright',
+                geocoder: L.Control.Geocoder.nominatim({
+                    geocodingQueryParams: {
+                        countrycodes: 'co', // Priorizar resultados en Colombia
+                        limit: 5
+                    }
+                })
+            }).on('markgeocode', function(e) {
+                const bbox = e.geocode.bbox;
+                const poly = L.polygon([
+                    bbox.getSouthEast(),
+                    bbox.getNorthEast(),
+                    bbox.getNorthWest(),
+                    bbox.getSouthWest()
+                ]);
+                map.fitBounds(poly.getBounds());
+                
+                // Agregar marcador temporal en la ubicación encontrada
+                const marker = L.marker(e.geocode.center).addTo(map)
+                    .bindPopup(e.geocode.name)
+                    .openPopup();
+                
+                // Remover marcador después de 5 segundos
+                setTimeout(() => {
+                    map.removeLayer(marker);
+                }, 5000);
+            }).addTo(map);
+            console.log('[LEAFLET] Control de búsqueda agregado');
+        } else {
+            console.warn('[LEAFLET] Plugin Geocoder no disponible - verifique que el script esté cargado');
+        }
 
         // 📺 Agregar control de pantalla completa
-        map.addControl(new L.Control.Fullscreen({
-            title: {
-                'false': 'Pantalla completa',
-                'true': 'Salir de pantalla completa'
-            }
-        }));
-
-        console.log('[LEAFLET] Controles de búsqueda y pantalla completa agregados');
+        if (typeof L.Control.Fullscreen !== 'undefined') {
+            map.addControl(new L.Control.Fullscreen({
+                position: 'topright',
+                title: 'Ver en pantalla completa',
+                titleCancel: 'Salir de pantalla completa'
+            }));
+            console.log('[LEAFLET] Control de pantalla completa agregado');
+        } else {
+            console.warn('[LEAFLET] Plugin Fullscreen no disponible - verifique que el script esté cargado');
+        }
 
         console.log('[LEAFLET] Mapa satelital Esri World Imagery cargado correctamente');
 
