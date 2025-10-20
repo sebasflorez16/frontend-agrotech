@@ -193,16 +193,26 @@ function loadMeteorologicalAnalysisWithRefresh(parcelId) {
         }
     })
     .then(async response => {
+        console.log('[METEOROLOGICAL] 📡 Respuesta recibida:', {
+            status: response.status,
+            statusText: response.statusText,
+            contentType: response.headers.get('content-type'),
+            url: response.url
+        });
+        
+        // Leer el texto de la respuesta UNA SOLA VEZ
+        const text = await response.text();
+        
         if (!response.ok) {
-            // Si la respuesta no es OK, intenta leer el texto para mostrar el HTML recibido
-            const text = await response.text();
+            console.error('[METEOROLOGICAL] ❌ Respuesta HTTP no OK:', text.substring(0, 500));
             throw new Error(`HTTP ${response.status}: ${response.statusText}\nRespuesta recibida:\n${text.substring(0, 500)}`);
         }
-        // Intenta parsear como JSON, si falla muestra el HTML recibido
+        
+        // Intenta parsear como JSON
         try {
-            return await response.json();
+            return JSON.parse(text);
         } catch (e) {
-            const text = await response.text();
+            console.error('[METEOROLOGICAL] ❌ Respuesta no es JSON:', text.substring(0, 500));
             throw new Error(`Respuesta no es JSON. Recibido:\n${text.substring(0, 500)}`);
         }
     })
@@ -261,11 +271,29 @@ function loadMeteorologicalAnalysisInternal(parcelId) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
+    .then(async response => {
+        console.log('[METEOROLOGICAL] 📡 Respuesta recibida (ndvi-weather):', {
+            status: response.status,
+            statusText: response.statusText,
+            contentType: response.headers.get('content-type'),
+            url: response.url
+        });
+        
+        // Leer el texto de la respuesta UNA SOLA VEZ
+        const text = await response.text();
+        
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            console.error('[METEOROLOGICAL] ❌ Respuesta HTTP no OK:', text.substring(0, 500));
+            throw new Error(`HTTP ${response.status}: ${response.statusText}\nRespuesta recibida:\n${text.substring(0, 500)}`);
         }
-        return response.json();
+        
+        // Intenta parsear como JSON
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error('[METEOROLOGICAL] ❌ Respuesta no es JSON:', text.substring(0, 500));
+            throw new Error(`Respuesta no es JSON. Recibido:\n${text.substring(0, 500)}`);
+        }
     })
     .then(data => {
         console.log('[METEOROLOGICAL] Datos meteorológicos recibidos:', data);
@@ -727,11 +755,29 @@ function loadWeatherForecast(parcelId) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
+    .then(async response => {
+        console.log('[METEOROLOGICAL] 📡 Respuesta de pronóstico recibida:', {
+            status: response.status,
+            statusText: response.statusText,
+            contentType: response.headers.get('content-type'),
+            url: response.url
+        });
+        
+        // Leer el texto de la respuesta UNA SOLA VEZ
+        const text = await response.text();
+        
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            console.error('[METEOROLOGICAL] ❌ Respuesta HTTP no OK:', text.substring(0, 500));
+            throw new Error(`HTTP ${response.status}: ${response.statusText}\nRespuesta recibida:\n${text.substring(0, 500)}`);
         }
-        return response.json();
+        
+        // Intenta parsear como JSON
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error('[METEOROLOGICAL] ❌ Respuesta no es JSON:', text.substring(0, 500));
+            throw new Error(`Respuesta no es JSON. Recibido:\n${text.substring(0, 500)}`);
+        }
     })
     .then(data => {
         console.log('[METEOROLOGICAL] Datos del pronóstico recibidos:', data);
