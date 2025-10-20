@@ -192,23 +192,28 @@ function loadMeteorologicalAnalysisWithRefresh(parcelId) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
+    .then(async response => {
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            // Si la respuesta no es OK, intenta leer el texto para mostrar el HTML recibido
+            const text = await response.text();
+            throw new Error(`HTTP ${response.status}: ${response.statusText}\nRespuesta recibida:\n${text.substring(0, 500)}`);
         }
-        return response.json();
+        // Intenta parsear como JSON, si falla muestra el HTML recibido
+        try {
+            return await response.json();
+        } catch (e) {
+            const text = await response.text();
+            throw new Error(`Respuesta no es JSON. Recibido:\n${text.substring(0, 500)}`);
+        }
     })
     .then(data => {
         console.log('[METEOROLOGICAL] ✅ Datos actualizados recibidos del backend:', data);
-        
         // Procesar datos reales de EOSDA con indicador de actualización
         processRealEOSDADataWithRefresh(data);
-        
     })
     .catch(error => {
         console.error('[METEOROLOGICAL] Error actualizando análisis:', error);
         showMeteorologicalError(error.message);
-        
         if (typeof showToast === 'function') {
             showToast('❌ Error actualizando datos meteorológicos', 'error');
         }
