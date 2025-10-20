@@ -179,9 +179,9 @@ function loadMeteorologicalAnalysisWithRefresh(parcelId) {
     
     showMeteorologicalLoading(true);
     
-    // Construir URL - usar siempre window.location.origin para producción
-    const baseUrl = window.location.origin;
-    const endpoint = `${baseUrl}/api/parcels/parcel/${parcelId}/ndvi-weather-comparison/?refresh=${Date.now()}`;
+    // Usar rutas relativas para aprovechar los redirects de Netlify
+    // Netlify redirige /api/* → backend preservando el tenant (django-tenants)
+    const endpoint = `/api/parcels/parcel/${parcelId}/ndvi-weather-comparison/?refresh=${Date.now()}`;
     
     console.log(`[METEOROLOGICAL] Haciendo petición de actualización a: ${endpoint}`);
     
@@ -243,9 +243,9 @@ function loadMeteorologicalAnalysisInternal(parcelId) {
     
     showMeteorologicalLoading(true);
     
-    // Usar siempre window.location.origin para producción
-    const baseUrl = window.location.origin;
-    const endpoint = `${baseUrl}/api/parcels/parcel/${parcelId}/ndvi-weather-comparison/`;
+    // Usar rutas relativas para aprovechar los redirects de Netlify
+    // Netlify redirige /api/* → backend preservando el tenant (django-tenants)
+    const endpoint = `/api/parcels/parcel/${parcelId}/ndvi-weather-comparison/`;
     
     console.log(`[METEOROLOGICAL] Haciendo petición a: ${endpoint}`);
     
@@ -709,10 +709,9 @@ function loadWeatherForecast(parcelId) {
     
     showMeteorologicalLoading(true);
     
-    // Usar siempre window.location.origin para producción
-    const baseUrl = window.location.origin;
-    // Usar la ruta directa para evitar conflictos de routing
-    const endpoint = `${baseUrl}/api/parcels/get-weather-forecast/${parcelId}/`;
+    // Usar rutas relativas para aprovechar los redirects de Netlify
+    // Netlify redirige /api/* → backend preservando el tenant (django-tenants)
+    const endpoint = `/api/parcels/get-weather-forecast/${parcelId}/`;
     
     console.log(`[METEOROLOGICAL] Haciendo petición al pronóstico (ruta directa): ${endpoint}`);
     

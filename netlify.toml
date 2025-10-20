@@ -1,4 +1,20 @@
-# Configuración de Netlify para AgroTech Digital
+# Configura# ========================================
+# REDIRECTS - MULTI-TENANT SUPPORT
+# ========================================
+
+# 1. Redirigir TODAS las peticiones de API a Railway
+# IMPORTANTE: 
+# - force=true: Redirige ANTES de buscar archivos locales
+# - status=200: Proxy transparente (el navegador no ve el redirect)
+# - Preserva headers X-Forwarded-Host para detección de tenant en django-tenants
+[[redirects]]
+  from = "/api/*"
+  to = "https://agrotechcolombia.com/api/:splat"
+  status = 200
+  force = true
+  # Headers necesarios para django-tenants
+  [redirects.headers]
+    X-Forwarded-Proto = "https"lify para AgroTech Digital
 # Optimizado para Leaflet + Esri World Imagery + Railway Backend
 
 [build]
@@ -13,11 +29,11 @@
 # REDIRECTS - ORDEN CRÍTICO
 # ========================================
 
-# 1. Redirigir TODAS las peticiones de API a Railway
+# 1. Redirigir TODAS las peticiones de API a Railway (Backend en Producción)
 # IMPORTANTE: force=true asegura que se redirija ANTES de buscar archivos locales
 [[redirects]]
   from = "/api/*"
-  to = "https://site-production-208b.up.railway.app/api/:splat"
+  to = "https://agrotechcolombia.com/api/:splat"
   status = 200
   force = true
 

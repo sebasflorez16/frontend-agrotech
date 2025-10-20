@@ -253,7 +253,9 @@ window.clearEOSDACache = function() {
     console.log('[CACHE CLEARED] Cache de EOSDA limpiado');
 };
 
-const BASE_URL = window.ApiUrls ? window.ApiUrls.parcels() : `${window.location.origin}/api/parcels`;
+// BASE_URL usa rutas relativas para aprovechar los redirects de Netlify
+// Netlify redirige /api/* → https://agrotechcolombia.com/api/* preservando el tenant
+const BASE_URL = window.ApiUrls ? window.ApiUrls.parcels() : '/api/parcels';
 
 // Variables globales
 let axiosInstance; // Declarar axiosInstance como global
