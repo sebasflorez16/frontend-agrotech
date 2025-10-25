@@ -1,9 +1,8 @@
 # Configuración de Netlify para AgroTech Digital
 # Optimizado para Leaflet + Esri World Imagery + Railway Backend
 
-
 [build]
-  publish = "metrica/static"
+  publish = "."
   command = "echo 'Desplegando frontend desde metrica/static/'"
 
 [build.environment]
