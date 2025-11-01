@@ -141,20 +141,19 @@ function renderScenesTable(scenes) {
     });
     
     const filteredCount = uniqueScenes.length - lowCloudScenes.length;
-    const finalScenes = lowCloudScenes.length > 0 ? lowCloudScenes : uniqueScenes.slice(0, 5); // Fallback: mostrar las 5 mejores
+    // Si hay escenas con nubosidad <= umbral, mostrar solo esas. Si no, mostrar las 5 mejores sin filtrar.
+    const finalScenes = lowCloudScenes.length > 0 ? lowCloudScenes : uniqueScenes.slice(0, 5);
 
     // Mensaje informativo sobre filtrado
     let filterMessage = '';
-    if (filteredCount > 0) {
-        if (lowCloudScenes.length > 0) {
-            filterMessage = `<div class="alert alert-info mb-3">
-                <i class="fas fa-info-circle"></i> Se filtraron ${filteredCount} escena(s) con alta cobertura de nubes (>${CLOUD_THRESHOLD}%) para mejorar la calidad del análisis.
-            </div>`;
-        } else {
-            filterMessage = `<div class="alert alert-warning mb-3">
-                <i class="fas fa-exclamation-triangle"></i> No hay imágenes disponibles con menos de ${CLOUD_THRESHOLD}% de nubes. Mostrando las 5 mejores disponibles.
-            </div>`;
-        }
+    if (filteredCount > 0 && lowCloudScenes.length > 0) {
+        filterMessage = `<div class="alert alert-info mb-3">
+            <i class="fas fa-info-circle"></i> Se filtraron ${filteredCount} escena(s) con alta cobertura de nubes (>${CLOUD_THRESHOLD}%). Mostrando solo las de mejor calidad.
+        </div>`;
+    } else if (filteredCount > 0 && lowCloudScenes.length === 0) {
+        filterMessage = `<div class="alert alert-warning mb-3">
+            <i class="fas fa-exclamation-triangle"></i> Todas las escenas tienen alta nubosidad. Mostrando las 5 mejores disponibles, aunque superan el umbral de ${CLOUD_THRESHOLD}%. Los resultados pueden ser menos precisos.
+        </div>`;
     }
 
     let html = `${filterMessage}<table class="table table-striped table-bordered">
@@ -1738,7 +1737,7 @@ window.verImagenEscenaEOSDA = async function(viewId, tipo, sceneDate = null) {
                 // Intervalo progresivo: empezar rápido, luego más lento
                 const currentInterval = attempts <= 3 ? baseInterval : baseInterval + (attempts * 1000);
                 await new Promise(resolve => setTimeout(resolve, currentInterval));
-            }
+                       }
         }
         
         // Si llegamos aquí, se agotaron los intentos
