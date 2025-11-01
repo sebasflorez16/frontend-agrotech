@@ -543,7 +543,7 @@ function savePolygon() {
     const description = document.getElementById("parcelDescription").value.trim();
     const fieldType = document.getElementById("parcelFieldType").value.trim();
     const soilType = document.getElementById("parcelSoilType").value.trim();
-    const topography = document.getElementById("parcelTopography").value.trim();
+    const topography = document.getElementById("parcelTopografia").value.trim();
 
     // Validar que el nombre esté completo
     if (!name) {
@@ -1074,20 +1074,16 @@ async function buscarEscenasPorRango(parcelId, startDate, endDate) {
         await showSceneSelectionTable(scenes);
     } catch (err) {
         hideSpinner();
-        
         // Manejo específico de error 402 (límite excedido)
         if (err.response && err.response.status === 402) {
             const errorData = err.response.data || {};
             console.error('[EOSDA_LIMIT_ERROR] Límite de requests excedido:', errorData);
-            
             showErrorToast(
                 "⚠️ EOSDA API: Límite de consultas excedido. " +
                 "Se ha alcanzado el límite mensual de la API de imágenes satelitales. " +
                 "Contacte al administrador del sistema.",
-                { duration: 10000 } // Toast más largo para este error crítico
+                { duration: 10000 }
             );
-            
-            // Mostrar modal con más información
             if (confirm(
                 "❌ LÍMITE DE API EOSDA EXCEDIDO\n\n" +
                 "Se ha alcanzado el límite mensual de consultas a EOSDA API Connect.\n" +
@@ -1099,20 +1095,16 @@ async function buscarEscenasPorRango(parcelId, startDate, endDate) {
             }
             return;
         }
-        
         // Manejo específico de error 404 (campo no encontrado)
         if (err.response && err.response.status === 404) {
             const errorData = err.response.data || {};
             console.error('[EOSDA_FIELD_ERROR] Campo no encontrado en EOSDA:', errorData);
-            
             showErrorToast(
                 "🔍 Campo no encontrado en EOSDA. " +
                 `El campo ID ${errorData.field_id} no existe en la API de imágenes satelitales. ` +
                 "Verifique la configuración del campo.",
                 { duration: 8000 }
             );
-            
-            // Mostrar modal con información técnica
             if (confirm(
                 "❌ CAMPO NO ENCONTRADO EN EOSDA\n\n" +
                 `El campo con ID ${errorData.field_id} no existe en EOSDA API Connect.\n\n` +
@@ -1126,442 +1118,29 @@ async function buscarEscenasPorRango(parcelId, startDate, endDate) {
             }
             return;
         }
-        
+        // Manejo específico de error 400 (Bad Request)
+        if (err.response && err.response.status === 400) {
+            const errorData = err.response.data || {};
+            console.error('[EOSDA_BAD_REQUEST] Error 400 en la petición a EOSDA:', errorData);
+            showErrorToast(
+                "No se encontraron escenas para el rango de fechas seleccionado. " +
+                "Verifica que las fechas sean válidas y que existan imágenes disponibles en EOSDA.",
+                { duration: 7000 }
+            );
+            return;
+        }
+        // Error 500 u otros
+        if (err.response && err.response.status === 500) {
+            console.error('[SCENES_ERROR] Error 500 en el backend:', err.response.data);
+            showErrorToast(
+                "Error interno en el servidor al buscar escenas. Intenta con otro rango de fechas o contacta al administrador.",
+                { duration: 7000 }
+            );
+            return;
+        }
         // Error genérico
         console.error('[SCENES_ERROR] Error buscando escenas:', err);
         showErrorToast("Error al buscar imágenes satelitales: " + (err.message || err));
-    }
-}
-
-// Las URLs WMTS/TMS de EOSDA ahora deben apuntar al proxy backend para evitar CORS y proteger el token.
-// Función profesional para buscar escenas y construir URLs WMTS usando el nuevo endpoint de búsqueda
-async function fetchEosdaWmtsUrls(polygonGeoJson) {
-    // Buscar la fecha más reciente disponible (por ejemplo, hace 10 días)
-    const today = new Date();
-    const daysAgo = 10;
-    const fechaNDVI = new Date(today.getFullYear(), today.getMonth(), today.getDate() - daysAgo)
-        .toISOString().split('T')[0];
-    // Usar hostname dinámico para el proxy WMTS
-    const baseProxy = window.ApiUrls ? window.ApiUrls.eosdaWmts() + '/' : 
-                     `${window.location.protocol}//${window.location.hostname}:8000/api/parcels/eosda-wmts-tile/`;
-    // const ndviUrl = ...; const ndmiUrl = ...; Eliminado. Usar Render API.
-    return { ndvi: ndviUrl, ndmi: ndmiUrl };
-}
-
-// Tabla/modal profesional para que el usuario elija la escena satelital a visualizar
-async function showSceneSelectionTable(scenes) {
-    console.log('[SCENES_TABLE] Mostrando tabla con escenas:', scenes);
-    return new Promise((resolve) => {
-        // Si ya existe el modal, elimínalo
-        let oldModal = document.getElementById("sceneSelectionModal");
-        if (oldModal) oldModal.remove();
-
-        // Aplicar el mismo filtro de nubes que en la tabla principal
-        if (!scenes || scenes.length === 0) {
-            alert('No hay escenas disponibles');
-            resolve({ ndvi: null, ndmi: null });
-            return;
-        }
-
-        // Filtrar escenas duplicadas: mantener solo la mejor calidad por fecha
-        const uniqueScenes = [];
-        const seenDates = new Set();
-        
-        // Ordenar por fecha desc y luego por calidad (menor nubosidad = mejor)
-        const sortedScenes = [...scenes].sort((a, b) => {
-            const dateCompare = new Date(b.date) - new Date(a.date);
-            if (dateCompare !== 0) return dateCompare;
-            
-            // Si misma fecha, ordenar por nubosidad (menor es mejor)
-            const cloudA = a.cloudCoverage ?? a.cloud ?? a.nubosidad ?? 100;
-            const cloudB = b.cloudCoverage ?? b.cloud ?? b.nubosidad ?? 100;
-            return cloudA - cloudB;
-        });
-
-        // Mantener solo la mejor escena por fecha
-        for (const scene of sortedScenes) {
-            const dateKey = scene.date ? scene.date.split('T')[0] : 'no-date';
-            if (!seenDates.has(dateKey)) {
-                seenDates.add(dateKey);
-                uniqueScenes.push(scene);
-            }
-        }
-
-        // Filtrar escenas por umbral de cobertura de nubes (≤50%)
-        const CLOUD_THRESHOLD = 50;
-        const lowCloudScenes = uniqueScenes.filter(scene => {
-            const cloud = scene.cloudCoverage ?? scene.cloud ?? scene.nubosidad ?? 0;
-            return cloud <= CLOUD_THRESHOLD;
-        });
-        
-        const filteredCount = uniqueScenes.length - lowCloudScenes.length;
-        const finalScenes = lowCloudScenes.length > 0 ? lowCloudScenes : uniqueScenes.slice(0, 5); // Fallback: mostrar las 5 mejores
-
-        // Crear modal
-        const modal = document.createElement("div");
-        modal.id = "sceneSelectionModal";
-        modal.style.position = "fixed";
-        modal.style.top = "0";
-        modal.style.left = "0";
-        modal.style.width = "100vw";
-        modal.style.height = "100vh";
-        modal.style.background = "rgba(79, 227, 5, 0.05)";
-        modal.style.zIndex = "9999";
-        modal.style.display = "flex";
-        modal.style.alignItems = "center";
-        modal.style.justifyContent = "center";
-
-        // Contenido del modal
-        const content = document.createElement("div");
-        content.style.background = "#fff";
-        content.style.padding = "32px";
-        content.style.borderRadius = "12px";
-        content.style.boxShadow = "0 2px 16px rgba(0,0,0,0.2)";
-        content.style.maxWidth = "600px";
-        content.style.width = "100%";
-
-        // Título
-        const title = document.createElement("h3");
-        title.textContent = "Selecciona la escena satelital a visualizar";
-        title.style.marginBottom = "18px";
-        content.appendChild(title);
-
-        // Mensaje informativo sobre filtrado (igual que en la tabla principal)
-        if (filteredCount > 0) {
-            const filterMessage = document.createElement("div");
-            filterMessage.style.marginBottom = "15px";
-            filterMessage.style.padding = "10px";
-            filterMessage.style.borderRadius = "4px";
-            
-            if (lowCloudScenes.length > 0) {
-                filterMessage.style.backgroundColor = "#d1ecf1";
-                filterMessage.style.color = "#0c5460";
-                filterMessage.innerHTML = `<i class="fas fa-info-circle"></i> Se filtraron ${filteredCount} escena(s) con alta cobertura de nubes (>${CLOUD_THRESHOLD}%) para mejorar la calidad del análisis.`;
-            } else {
-                filterMessage.style.backgroundColor = "#fff3cd";
-                filterMessage.style.color = "#856404";
-                filterMessage.innerHTML = `<i class="fas fa-exclamation-triangle"></i> No hay imágenes disponibles con menos de ${CLOUD_THRESHOLD}% de nubes. Mostrando las 5 mejores disponibles.`;
-            }
-            content.appendChild(filterMessage);
-        }
-
-        // Tabla con botones NDVI y NDMI y porcentaje de nubosidad
-        const table = document.createElement("table");
-        table.style.width = "100%";
-        table.style.borderCollapse = "collapse";
-        table.innerHTML = `
-            <thead>
-                <tr style="background:#f5f5f5">
-                    <th style="padding:8px;border-bottom:1px solid #ccc">Fecha</th>
-                    <th style="padding:8px;border-bottom:1px solid #ccc">Cobertura de nubes (%)</th>
-                    <th style="padding:8px;border-bottom:1px solid #ccc">NDVI</th>
-                    <th style="padding:8px;border-bottom:1px solid #ccc">NDMI</th>
-                    <th style="padding:8px;border-bottom:1px solid #ccc">Analytics</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${finalScenes.map((scene, idx) => {
-                    let cloud = scene.cloudCoverage ?? scene.cloud ?? scene.nubosidad;
-                    let cloudText = (typeof cloud === 'number') ? cloud.toFixed(2) + ' %' : (cloud ? cloud + ' %' : '-');
-                    
-                    // Añadir indicador visual para alta nubosidad
-                    let cloudBadge = '';
-                    if (typeof cloud === 'number' && cloud > CLOUD_THRESHOLD) {
-                        cloudBadge = ' <span class="badge badge-warning" style="background:#ffc107;color:#000;padding:2px 6px;border-radius:10px;font-size:10px;">Alta</span>';
-                    }
-                    
-                    console.log('[SCENE_ROW]', { scene, viewId: scene.view_id, date: scene.date, idx });
-                    return `
-                        <tr>
-                            <td style="padding:8px;border-bottom:1px solid #eee">${scene.date ? scene.date.split('T')[0] : '-'}</td>
-                            <td style="padding:8px;border-bottom:1px solid #eee">${cloudText}${cloudBadge}</td>
-                            <td style="padding:8px;border-bottom:1px solid #eee">
-                                <button class="btn btn-sm btn-success" data-ndvi-idx="${idx}">Ver NDVI</button>
-                            </td>
-                            <td style="padding:8px;border-bottom:1px solid #eee">
-                                <button class="btn btn-sm btn-info" data-ndmi-idx="${idx}">Ver NDMI</button>
-                            </td>
-                            <td style="padding:8px;border-bottom:1px solid #eee">
-                                <button class="btn btn-sm btn-warning" onclick="obtenerAnalyticsEscena('${scene.view_id}', '${scene.date}')">📊 Stats</button>
-                            </td>
-                        </tr>
-                    `;
-                }).join('')}
-            </tbody>
-        `;
-        content.appendChild(table);
-
-        // Botón cerrar
-        const closeBtn = document.createElement("button");
-        closeBtn.textContent = "Cerrar";
-        closeBtn.className = "btn btn-secondary";
-        closeBtn.style.marginTop = "18px";
-        closeBtn.onclick = () => {
-            modal.remove();
-            resolve({ ndvi: null, ndmi: null });
-        };
-        content.appendChild(closeBtn);
-
-        modal.appendChild(content);
-        document.body.appendChild(modal);
-
-        // Manejar click en NDVI (usar finalScenes en lugar de scenes)
-        table.querySelectorAll('button[data-ndvi-idx]').forEach(btn => {
-            btn.onclick = async () => {
-                const idx = btn.getAttribute('data-ndvi-idx');
-                const scene = finalScenes[idx]; // Usar finalScenes filtradas
-                
-                // Deshabilitar todos los botones del modal durante procesamiento
-                const modalButtons = modal.querySelectorAll('button');
-                modalButtons.forEach(b => b.disabled = true);
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
-                
-                try {
-                    const result = await window.verImagenEscenaEOSDA(scene.view_id || scene.id, 'ndvi', scene.date);
-                    if (result && result.success) {
-                        modal.remove();
-                        resolve({ ndvi: true, ndmi: false });
-                    }
-                } finally {
-                    // Rehabilitar botones si aún existe el modal
-                    if (document.body.contains(modal)) {
-                        modalButtons.forEach(b => {
-                            b.disabled = false;
-                            if (b.getAttribute('data-ndvi-idx')) {
-                                b.innerHTML = 'Ver NDVI';
-                            } else if (b.getAttribute('data-ndmi-idx')) {
-                                b.innerHTML = 'Ver NDMI';
-                            }
-                        });
-                    }
-                }
-            };
-        });
-        // Manejar click en NDMI (usar finalScenes en lugar de scenes)
-        table.querySelectorAll('button[data-ndmi-idx]').forEach(btn => {
-            btn.onclick = async () => {
-                const idx = btn.getAttribute('data-ndmi-idx');
-                const scene = finalScenes[idx]; // Usar finalScenes filtradas
-                
-                // Deshabilitar todos los botones del modal durante procesamiento
-                const modalButtons = modal.querySelectorAll('button');
-                modalButtons.forEach(b => b.disabled = true);
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
-                
-                try {
-                    const result = await window.verImagenEscenaEOSDA(scene.view_id || scene.id, 'ndmi', scene.date);
-                    if (result && result.success) {
-                        modal.remove();
-                        resolve({ ndvi: false, ndmi: true });
-                    }
-                } finally {
-                    // Rehabilitar botones si aún existe el modal
-                    if (document.body.contains(modal)) {
-                        modalButtons.forEach(b => {
-                            b.disabled = false;
-                            if (b.getAttribute('data-ndvi-idx')) {
-                                b.innerHTML = 'Ver NDVI';
-                            } else if (b.getAttribute('data-ndmi-idx')) {
-                                b.innerHTML = 'Ver NDMI';
-                            }
-                        });
-                    }
-                }
-            };
-        });
-    });
-}
-
-// Utilidad para calcular el bounding box de un polígono GeoJSON
-function getPolygonBounds(coordinates) {
-    let minLon = 180, minLat = 90, maxLon = -180, maxLat = -90;
-    coordinates.forEach(coord => {
-        if (coord[0] < minLon) minLon = coord[0];
-        if (coord[0] > maxLon) maxLon = coord[0];
-        if (coord[1] < minLat) minLat = coord[1];
-        if (coord[1] > maxLat) maxLat = coord[1];
-    });
-    return [minLon, minLat, maxLon, maxLat]; // [west, south, east, north]
-}
-
-// Botón flotante para mostrar/ocultar imagen NDVI/NDMI cacheada
-function showFloatingImageToggleButton(cacheKey, bounds, mapInstance) {
-    let btn = document.getElementById('floatingImageToggleBtn');
-    if (!btn) {
-        btn = document.createElement('button');
-        btn.id = 'floatingImageToggleBtn';
-        btn.className = 'btn btn-warning';
-        btn.style.position = 'fixed';
-        btn.style.bottom = '32px';
-        btn.style.right = '32px';
-        btn.style.zIndex = '99999';
-        btn.style.boxShadow = '0 2px 8px rgba(0, 209, 10, 0.32)';
-        document.body.appendChild(btn);
-    }
-    let visible = true;
-    btn.textContent = 'Ocultar imagen satelital';
-    btn.onclick = () => {
-        visible = !visible;
-        if (visible) {
-            showNDVIImageOnCesium(window.EOSDA_IMAGE_CACHE[cacheKey], bounds, mapInstance);
-            btn.textContent = 'Ocultar imagen satelital';
-        } else {
-            // Elimina la capa NDVI/NDMI en Leaflet
-            mapInstance.eachLayer(function (layer) {
-                if (layer.options && layer.options.className === 'ndvi-layer') {
-                    mapInstance.removeLayer(layer);
-                }
-            });
-            btn.textContent = 'Mostrar imagen satelital';
-        }
-    };
-    btn.style.display = 'block';
-}
-// Función para mostrar la imagen NDVI/NDMI en Leaflet sobre la parcela seleccionada
-function showNDVIImageOnLeaflet(imageBase64, bounds, mapInstance) {
-    // Elimina capas NDVI previas
-    mapInstance.eachLayer(function (layer) {
-        if (layer.options && layer.options.className === 'ndvi-layer') {
-            mapInstance.removeLayer(layer);
-        }
-    });
-    
-    // Crear URL para la imagen base64
-    const imageUrl = `data:image/png;base64,${imageBase64}`;
-    
-    // bounds: [west, south, east, north]
-    // Convertir a formato Leaflet [[south, west], [north, east]]
-    const leafletBounds = [[bounds[1], bounds[0]], [bounds[3], bounds[2]]];
-    
-    // Agregar imagen como overlay con clase identificadora
-    const imageOverlay = L.imageOverlay(imageUrl, leafletBounds, {
-        opacity: 0.7,
-        className: 'ndvi-layer'
-    }).addTo(mapInstance);
-    
-    console.log('[LEAFLET_NDVI] Imagen NDVI/NDMI superpuesta correctamente');
-    
-    return imageOverlay;
-}
-
-// Mantener función antigua para compatibilidad con código existente
-function showNDVIImageOnCesium(imageBase64, bounds, viewerOrMap) {
-    // Si es mapa Leaflet, redirigir a nueva función
-    if (viewerOrMap && viewerOrMap._layersMaxZoom !== undefined) {
-        return showNDVIImageOnLeaflet(imageBase64, bounds, viewerOrMap);
-    }
-    
-    // Si llegamos aquí con Cesium (no debería pasar), log de error
-    console.error('[MIGRATION_ERROR] Cesium no está disponible. Usar Leaflet.');
-}
-
-// Spinner overlay con loader CSS personalizado y mensaje
-function showSpinner(message = "Procesando...") {
-    let spinnerContainer = document.getElementById('eosdaSpinnerContainer');
-    if (!spinnerContainer) {
-        spinnerContainer = document.createElement('div');
-        spinnerContainer.id = 'eosdaSpinnerContainer';
-        spinnerContainer.style.position = 'fixed';
-        spinnerContainer.style.top = '0';
-        spinnerContainer.style.left = '0';
-        spinnerContainer.style.width = '100vw';
-        spinnerContainer.style.height = '100vh';
-        spinnerContainer.style.background = 'rgba(0,0,0,0.35)';
-        spinnerContainer.style.zIndex = '99999';
-        spinnerContainer.style.display = 'flex';
-        spinnerContainer.style.flexDirection = 'column';
-        spinnerContainer.style.alignItems = 'center';
-        spinnerContainer.style.justifyContent = 'center';
-        spinnerContainer.innerHTML = `
-            <style id="eosdaLoaderStyle">
-            .loader {
-                transform: rotateZ(45deg);
-                perspective: 1000px;
-                border-radius: 50%;
-                width: 120px;
-                height: 120px;
-                color: #43ea2e;
-                position: relative;
-                display: block;
-            }
-            .loader:before,
-            .loader:after {
-                content: '';
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: inherit;
-                height: inherit;
-                border-radius: 50%;
-                transform: rotateX(70deg);
-                animation: 1.2s spin linear infinite;
-            }
-            .loader:before {
-                color: #ff9800;
-            }
-            .loader:after {
-                color: #43ea2e;
-                transform: rotateY(70deg);
-                animation-delay: .5s;
-            }
-            @keyframes spin {
-                0%,100% { box-shadow: .4em 0px 0 0px currentcolor; }
-                12% { box-shadow: .4em .4em 0 0 currentcolor; }
-                25% { box-shadow: 0 .4em 0 0px currentcolor; }
-                37% { box-shadow: -.4em .4em 0 0currentcolor; }
-                50% { box-shadow: -.4em 0 0 0 currentcolor; }
-                62% { box-shadow: -.4em -.4em 0 0 currentcolor; }
-                75% { box-shadow: 0px -.4em 0 0 currentcolor; }
-                87% { box-shadow: .4em -.4em 0 0 currentcolor; }
-            }
-            </style>
-            <span class="loader"></span>
-            <p id="eosdaSpinnerMsg" style="margin-top:32px;font-size:2rem;color:#fff;text-shadow:0 1px 4px #333;">${message}</p>
-        `;
-        document.body.appendChild(spinnerContainer);
-    } else {
-        // Actualizar solo el mensaje
-        const msgElem = spinnerContainer.querySelector('#eosdaSpinnerMsg');
-        if (msgElem) msgElem.textContent = message;
-    }
-    spinnerContainer.style.display = 'flex';
-}
-
-// Función para ocultar el spinner
-function hideSpinner() {
-    const spinnerContainer = document.getElementById('eosdaSpinnerContainer');
-    if (spinnerContainer) {
-        spinnerContainer.style.display = 'none';
-    }
-}
-
-// Función wrapper para manejar botones durante procesamiento de imágenes
-window.procesarImagenEOSDA = async function(viewId, tipo, buttonElement = null) {
-    // Deshabilitar el botón específico y todos los botones de imágenes para evitar clics múltiples
-    const allImageButtons = document.querySelectorAll('button[onclick*="verImagenEscenaEOSDA"], button[onclick*="procesarImagenEOSDA"]');
-    const originalTexts = new Map();
-    
-    allImageButtons.forEach(btn => {
-        originalTexts.set(btn, btn.innerHTML);
-        btn.disabled = true;
-        if (btn.innerHTML.includes('Ver NDVI')) {
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
-        } else if (btn.innerHTML.includes('Ver NDMI')) {
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
-        }
-    });
-    
-    try {
-        // Llamar a la función principal
-        const result = await window.verImagenEscenaEOSDA(viewId, tipo);
-        return result;
-    } finally {
-        // Rehabilitar botones y restaurar textos originales
-        allImageButtons.forEach(btn => {
-            btn.disabled = false;
-            btn.innerHTML = originalTexts.get(btn);
-        });
     }
 };
 
