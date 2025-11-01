@@ -310,9 +310,24 @@ function initializeLeaflet() {
             'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             {
                 attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
-                maxZoom: 19
+                maxZoom: 19 // Permitir máximo zoom posible para Esri
             }
         ).addTo(map);
+
+        // Capa alternativa OpenStreetMap para zoom extremo
+        const osm = L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 21 // OSM soporta zoom muy alto
+            }
+        );
+
+        // Control de capas para alternar entre satélite y OSM
+        L.control.layers({
+            'Satélite Esri': esriSatellite,
+            'OpenStreetMap': osm
+        }).addTo(map);
 
         // Opcional: Agregar capa de etiquetas sobre el satélite para referencia
         const esriLabels = L.tileLayer(
