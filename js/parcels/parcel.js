@@ -310,7 +310,7 @@ function initializeLeaflet() {
             'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             {
                 attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
-                maxZoom: 19 // Permitir máximo zoom posible para Esri
+                maxZoom: 19
             }
         ).addTo(map);
 
