@@ -314,21 +314,6 @@ function initializeLeaflet() {
             }
         ).addTo(map);
 
-        // Capa alternativa OpenStreetMap para zoom extremo
-        const osm = L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 21 // OSM soporta zoom muy alto
-            }
-        );
-
-        // Control de capas para alternar entre satélite y OSM
-        L.control.layers({
-            'Satélite Esri': esriSatellite,
-            'OpenStreetMap': osm
-        }).addTo(map);
-
         // Opcional: Agregar capa de etiquetas sobre el satélite para referencia
         const esriLabels = L.tileLayer(
             'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
