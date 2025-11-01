@@ -133,8 +133,8 @@ function renderScenesTable(scenes) {
         }
     }
 
-    // Filtrar escenas por umbral de cobertura de nubes (≤50%)
-    const CLOUD_THRESHOLD = 50;
+    // Filtrar escenas por umbral de cobertura de nubes (≤90%)
+    const CLOUD_THRESHOLD = 90;
     const lowCloudScenes = uniqueScenes.filter(scene => {
         const cloud = scene.cloudCoverage ?? scene.cloud ?? scene.nubosidad ?? 0;
         return cloud <= CLOUD_THRESHOLD;
