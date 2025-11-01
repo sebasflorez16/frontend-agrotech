@@ -133,8 +133,8 @@ function renderScenesTable(scenes) {
         }
     }
 
-    // Filtrar escenas con alta cobertura de nubes (>70%)
-    const CLOUD_THRESHOLD = 70;
+    // Filtrar escenas por umbral de cobertura de nubes (≤50%)
+    const CLOUD_THRESHOLD = 50;
     const lowCloudScenes = uniqueScenes.filter(scene => {
         const cloud = scene.cloudCoverage ?? scene.cloud ?? scene.nubosidad ?? 0;
         return cloud <= CLOUD_THRESHOLD;
@@ -152,7 +152,7 @@ function renderScenesTable(scenes) {
             </div>`;
         } else {
             filterMessage = `<div class="alert alert-warning mb-3">
-                <i class="fas fa-exclamation-triangle"></i> Todas las escenas tienen alta cobertura de nubes. Mostrando las 5 mejores disponibles. Los resultados pueden ser menos precisos.
+                <i class="fas fa-exclamation-triangle"></i> No hay imágenes disponibles con menos de ${CLOUD_THRESHOLD}% de nubes. Mostrando las 5 mejores disponibles.
             </div>`;
         }
     }
@@ -1188,8 +1188,8 @@ async function showSceneSelectionTable(scenes) {
             }
         }
 
-        // Filtrar escenas con alta cobertura de nubes (>70%)
-        const CLOUD_THRESHOLD = 70;
+        // Filtrar escenas por umbral de cobertura de nubes (≤50%)
+        const CLOUD_THRESHOLD = 50;
         const lowCloudScenes = uniqueScenes.filter(scene => {
             const cloud = scene.cloudCoverage ?? scene.cloud ?? scene.nubosidad ?? 0;
             return cloud <= CLOUD_THRESHOLD;
@@ -1241,7 +1241,7 @@ async function showSceneSelectionTable(scenes) {
             } else {
                 filterMessage.style.backgroundColor = "#fff3cd";
                 filterMessage.style.color = "#856404";
-                filterMessage.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Todas las escenas tienen alta cobertura de nubes. Mostrando las 5 mejores disponibles. Los resultados pueden ser menos precisos.`;
+                filterMessage.innerHTML = `<i class="fas fa-exclamation-triangle"></i> No hay imágenes disponibles con menos de ${CLOUD_THRESHOLD}% de nubes. Mostrando las 5 mejores disponibles.`;
             }
             content.appendChild(filterMessage);
         }
