@@ -306,13 +306,29 @@ function initializeLeaflet() {
         });
 
         // Agregar la capa satelital Esri World Imagery
-        const esriSatellite = L.tileLayer(
+        const esriSat = L.tileLayer(
             'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             {
                 attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community',
-                maxZoom: 19
+                maxZoom: 17 // Limitar zoom para evitar "Map data not yet available"
             }
         ).addTo(map);
+
+        // Capa alternativa OpenStreetMap para zoom extremo
+        const osmLayer = L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19 // OSM tiene datos en niveles altos
+            }
+        );
+
+        // Control para alternar entre capas base
+        const baseMaps = {
+            "Satélite Esri": esriSat,
+            "OpenStreetMap": osmLayer
+        };
+        L.control.layers(baseMaps).addTo(map);
 
         // Opcional: Agregar capa de etiquetas sobre el satélite para referencia
         const esriLabels = L.tileLayer(
@@ -1226,9 +1242,9 @@ async function showSceneSelectionTable(scenes) {
             } else {
                 filterMessage.style.backgroundColor = "#fff3cd";
                 filterMessage.style.color = "#856404";
-                filterMessage.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Todas las escenas tienen alta cobertura de nubes. Mostrando las 5 mejores disponibles. Los resultados pueden ser menos precisos.`;
+                filterMessage.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Todas las escenas tienen alta cobertura de nubes. Mostrando las 5 mejores disponibles. Los resultados pueden ser menos precisos.`,
+                content.appendChild(filterMessage);
             }
-            content.appendChild(filterMessage);
         }
 
         // Tabla con botones NDVI y NDMI y porcentaje de nubosidad
