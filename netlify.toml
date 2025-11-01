@@ -23,11 +23,7 @@
   status = 200
   force = true
   [redirects.headers]
-<<<<<<< HEAD
-    X-Forwardedlisto-Proto = "https"
-=======
     X-Forwarded-Proto = "https"
->>>>>>> 8f4bae82a923d8886ea12eb24d47400678b24f5c
 
 # 2. Manejo de 404 - DEBE IR AL FINAL
 [[redirects]]
