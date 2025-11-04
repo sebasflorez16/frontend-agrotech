@@ -133,6 +133,19 @@ function renderScenesTable(scenes) {
         }
     }
 
+    // LOG DE DEPURACIÓN: Verificar qué escenas llegan y sus valores de nubosidad
+    console.log('[DEBUG_SCENES] uniqueScenes:', uniqueScenes);
+    uniqueScenes.forEach((scene, idx) => {
+        console.log(`[DEBUG_SCENE ${idx}]`, {
+            date: scene.date,
+            view_id: scene.view_id,
+            cloudCoverage: scene.cloudCoverage,
+            cloud: scene.cloud,
+            nubosidad: scene.nubosidad,
+            typeofCloud: typeof scene.cloud
+        });
+    });
+
     // Filtrar escenas por umbral de cobertura de nubes (≤90%)
     const CLOUD_THRESHOLD = 90;
     const lowCloudScenes = uniqueScenes.filter(scene => {
