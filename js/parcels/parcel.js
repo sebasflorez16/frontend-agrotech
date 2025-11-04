@@ -1163,7 +1163,7 @@ async function showSceneSelectionTable(scenes) {
         }
 
         // Filtrar escenas por umbral de cobertura de nubes (≤75%)
-        const CLOUD_THRESHOLD = 75;
+        const CLOUD_THRESHOLD = 100;
         const lowCloudScenes = uniqueScenes.filter(scene => {
             const cloud = scene.cloudCoverage ?? scene.cloud ?? scene.nubosidad ?? 0;
             return cloud <= CLOUD_THRESHOLD;
