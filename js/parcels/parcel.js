@@ -1162,8 +1162,8 @@ async function showSceneSelectionTable(scenes) {
             }
         }
 
-        // Filtrar escenas por umbral de cobertura de nubes (≤50%)
-        const CLOUD_THRESHOLD = 50;
+        // Filtrar escenas por umbral de cobertura de nubes (≤75%)
+        const CLOUD_THRESHOLD = 75;
         const lowCloudScenes = uniqueScenes.filter(scene => {
             const cloud = scene.cloudCoverage ?? scene.cloud ?? scene.nubosidad ?? 0;
             return cloud <= CLOUD_THRESHOLD;
@@ -1198,8 +1198,24 @@ async function showSceneSelectionTable(scenes) {
         // Título
         const title = document.createElement("h3");
         title.textContent = "Selecciona la escena satelital a visualizar";
-        title.style.marginBottom = "18px";
+        title.style.marginBottom = "12px";
         content.appendChild(title);
+
+        // Mensaje explicativo sobre nubosidad
+        const infoBox = document.createElement("div");
+        infoBox.style.marginBottom = "18px";
+        infoBox.style.padding = "10px 12px";
+        infoBox.style.borderRadius = "6px";
+        infoBox.style.backgroundColor = "#e7f3ff";
+        infoBox.style.border = "1px solid #b3d9ff";
+        infoBox.style.fontSize = "13px";
+        infoBox.style.lineHeight = "1.5";
+        infoBox.innerHTML = `
+            <strong>💡 Importante sobre la nubosidad:</strong><br>
+            Las nubes bloquean la vista del satélite y hacen que los análisis (NDVI, NDMI) sean inexactos.<br>
+            <strong>Recomendación:</strong> Selecciona escenas con <strong>menos del 30% de nubes</strong> para obtener datos precisos.
+        `;
+        content.appendChild(infoBox);
 
         // Mensaje informativo sobre filtrado - explicación clara para usuarios
         if (filteredCount > 0) {
@@ -1218,7 +1234,7 @@ async function showSceneSelectionTable(scenes) {
                     <div style="display:flex;align-items:flex-start;gap:10px;">
                         <i class="fas fa-info-circle" style="font-size:20px;margin-top:2px;"></i>
                         <div>
-                            <strong>Filtro aplicado:</strong> Se ocultaron ${filteredCount} imagen(es) porque tenían más del 50% del cielo cubierto por nubes.
+                            <strong>Filtro aplicado:</strong> Se ocultaron ${filteredCount} imagen(es) porque tenían más del 75% del cielo cubierto por nubes.
                             <br><small>Mostramos solo las imágenes con cielo más despejado para obtener análisis más precisos.</small>
                         </div>
                     </div>`;
@@ -1231,8 +1247,8 @@ async function showSceneSelectionTable(scenes) {
                         <i class="fas fa-exclamation-triangle" style="font-size:20px;margin-top:2px;"></i>
                         <div>
                             <strong>⚠️ Atención:</strong> No hay imágenes satelitales con cielo despejado en este período.
-                            <br>Todas las imágenes disponibles tienen más del 50% del cielo cubierto por nubes, lo que puede afectar la precisión del análisis.
-                            <br><small>💡 <strong>Recomendación:</strong> Intenta seleccionar otro rango de fechas con mejor clima o revisa las imágenes disponibles más abajo.</small>
+                            <br>Todas las imágenes disponibles tienen más del 75% del cielo cubierto por nubes, lo que <strong>afectará significativamente</strong> la precisión del análisis.
+                            <br><small>💡 <strong>Recomendación:</strong> Intenta seleccionar otro rango de fechas con mejor clima. Las escenas con más del 50% de nubes tienen datos poco confiables.</small>
                         </div>
                     </div>`;
             }
@@ -1256,19 +1272,29 @@ async function showSceneSelectionTable(scenes) {
             <tbody>
                 ${finalScenes.map((scene, idx) => {
                     let cloud = scene.cloudCoverage ?? scene.cloud ?? scene.nubosidad;
-                    let cloudText = (typeof cloud === 'number') ? cloud.toFixed(2) + ' %' : (cloud ? cloud + ' %' : '-');
+                    let cloudText = (typeof cloud === 'number') ? cloud.toFixed(1) : (cloud ? cloud : '-');
                     
-                    // Añadir indicador visual para alta nubosidad
+                    // Badge visual por nivel de nubosidad
                     let cloudBadge = '';
-                    if (typeof cloud === 'number' && cloud > CLOUD_THRESHOLD) {
-                        cloudBadge = ' <span class="badge badge-warning" style="background:#ffc107;color:#000;padding:2px 6px;border-radius:10px;font-size:10px;">Alta</span>';
+                    let rowStyle = '';
+                    if (typeof cloud === 'number') {
+                        if (cloud <= 30) {
+                            cloudBadge = ' <span class="badge" style="background:#28a745;color:#fff;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:600;">✓ Óptima</span>';
+                            rowStyle = 'background:#f0fff4;'; // Verde claro
+                        } else if (cloud <= 50) {
+                            cloudBadge = ' <span class="badge" style="background:#ffc107;color:#000;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:600;">⚠ Aceptable</span>';
+                            rowStyle = 'background:#fffbf0;'; // Amarillo claro
+                        } else {
+                            cloudBadge = ' <span class="badge" style="background:#dc3545;color:#fff;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:600;">✗ No recomendada</span>';
+                            rowStyle = 'background:#fff5f5;'; // Rojo claro
+                        }
                     }
                     
                     console.log('[SCENE_ROW]', { scene, viewId: scene.view_id, date: scene.date, idx });
                     return `
-                        <tr>
+                        <tr style="${rowStyle}">
                             <td style="padding:8px;border-bottom:1px solid #eee">${scene.date ? scene.date.split('T')[0] : '-'}</td>
-                            <td style="padding:8px;border-bottom:1px solid #eee">${cloudText}${cloudBadge}</td>
+                            <td style="padding:8px;border-bottom:1px solid #eee">${cloudText}%${cloudBadge}</td>
                             <td style="padding:8px;border-bottom:1px solid #eee">
                                 <button class="btn btn-sm btn-success" data-ndvi-idx="${idx}">Ver NDVI</button>
                             </td>
@@ -1529,6 +1555,10 @@ function hideSpinner() {
         spinnerContainer.style.display = 'none';
     }
 }
+
+// Exponer showSpinner y hideSpinner globalmente para usar en otros módulos
+window.showSpinner = showSpinner;
+window.hideSpinner = hideSpinner;
 
 // Función wrapper para manejar botones durante procesamiento de imágenes
 window.procesarImagenEOSDA = async function(viewId, tipo, buttonElement = null) {
