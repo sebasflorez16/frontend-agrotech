@@ -611,7 +611,7 @@ function renderMeteorologicalChart(data) {
                 },
                 title: {
                     display: true,
-                    text: 'Análisis Meteorológico Multi-Variable - Datos EOSDA Reales',
+                    text: 'Análisis Meteorológico Multi-Variable',
                     font: {
                         size: 16,
                         weight: 'bold'
