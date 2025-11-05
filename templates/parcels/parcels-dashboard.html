@@ -1440,7 +1440,10 @@
             });
         }
 
-        addDataLabelsToTable();
+        // Ejecutar solo después de que la tabla tenga datos
+        setTimeout(() => {
+            addDataLabelsToTable();
+        }, 1000);
 
         // ============================================
         // PAGINACIÓN MÓVIL - 2 CARDS POR PÁGINA
@@ -1449,7 +1452,10 @@
             if (window.innerWidth >= 768) return; // Solo móvil
 
             const table = document.getElementById('parcelTable');
-            if (!table) return;
+            if (!table) {
+                console.log('Tabla no encontrada, reintentando...');
+                return;
+            }
 
             const itemsPerPage = 2;
             let currentPage = 1;
@@ -1525,22 +1531,29 @@
                 subtree: true
             });
 
-            // Ejecutar inicialmente
-            setTimeout(updatePagination, 500);
+            // Ejecutar inicialmente con delay para esperar datos
+            setTimeout(() => {
+                updatePagination();
+            }, 1500);
         }
 
-        setupMobilePagination();
+        // Ejecutar paginación solo cuando la tabla tenga datos
+        setTimeout(() => {
+            setupMobilePagination();
+        }, 2000);
 
         // ============================================
         // OPTIMIZAR GRÁFICO METEOROLÓGICO PARA MÓVIL
         // Basado en mejores prácticas de visualización móvil
         // ============================================
-        if (window.innerWidth < 768) {
-            // Interceptar la creación del gráfico Chart.js
-            const originalChart = window.Chart;
-            if (originalChart) {
-                window.Chart = function(ctx, config) {
-                    if (config && config.type === 'line' && ctx.canvas && ctx.canvas.id === 'weatherChart') {
+        try {
+            if (window.innerWidth < 768) {
+                // Interceptar la creación del gráfico Chart.js
+                const originalChart = window.Chart;
+                if (originalChart) {
+                    window.Chart = function(ctx, config) {
+                        try {
+                            if (config && config.type === 'line' && ctx.canvas && ctx.canvas.id === 'weatherChart') {
                         // ===== OPTIMIZACIONES PROFESIONALES PARA MÓVIL =====
                         
                         // 1. Reducir datasets a solo 2-3 variables más importantes
@@ -1702,6 +1715,8 @@
                                 chartTitle.textContent = chartTitle.textContent.replace(/Datos EOSDA Reales/gi, '').replace(/-\s*$/,'').trim();
                             }
                         }, 100);
+                    } catch(e) {
+                        console.error('Error optimizando gráfico:', e);
                     }
                     return new originalChart(ctx, config);
                 };
@@ -1712,6 +1727,9 @@
                     window.Chart[key] = originalChart[key];
                 });
             }
+        }
+        } catch(e) {
+            console.error('Error en optimización de gráficos móvil:', e);
         }
     });
     </script>
