@@ -1405,13 +1405,21 @@
         // ============================================
         function addDataLabelsToTable() {
             const table = document.getElementById('parcelTable');
-            if (!table) return;
+            if (!table) {
+                console.log('[DATA-LABELS] Tabla no encontrada aún');
+                return;
+            }
 
             const headers = table.querySelectorAll('thead th');
+            if (!headers || headers.length === 0) {
+                console.log('[DATA-LABELS] Headers no encontrados aún');
+                return;
+            }
+            
             const headerTexts = Array.from(headers).map(h => h.textContent.trim());
 
-            // Observar cambios en la tabla
-            const observer = new MutationObserver(function() {
+            // Función para agregar labels a las filas existentes
+            function updateRowLabels() {
                 const rows = table.querySelectorAll('tbody tr');
                 rows.forEach(row => {
                     const cells = row.querySelectorAll('td');
@@ -1421,26 +1429,34 @@
                         }
                     });
                 });
-            });
+            }
 
-            observer.observe(table.querySelector('tbody'), {
-                childList: true,
-                subtree: true
-            });
+            // Observar cambios en la tabla solo si tbody existe
+            const tbody = table.querySelector('tbody');
+            if (tbody) {
+                const observer = new MutationObserver(function() {
+                    updateRowLabels();
+                });
+
+                observer.observe(tbody, {
+                    childList: true,
+                    subtree: true
+                });
+            }
 
             // Ejecutar una vez al cargar
-            const rows = table.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                cells.forEach((cell, index) => {
-                    if (headerTexts[index]) {
-                        cell.setAttribute('data-label', headerTexts[index]);
-                    }
-                });
-            });
+            updateRowLabels();
+            console.log('[DATA-LABELS] Labels aplicados correctamente');
         }
 
-        addDataLabelsToTable();
+        // Ejecutar con delay para permitir que la tabla cargue
+        setTimeout(() => {
+            try {
+                addDataLabelsToTable();
+            } catch(e) {
+                console.error('[DATA-LABELS] Error:', e);
+            }
+        }, 1000);
     });
     </script>
 
