@@ -917,11 +917,59 @@
     }
     
     /* ============================================
+       PAGINACIÓN MÓVIL PARA TABLA
+       ============================================ */
+    .mobile-pagination {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        margin-top: 20px !important;
+        padding: 16px !important;
+        background: white !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    }
+    
+    .mobile-pagination button {
+        background: linear-gradient(135deg, var(--agrotech-bright-green), #4CAF50) !important;
+        color: white !important;
+        border: none !important;
+        padding: 10px 20px !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .mobile-pagination button:disabled {
+        background: linear-gradient(135deg, #CCCCCC, #AAAAAA) !important;
+        cursor: not-allowed !important;
+        opacity: 0.6 !important;
+    }
+    
+    .mobile-pagination button:active:not(:disabled) {
+        transform: scale(0.95) !important;
+    }
+    
+    .mobile-pagination-info {
+        font-size: 0.95rem !important;
+        font-weight: 600 !important;
+        color: var(--agrotech-dark-green) !important;
+    }
+    
+    /* Ocultar filas paginadas */
+    #parcelTable tbody tr.hidden-mobile {
+        display: none !important;
+    }
+    
+    /* ============================================
        GRÁFICO METEOROLÓGICO - OPTIMIZADO PARA MÓVIL
        ============================================ */
     #weatherChart {
-        max-height: 300px !important;
-        height: 300px !important;
+        max-height: 350px !important;
+        height: 350px !important;
+        width: 100% !important;
     }
     
     /* Contenedor del gráfico */
@@ -938,6 +986,14 @@
         font-weight: 700 !important;
         color: var(--agrotech-dark-green) !important;
         margin-bottom: 16px !important;
+    }
+    
+    /* Ocultar título "Análisis Meteorológico..." si existe */
+    h4:contains("EOSDA"),
+    h5:contains("EOSDA"),
+    span:contains("EOSDA"),
+    .eosda-reference {
+        display: none !important;
     }
 }
 
