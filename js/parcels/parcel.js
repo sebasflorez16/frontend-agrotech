@@ -1162,13 +1162,8 @@ async function showSceneSelectionTable(scenes) {
             }
         }
 
-<<<<<<< HEAD
-        // Filtrar escenas por umbral de cobertura de nubes (≤50%)
-        const CLOUD_THRESHOLD = 50;
-=======
         // Filtrar escenas por umbral de cobertura de nubes (≤75%)
-        const CLOUD_THRESHOLD = 100;
->>>>>>> c62037f (probando las rutas de parcelas)
+        const CLOUD_THRESHOLD = 75;
         const lowCloudScenes = uniqueScenes.filter(scene => {
             const cloud = scene.cloudCoverage ?? scene.cloud ?? scene.nubosidad ?? 0;
             return cloud <= CLOUD_THRESHOLD;
@@ -1206,8 +1201,6 @@ async function showSceneSelectionTable(scenes) {
         title.style.marginBottom = "12px";
         content.appendChild(title);
 
-<<<<<<< HEAD
-=======
         // Mensaje explicativo sobre nubosidad
         const infoBox = document.createElement("div");
         infoBox.style.marginBottom = "18px";
@@ -1224,7 +1217,6 @@ async function showSceneSelectionTable(scenes) {
         `;
         content.appendChild(infoBox);
 
->>>>>>> c62037f (probando las rutas de parcelas)
         // Mensaje informativo sobre filtrado - explicación clara para usuarios
         if (filteredCount > 0) {
             const filterMessage = document.createElement("div");
@@ -1242,11 +1234,7 @@ async function showSceneSelectionTable(scenes) {
                     <div style="display:flex;align-items:flex-start;gap:10px;">
                         <i class="fas fa-info-circle" style="font-size:20px;margin-top:2px;"></i>
                         <div>
-<<<<<<< HEAD
-                            <strong>Filtro aplicado:</strong> Se ocultaron ${filteredCount} imagen(es) porque tenían más del 50% del cielo cubierto por nubes.
-=======
                             <strong>Filtro aplicado:</strong> Se ocultaron ${filteredCount} imagen(es) porque tenían más del 75% del cielo cubierto por nubes.
->>>>>>> c62037f (probando las rutas de parcelas)
                             <br><small>Mostramos solo las imágenes con cielo más despejado para obtener análisis más precisos.</small>
                         </div>
                     </div>`;
@@ -1259,13 +1247,8 @@ async function showSceneSelectionTable(scenes) {
                         <i class="fas fa-exclamation-triangle" style="font-size:20px;margin-top:2px;"></i>
                         <div>
                             <strong>⚠️ Atención:</strong> No hay imágenes satelitales con cielo despejado en este período.
-<<<<<<< HEAD
-                            <br>Todas las imágenes disponibles tienen más del 50% del cielo cubierto por nubes, lo que puede afectar la precisión del análisis.
-                            <br><small>💡 <strong>Recomendación:</strong> Intenta seleccionar otro rango de fechas con mejor clima o revisa las imágenes disponibles más abajo.</small>
-=======
                             <br>Todas las imágenes disponibles tienen más del 75% del cielo cubierto por nubes, lo que <strong>afectará significativamente</strong> la precisión del análisis.
                             <br><small>💡 <strong>Recomendación:</strong> Intenta seleccionar otro rango de fechas con mejor clima. Las escenas con más del 50% de nubes tienen datos poco confiables.</small>
->>>>>>> c62037f (probando las rutas de parcelas)
                         </div>
                     </div>`;
             }
