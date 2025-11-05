@@ -1405,21 +1405,13 @@
         // ============================================
         function addDataLabelsToTable() {
             const table = document.getElementById('parcelTable');
-            if (!table) {
-                console.log('[DATA-LABELS] Tabla no encontrada aún');
-                return;
-            }
+            if (!table) return;
 
             const headers = table.querySelectorAll('thead th');
-            if (!headers || headers.length === 0) {
-                console.log('[DATA-LABELS] Headers no encontrados aún');
-                return;
-            }
-            
             const headerTexts = Array.from(headers).map(h => h.textContent.trim());
 
-            // Función para agregar labels a las filas existentes
-            function updateRowLabels() {
+            // Observar cambios en la tabla
+            const observer = new MutationObserver(function() {
                 const rows = table.querySelectorAll('tbody tr');
                 rows.forEach(row => {
                     const cells = row.querySelectorAll('td');
@@ -1429,34 +1421,298 @@
                         }
                     });
                 });
-            }
+            });
 
-            // Observar cambios en la tabla solo si tbody existe
-            const tbody = table.querySelector('tbody');
-            if (tbody) {
-                const observer = new MutationObserver(function() {
-                    updateRowLabels();
-                });
-
-                observer.observe(tbody, {
-                    childList: true,
-                    subtree: true
-                });
-            }
+            observer.observe(table.querySelector('tbody'), {
+                childList: true,
+                subtree: true
+            });
 
             // Ejecutar una vez al cargar
-            updateRowLabels();
-            console.log('[DATA-LABELS] Labels aplicados correctamente');
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                cells.forEach((cell, index) => {
+                    if (headerTexts[index]) {
+                        cell.setAttribute('data-label', headerTexts[index]);
+                    }
+                });
+            });
         }
 
-        // Ejecutar con delay para permitir que la tabla cargue
-        setTimeout(() => {
-            try {
-                addDataLabelsToTable();
-            } catch(e) {
-                console.error('[DATA-LABELS] Error:', e);
+        addDataLabelsToTable();
+
+        // ============================================
+        // PAGINACIÓN MÓVIL - 2 CARDS POR PÁGINA
+        // ============================================
+        function setupMobilePagination() {
+            if (window.innerWidth >= 768) return; // Solo móvil
+
+            const table = document.getElementById('parcelTable');
+            if (!table) return;
+
+            const itemsPerPage = 2;
+            let currentPage = 1;
+
+            function updatePagination() {
+                const tbody = table.querySelector('tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => 
+                    !row.id.includes('no-parcels') && row.cells.length > 1
+                );
+
+                const totalPages = Math.ceil(rows.length / itemsPerPage);
+                if (totalPages <= 1) {
+                    // Ocultar paginación si hay 2 o menos cards
+                    const existingPag = document.querySelector('.mobile-pagination');
+                    if (existingPag) existingPag.remove();
+                    rows.forEach(row => row.classList.remove('hidden-mobile'));
+                    return;
+                }
+
+                // Ocultar/mostrar filas según página actual
+                rows.forEach((row, index) => {
+                    const startIndex = (currentPage - 1) * itemsPerPage;
+                    const endIndex = startIndex + itemsPerPage;
+                    
+                    if (index >= startIndex && index < endIndex) {
+                        row.classList.remove('hidden-mobile');
+                    } else {
+                        row.classList.add('hidden-mobile');
+                    }
+                });
+
+                // Crear o actualizar controles de paginación
+                let paginationDiv = document.querySelector('.mobile-pagination');
+                if (!paginationDiv) {
+                    paginationDiv = document.createElement('div');
+                    paginationDiv.className = 'mobile-pagination';
+                    table.parentElement.appendChild(paginationDiv);
+                }
+
+                paginationDiv.innerHTML = `
+                    <button id="prevPage" ${currentPage === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <span class="mobile-pagination-info">${currentPage} / ${totalPages}</span>
+                    <button id="nextPage" ${currentPage === totalPages ? 'disabled' : ''}>
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
+                `;
+
+                // Event listeners
+                document.getElementById('prevPage')?.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        updatePagination();
+                    }
+                });
+
+                document.getElementById('nextPage')?.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        updatePagination();
+                    }
+                });
             }
-        }, 1000);
+
+            // Observar cambios en la tabla
+            const observer = new MutationObserver(() => {
+                setTimeout(updatePagination, 100);
+            });
+
+            observer.observe(table.querySelector('tbody'), {
+                childList: true,
+                subtree: true
+            });
+
+            // Ejecutar inicialmente
+            setTimeout(updatePagination, 500);
+        }
+
+        setupMobilePagination();
+
+        // ============================================
+        // OPTIMIZAR GRÁFICO METEOROLÓGICO PARA MÓVIL
+        // Basado en mejores prácticas de visualización móvil
+        // ============================================
+        if (window.innerWidth < 768) {
+            // Interceptar la creación del gráfico Chart.js
+            const originalChart = window.Chart;
+            if (originalChart) {
+                window.Chart = function(ctx, config) {
+                    if (config && config.type === 'line' && ctx.canvas && ctx.canvas.id === 'weatherChart') {
+                        // ===== OPTIMIZACIONES PROFESIONALES PARA MÓVIL =====
+                        
+                        // 1. Reducir datasets a solo 2-3 variables más importantes
+                        if (config.data && config.data.datasets && config.data.datasets.length > 3) {
+                            // Mantener solo Temperatura, Precipitación y opcionalmente Viento
+                            config.data.datasets = config.data.datasets.slice(0, 3);
+                        }
+                        
+                        // 2. Sampling de datos: mostrar solo cada N puntos
+                        if (config.data && config.data.labels && config.data.labels.length > 30) {
+                            const sampleRate = Math.ceil(config.data.labels.length / 30); // Máximo 30 puntos
+                            config.data.labels = config.data.labels.filter((_, index) => index % sampleRate === 0);
+                            config.data.datasets.forEach(dataset => {
+                                if (dataset.data) {
+                                    dataset.data = dataset.data.filter((_, index) => index % sampleRate === 0);
+                                }
+                            });
+                        }
+                        
+                        if (config.options) {
+                            // 3. Configuración de elementos visuales
+                            config.options.elements = config.options.elements || {};
+                            config.options.elements.point = {
+                                radius: 0, // Ocultar puntos
+                                hoverRadius: 8, // Mostrar grande al tocar
+                                hitRadius: 15, // Área de toque muy amplia
+                                borderWidth: 2
+                            };
+                            
+                            config.options.elements.line = {
+                                borderWidth: 3, // Líneas gruesas y visibles
+                                tension: 0.4, // Curvas suaves
+                                borderCapStyle: 'round',
+                                borderJoinStyle: 'round'
+                            };
+                            
+                            // 4. Escalas optimizadas
+                            config.options.scales = config.options.scales || {};
+                            
+                            // Eje X - Fechas
+                            config.options.scales.x = {
+                                display: true,
+                                grid: {
+                                    display: false // Ocultar líneas verticales
+                                },
+                                ticks: {
+                                    maxTicksLimit: 6, // Máximo 6 etiquetas
+                                    maxRotation: 45,
+                                    minRotation: 45,
+                                    font: {
+                                        size: 10,
+                                        family: 'Poppins, sans-serif'
+                                    },
+                                    color: '#7F8C8D',
+                                    autoSkip: true,
+                                    autoSkipPadding: 10
+                                }
+                            };
+                            
+                            // Eje Y - Valores
+                            config.options.scales.y = {
+                                display: true,
+                                position: 'left',
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)', // Líneas muy sutiles
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    maxTicksLimit: 5,
+                                    font: {
+                                        size: 10,
+                                        family: 'Poppins, sans-serif'
+                                    },
+                                    color: '#7F8C8D',
+                                    padding: 8
+                                }
+                            };
+                            
+                            // 5. Plugins optimizados
+                            config.options.plugins = config.options.plugins || {};
+                            
+                            // Tooltip mejorado para móvil
+                            config.options.plugins.tooltip = {
+                                enabled: true,
+                                mode: 'index',
+                                intersect: false,
+                                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                                titleColor: '#007A20',
+                                bodyColor: '#2C3E50',
+                                borderColor: '#E8ECEF',
+                                borderWidth: 1,
+                                padding: 12,
+                                titleFont: {
+                                    size: 13,
+                                    weight: 'bold',
+                                    family: 'Poppins, sans-serif'
+                                },
+                                bodyFont: {
+                                    size: 12,
+                                    family: 'Poppins, sans-serif'
+                                },
+                                displayColors: true,
+                                boxWidth: 12,
+                                boxHeight: 12,
+                                usePointStyle: true
+                            };
+                            
+                            // Leyenda compacta
+                            config.options.plugins.legend = {
+                                display: true,
+                                position: 'top',
+                                align: 'start',
+                                labels: {
+                                    font: {
+                                        size: 11,
+                                        family: 'Poppins, sans-serif'
+                                    },
+                                    boxWidth: 25,
+                                    boxHeight: 3,
+                                    padding: 10,
+                                    usePointStyle: false,
+                                    color: '#2C3E50'
+                                }
+                            };
+                            
+                            // 6. Interacción táctil optimizada
+                            config.options.interaction = {
+                                mode: 'index',
+                                intersect: false,
+                                axis: 'x'
+                            };
+                            
+                            // 7. Responsive y maintainAspectRatio
+                            config.options.responsive = true;
+                            config.options.maintainAspectRatio = true;
+                            config.options.aspectRatio = 1.3; // Ratio óptimo para móvil
+                            
+                            // 8. Animaciones suaves
+                            config.options.animation = {
+                                duration: 750,
+                                easing: 'easeInOutQuart'
+                            };
+                            
+                            // 9. Layout con padding
+                            config.options.layout = {
+                                padding: {
+                                    top: 10,
+                                    right: 10,
+                                    bottom: 10,
+                                    left: 10
+                                }
+                            };
+                        }
+                        
+                        // 10. Ocultar texto "Datos EOSDA Reales"
+                        setTimeout(() => {
+                            const chartTitle = document.querySelector('h4, h5, h3');
+                            if (chartTitle && chartTitle.textContent.includes('EOSDA')) {
+                                chartTitle.textContent = chartTitle.textContent.replace(/Datos EOSDA Reales/gi, '').replace(/-\s*$/,'').trim();
+                            }
+                        }, 100);
+                    }
+                    return new originalChart(ctx, config);
+                };
+                
+                // Copiar propiedades estáticas
+                Object.setPrototypeOf(window.Chart, originalChart);
+                Object.keys(originalChart).forEach(key => {
+                    window.Chart[key] = originalChart[key];
+                });
+            }
+        }
     });
     </script>
 
