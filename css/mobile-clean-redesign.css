@@ -819,5 +819,126 @@
     #mobile-sidebar .menu li a.active i {
         color: var(--agrotech-dark-green) !important;
     }
+    
+    /* ============================================
+       TABLA DE PARCELAS - DISEÑO MÓVIL MEJORADO
+       ============================================ */
+    /* Tabla compacta tipo cards en móvil */
+    #parcelTable {
+        display: block !important;
+        min-width: 100% !important;
+        border: none !important;
+    }
+    
+    #parcelTable thead {
+        display: none !important; /* Ocultar encabezados en móvil */
+    }
+    
+    #parcelTable tbody {
+        display: block !important;
+    }
+    
+    #parcelTable tr {
+        display: block !important;
+        background: white !important;
+        border-radius: 16px !important;
+        padding: 16px !important;
+        margin-bottom: 16px !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+        border: 1px solid var(--border-light) !important;
+        position: relative !important;
+    }
+    
+    #parcelTable td {
+        display: block !important;
+        text-align: left !important;
+        padding: 8px 0 !important;
+        border: none !important;
+        position: relative !important;
+        padding-left: 50% !important;
+    }
+    
+    #parcelTable td::before {
+        content: attr(data-label);
+        position: absolute !important;
+        left: 0 !important;
+        width: 45% !important;
+        padding-right: 10px !important;
+        font-weight: 700 !important;
+        color: var(--agrotech-dark-green) !important;
+        font-size: 0.85rem !important;
+    }
+    
+    /* Botones de acciones en cards */
+    #parcelTable td:last-child {
+        padding-left: 0 !important;
+        display: flex !important;
+        gap: 8px !important;
+        margin-top: 12px !important;
+        padding-top: 12px !important;
+        border-top: 1px solid var(--border-light) !important;
+    }
+    
+    #parcelTable td:last-child::before {
+        display: none !important;
+    }
+    
+    #parcelTable button,
+    #parcelTable .btn {
+        flex: 1 !important;
+        font-size: 0.85rem !important;
+        padding: 10px 12px !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+    }
+    
+    #parcelTable .btn-info {
+        background: linear-gradient(135deg, #00BCD4, #0097A7) !important;
+        border: none !important;
+        color: white !important;
+    }
+    
+    #parcelTable .btn-success {
+        background: linear-gradient(135deg, var(--agrotech-bright-green), #4CAF50) !important;
+        border: none !important;
+        color: white !important;
+    }
+    
+    #parcelTable .btn-danger {
+        background: linear-gradient(135deg, #E85C2B, #D84315) !important;
+        border: none !important;
+        color: white !important;
+    }
+    
+    #parcelTableContainer {
+        padding: 16px !important;
+        margin: 20px auto !important;
+        max-width: 100% !important;
+    }
+    
+    /* ============================================
+       GRÁFICO METEOROLÓGICO - OPTIMIZADO PARA MÓVIL
+       ============================================ */
+    #weatherChart {
+        max-height: 300px !important;
+        height: 300px !important;
+    }
+    
+    /* Contenedor del gráfico */
+    #weatherDashboard {
+        padding: 20px 12px !important;
+        background: white !important;
+        border-radius: 16px !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+        margin: 20px 12px !important;
+    }
+    
+    #weatherLocation {
+        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+        color: var(--agrotech-dark-green) !important;
+        margin-bottom: 16px !important;
+    }
 }
+
 
