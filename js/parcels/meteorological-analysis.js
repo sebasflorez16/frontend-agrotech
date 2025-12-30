@@ -179,9 +179,9 @@ function loadMeteorologicalAnalysisWithRefresh(parcelId) {
     
     showMeteorologicalLoading(true);
     
-    // Construir URL - usar siempre window.location.origin para producción
-    const baseUrl = window.location.origin;
-    const endpoint = `${baseUrl}/api/parcels/parcel/${parcelId}/ndvi-weather-comparison/?refresh=${Date.now()}`;
+    // Usar rutas relativas para aprovechar los redirects de Netlify
+    // Netlify redirige /api/* → backend preservando el tenant (django-tenants)
+    const endpoint = `/api/parcels/parcel/${parcelId}/ndvi-weather-comparison/?refresh=${Date.now()}`;
     
     console.log(`[METEOROLOGICAL] Haciendo petición de actualización a: ${endpoint}`);
     
@@ -192,23 +192,38 @@ function loadMeteorologicalAnalysisWithRefresh(parcelId) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
+    .then(async response => {
+        console.log('[METEOROLOGICAL] 📡 Respuesta recibida:', {
+            status: response.status,
+            statusText: response.statusText,
+            contentType: response.headers.get('content-type'),
+            url: response.url
+        });
+        
+        // Leer el texto de la respuesta UNA SOLA VEZ
+        const text = await response.text();
+        
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            console.error('[METEOROLOGICAL] ❌ Respuesta HTTP no OK:', text.substring(0, 500));
+            throw new Error(`HTTP ${response.status}: ${response.statusText}\nRespuesta recibida:\n${text.substring(0, 500)}`);
         }
-        return response.json();
+        
+        // Intenta parsear como JSON
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error('[METEOROLOGICAL] ❌ Respuesta no es JSON:', text.substring(0, 500));
+            throw new Error(`Respuesta no es JSON. Recibido:\n${text.substring(0, 500)}`);
+        }
     })
     .then(data => {
         console.log('[METEOROLOGICAL] ✅ Datos actualizados recibidos del backend:', data);
-        
         // Procesar datos reales de EOSDA con indicador de actualización
         processRealEOSDADataWithRefresh(data);
-        
     })
     .catch(error => {
         console.error('[METEOROLOGICAL] Error actualizando análisis:', error);
         showMeteorologicalError(error.message);
-        
         if (typeof showToast === 'function') {
             showToast('❌ Error actualizando datos meteorológicos', 'error');
         }
@@ -243,9 +258,9 @@ function loadMeteorologicalAnalysisInternal(parcelId) {
     
     showMeteorologicalLoading(true);
     
-    // Usar siempre window.location.origin para producción
-    const baseUrl = window.location.origin;
-    const endpoint = `${baseUrl}/api/parcels/parcel/${parcelId}/ndvi-weather-comparison/`;
+    // Usar rutas relativas para aprovechar los redirects de Netlify
+    // Netlify redirige /api/* → backend preservando el tenant (django-tenants)
+    const endpoint = `/api/parcels/parcel/${parcelId}/ndvi-weather-comparison/`;
     
     console.log(`[METEOROLOGICAL] Haciendo petición a: ${endpoint}`);
     
@@ -256,11 +271,29 @@ function loadMeteorologicalAnalysisInternal(parcelId) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
+    .then(async response => {
+        console.log('[METEOROLOGICAL] 📡 Respuesta recibida (ndvi-weather):', {
+            status: response.status,
+            statusText: response.statusText,
+            contentType: response.headers.get('content-type'),
+            url: response.url
+        });
+        
+        // Leer el texto de la respuesta UNA SOLA VEZ
+        const text = await response.text();
+        
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            console.error('[METEOROLOGICAL] ❌ Respuesta HTTP no OK:', text.substring(0, 500));
+            throw new Error(`HTTP ${response.status}: ${response.statusText}\nRespuesta recibida:\n${text.substring(0, 500)}`);
         }
-        return response.json();
+        
+        // Intenta parsear como JSON
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error('[METEOROLOGICAL] ❌ Respuesta no es JSON:', text.substring(0, 500));
+            throw new Error(`Respuesta no es JSON. Recibido:\n${text.substring(0, 500)}`);
+        }
     })
     .then(data => {
         console.log('[METEOROLOGICAL] Datos meteorológicos recibidos:', data);
@@ -578,7 +611,7 @@ function renderMeteorologicalChart(data) {
                 },
                 title: {
                     display: true,
-                    text: 'Análisis Meteorológico Multi-Variable - Datos EOSDA Reales',
+                    text: 'Análisis Meteorológico Multi-Variable',
                     font: {
                         size: 16,
                         weight: 'bold'
@@ -709,10 +742,9 @@ function loadWeatherForecast(parcelId) {
     
     showMeteorologicalLoading(true);
     
-    // Usar siempre window.location.origin para producción
-    const baseUrl = window.location.origin;
-    // Usar la ruta directa para evitar conflictos de routing
-    const endpoint = `${baseUrl}/api/parcels/get-weather-forecast/${parcelId}/`;
+    // Usar rutas relativas para aprovechar los redirects de Netlify
+    // Netlify redirige /api/* → backend preservando el tenant (django-tenants)
+    const endpoint = `/api/parcels/get-weather-forecast/${parcelId}/`;
     
     console.log(`[METEOROLOGICAL] Haciendo petición al pronóstico (ruta directa): ${endpoint}`);
     
@@ -723,11 +755,29 @@ function loadWeatherForecast(parcelId) {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
+    .then(async response => {
+        console.log('[METEOROLOGICAL] 📡 Respuesta de pronóstico recibida:', {
+            status: response.status,
+            statusText: response.statusText,
+            contentType: response.headers.get('content-type'),
+            url: response.url
+        });
+        
+        // Leer el texto de la respuesta UNA SOLA VEZ
+        const text = await response.text();
+        
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            console.error('[METEOROLOGICAL] ❌ Respuesta HTTP no OK:', text.substring(0, 500));
+            throw new Error(`HTTP ${response.status}: ${response.statusText}\nRespuesta recibida:\n${text.substring(0, 500)}`);
         }
-        return response.json();
+        
+        // Intenta parsear como JSON
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.error('[METEOROLOGICAL] ❌ Respuesta no es JSON:', text.substring(0, 500));
+            throw new Error(`Respuesta no es JSON. Recibido:\n${text.substring(0, 500)}`);
+        }
     })
     .then(data => {
         console.log('[METEOROLOGICAL] Datos del pronóstico recibidos:', data);

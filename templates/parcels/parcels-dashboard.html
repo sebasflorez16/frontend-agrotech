@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Content Security Policy permisiva para Cesium y WebAssembly -->
+    <!-- Content Security Policy permisiva para Leaflet y recursos externos -->
     <meta http-equiv="Content-Security-Policy" 
           content="default-src 'self' 'unsafe-eval' 'unsafe-inline' https: data: blob:; 
                    script-src 'self' 'unsafe-eval' 'unsafe-inline' https: data: blob:; 
@@ -13,19 +13,44 @@
                    worker-src 'self' 'unsafe-eval' 'unsafe-inline' https: data: blob:; 
                    child-src 'self' 'unsafe-eval' 'unsafe-inline' https: data: blob:;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa 3D Cesium - AgroTech</title>
-    <!-- Estilos de Cesium -->
+    <title>Mapa Satelital - AgroTech</title>
     
-    <link href="https://cesium.com/downloads/cesiumjs/releases/1.118/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-    <script src="https://cesium.com/downloads/cesiumjs/releases/1.118/Build/Cesium/Cesium.js"></script>
+    <!-- Leaflet CSS y JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- Leaflet.Draw para herramientas de dibujo -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    
+    <!-- Leaflet Geocoder (Control de búsqueda) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    
+    <!-- Leaflet Fullscreen -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@latest/Control.FullScreen.css" />
+    <script src="https://unpkg.com/leaflet.fullscreen@latest/Control.FullScreen.js"></script>
+    
+    <!-- Bootstrap y otros estilos -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../../css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="../../css/app.min.css" rel="stylesheet" type="text/css" />
     <link href="../../css/employees.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Diseño Móvil Premium UX/UI - Agrotech -->
+    <link href="../../css/mobile-clean-redesign.css" rel="stylesheet" type="text/css" />
+    
     <!-- Font Awesome for Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Tabler Icons for Sidebar -->
-    <link href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/tabler-sprite.svg" rel="preload" as="image">
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/tabler-sprite.svg" as="image">
     <link href="https://unpkg.com/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
@@ -84,6 +109,95 @@
         @media (min-width: 992px) {
             .modal-lg {
                 max-width: 800px;
+            }
+        }
+
+        /* ============================================
+           ESTILOS MÓVIL - TOPBAR Y SIDEBAR
+           Solo visible en móvil < 768px
+           ============================================ */
+        @media (max-width: 767px) {
+            /* Topbar móvil claro */
+            .topbar {
+                display: flex !important;
+                align-items: center;
+                justify-content: space-between;
+                padding: 12px 16px;
+                background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFB 100%);
+                border-bottom: 1px solid #E8ECEF;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                height: 60px;
+            }
+
+            .menu-toggle {
+                background: transparent;
+                border: none;
+                color: #2C3E50;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 8px 12px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .menu-toggle:hover {
+                background: rgba(0, 122, 32, 0.1);
+            }
+
+            .topbar-title {
+                flex: 1;
+                text-align: center;
+                font-weight: 600;
+                color: #007A20;
+            }
+
+            .topbar-actions {
+                display: flex;
+                gap: 8px;
+            }
+
+            /* Ocultar topbar y sidebar de desktop en móvil */
+            #topbar-container,
+            #left-sidebar {
+                display: none !important;
+            }
+
+            /* Ajustar contenido principal */
+            #main-content {
+                padding-top: 70px !important;
+            }
+
+            /* Sidebar overlay */
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 9998;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+            }
+
+            .sidebar-overlay.show {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        /* Desktop - ocultar elementos móviles */
+        @media (min-width: 768px) {
+            .topbar,
+            #mobile-sidebar,
+            .sidebar-overlay {
+                display: none !important;
             }
         }
     </style>
@@ -162,6 +276,41 @@
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             text-align: center;
+            transition: all 0.3s ease;
+        }
+        @media (max-width: 767.98px) {
+            #button-container {
+                position: static;
+                width: 95vw;
+                max-width: 98vw;
+                margin: 0 auto 18px auto;
+                top: unset;
+                left: unset;
+                transform: none;
+                background: rgba(255,255,255,0.95);
+                border-radius: 18px;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+                padding: 18px 8px 14px 8px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #button-container h3 {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+            .custom-button {
+                width: 90vw !important;
+                max-width: 98vw;
+                font-size: 1.1rem;
+                margin: 8px 0;
+                padding: 14px 0;
+                border-radius: 10px;
+            }
+            #cancel-button {
+                margin-top: 6px;
+            }
         }
         .custom-button {
             display: block;
@@ -222,6 +371,41 @@
     </style>
 </head>
 <body>  
+    <!-- Topbar móvil (solo visible en móvil < 768px) -->
+    <div class="topbar" style="display: none;">
+        <button class="menu-toggle button-menu-mobile" aria-label="Abrir menú" onclick="toggleMobileSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="topbar-title" style="font-size: 1.1rem; font-weight: 600; color: #007A20;">Parcelas - Agrotech</div>
+        <div class="topbar-actions">
+            <button class="topbar-icon" aria-label="Notificaciones" style="background:none;border:none;color:#2C3E50;">
+                <i class="fas fa-bell"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sidebar móvil (solo visible en móvil < 768px) -->
+    <div id="mobile-sidebar" class="mobile-sidebar">
+        <div class="brand" style="padding: 32px 0 18px 0; text-align: center; background: linear-gradient(135deg, #FFFFFF, rgba(232, 245, 233, 0.4)); border-bottom: 1px solid #E8ECEF;">
+            <a href="#" class="logo">
+                <span>
+                    <img src="../../images/agrotech solo negro.png" alt="Agrotech" class="logo-sm" style="max-width: 80px; margin: 0 auto; display: block;">
+                </span>
+            </a>
+        </div>
+        <ul class="menu" style="padding: 20px 0; margin: 0; list-style: none;">
+            <li><a href="../vertical_base.html" style="display: flex; align-items: center; gap: 10px; color: #2C3E50; padding: 12px 22px; border-radius: 7px; transition: all 0.3s; font-size: 15px;"><i class="ti ti-home" style="font-size: 1.2em; color: #35B835;"></i> Dashboard</a></li>
+            <li><a href="../employees/RRHH-dashboard.html" style="display: flex; align-items: center; gap: 10px; color: #2C3E50; padding: 12px 22px; border-radius: 7px; transition: all 0.3s; font-size: 15px;"><i class="ti ti-user" style="font-size: 1.2em; color: #35B835;"></i> Recursos Humanos</a></li>
+            <li><a href="../inventory/inventario-dashboard.html" style="display: flex; align-items: center; gap: 10px; color: #2C3E50; padding: 12px 22px; border-radius: 7px; transition: all 0.3s; font-size: 15px;"><i class="ti ti-box" style="font-size: 1.2em; color: #35B835;"></i> Inventario</a></li>
+            <li><a href="../configuration/configuracion.html" style="display: flex; align-items: center; gap: 10px; color: #2C3E50; padding: 12px 22px; border-radius: 7px; transition: all 0.3s; font-size: 15px;"><i class="ti ti-settings" style="font-size: 1.2em; color: #35B835;"></i> Configuración</a></li>
+            <li><a href="parcels-dashboard.html" class="active" style="display: flex; align-items: center; gap: 10px; color: #007A20; padding: 12px 22px; border-radius: 7px; background: linear-gradient(135deg, rgba(53, 184, 53, 0.15), rgba(0, 122, 32, 0.1)); font-weight: 600; transition: all 0.3s; font-size: 15px;"><i class="ti ti-map" style="font-size: 1.2em; color: #007A20;"></i> Parcelas</a></li>
+            <li><a href="../labors/labor-dashboard.html" style="display: flex; align-items: center; gap: 10px; color: #2C3E50; padding: 12px 22px; border-radius: 7px; transition: all 0.3s; font-size: 15px;"><i class="ti ti-clipboard-list" style="font-size: 1.2em; color: #35B835;"></i> Labores</a></li>
+            <li><a href="../crops/crops-dashboard.html" style="display: flex; align-items: center; gap: 10px; color: #2C3E50; padding: 12px 22px; border-radius: 7px; transition: all 0.3s; font-size: 15px;"><i class="ti ti-plant" style="font-size: 1.2em; color: #35B835;"></i> Cultivos</a></li>
+        </ul>
+    </div>
+
+    <!-- Overlay del sidebar (solo móvil) -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
             
     <div id="left-sidebar"></div>
     <!-- Contenedor del topbar -->
@@ -1047,11 +1231,8 @@
     </script>
 
 <!-- Scripts -->
-    <script src="https://cesium.com/downloads/cesiumjs/releases/1.102/Build/Cesium/Cesium.js"></script>
-    <script>
-        // Configurar token de Cesium Ion - Agrotech
-        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MDYwOTcwMy1mMTRlLTQxMTYtYWRmNi02OTY4YjZkNjI0YWQiLCJpZCI6MjkwMzgyLCJpYXQiOjE3NTM1NDAzNTJ9.qZvwbfLRYsWlXHqxsePXVRfv87tF_0IIr6_Ch6efdF8';
-    </script>
+    <!-- Cesium 1.118 ya está cargado arriba, no duplicar -->
+    <!-- El token de Cesium Ion se configura en parcel.js después de verificar que Cesium esté cargado -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qs/dist/qs.js"></script>
     <script type="module" src="../../js/utils/api-utils.js"></script>
@@ -1061,7 +1242,7 @@
     <script type="module" src="../../js/parcels/layers.js"></script>
     <script src="../../js/parcels/analytics-cientifico.js"></script>
     <script src="../../js/parcels/historical-chart.js?v=2025082412"></script>
-    <script src="../../js/parcels/meteorological-analysis.js?v=2025082425"></script>
+    <script src="../../js/parcels/meteorological-analysis.js?v=2025102002"></script>
     <script src="../../js/parcels/weather-detail.js?v=2025090101"></script>
 
     <script>
@@ -1173,6 +1354,367 @@
         });
         
 
+    </script>
+
+    <script>
+    // Función global para manejar el menú lateral móvil
+    function toggleMobileSidebar() {
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        
+        if (mobileSidebar && overlay) {
+            const isOpen = mobileSidebar.classList.contains('show');
+            
+            if (isOpen) {
+                mobileSidebar.classList.remove('show');
+                overlay.classList.remove('show');
+            } else {
+                mobileSidebar.classList.add('show');
+                overlay.classList.add('show');
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Configurar eventos del menú móvil
+        const overlay = document.getElementById('sidebar-overlay');
+        if (overlay) {
+            overlay.addEventListener('click', toggleMobileSidebar);
+        }
+        
+        // Cerrar menú al hacer clic en los enlaces
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        if (mobileSidebar) {
+            const links = mobileSidebar.querySelectorAll('a');
+            links.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    toggleMobileSidebar();
+                });
+            });
+        }
+
+        // Mostrar topbar móvil solo en móvil
+        //forzando el push
+        const isMobile = window.innerWidth < 768;
+        const topbar = document.querySelector('.topbar');
+        if (topbar && isMobile) {
+            topbar.style.display = 'flex';
+        }
+
+        // ============================================
+        // AGREGAR DATA-LABELS A LA TABLA PARA MÓVIL
+        // ============================================
+        function addDataLabelsToTable() {
+            const table = document.getElementById('parcelTable');
+            if (!table) return;
+
+            const headers = table.querySelectorAll('thead th');
+            const headerTexts = Array.from(headers).map(h => h.textContent.trim());
+
+            // Observar cambios en la tabla
+            const observer = new MutationObserver(function() {
+                const rows = table.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    cells.forEach((cell, index) => {
+                        if (headerTexts[index] && !cell.hasAttribute('data-label')) {
+                            cell.setAttribute('data-label', headerTexts[index]);
+                        }
+                    });
+                });
+            });
+
+            observer.observe(table.querySelector('tbody'), {
+                childList: true,
+                subtree: true
+            });
+
+            // Ejecutar una vez al cargar
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                cells.forEach((cell, index) => {
+                    if (headerTexts[index]) {
+                        cell.setAttribute('data-label', headerTexts[index]);
+                    }
+                });
+            });
+        }
+
+        addDataLabelsToTable();
+
+        // ============================================
+        // PAGINACIÓN MÓVIL - 2 CARDS POR PÁGINA
+        // ============================================
+        function setupMobilePagination() {
+            if (window.innerWidth >= 768) return; // Solo móvil
+
+            const table = document.getElementById('parcelTable');
+            if (!table) return;
+
+            const itemsPerPage = 2;
+            let currentPage = 1;
+
+            function updatePagination() {
+                const tbody = table.querySelector('tbody');
+                const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => 
+                    !row.id.includes('no-parcels') && row.cells.length > 1
+                );
+
+                const totalPages = Math.ceil(rows.length / itemsPerPage);
+                if (totalPages <= 1) {
+                    // Ocultar paginación si hay 2 o menos cards
+                    const existingPag = document.querySelector('.mobile-pagination');
+                    if (existingPag) existingPag.remove();
+                    rows.forEach(row => row.classList.remove('hidden-mobile'));
+                    return;
+                }
+
+                // Ocultar/mostrar filas según página actual
+                rows.forEach((row, index) => {
+                    const startIndex = (currentPage - 1) * itemsPerPage;
+                    const endIndex = startIndex + itemsPerPage;
+                    
+                    if (index >= startIndex && index < endIndex) {
+                        row.classList.remove('hidden-mobile');
+                    } else {
+                        row.classList.add('hidden-mobile');
+                    }
+                });
+
+                // Crear o actualizar controles de paginación
+                let paginationDiv = document.querySelector('.mobile-pagination');
+                if (!paginationDiv) {
+                    paginationDiv = document.createElement('div');
+                    paginationDiv.className = 'mobile-pagination';
+                    table.parentElement.appendChild(paginationDiv);
+                }
+
+                paginationDiv.innerHTML = `
+                    <button id="prevPage" ${currentPage === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <span class="mobile-pagination-info">${currentPage} / ${totalPages}</span>
+                    <button id="nextPage" ${currentPage === totalPages ? 'disabled' : ''}>
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
+                `;
+
+                // Event listeners
+                document.getElementById('prevPage')?.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        updatePagination();
+                    }
+                });
+
+                document.getElementById('nextPage')?.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        updatePagination();
+                    }
+                });
+            }
+
+            // Observar cambios en la tabla
+            const observer = new MutationObserver(() => {
+                setTimeout(updatePagination, 100);
+            });
+
+            observer.observe(table.querySelector('tbody'), {
+                childList: true,
+                subtree: true
+            });
+
+            // Ejecutar inicialmente
+            setTimeout(updatePagination, 500);
+        }
+
+        setupMobilePagination();
+
+        // ============================================
+        // OPTIMIZAR GRÁFICO METEOROLÓGICO PARA MÓVIL
+        // Basado en mejores prácticas de visualización móvil
+        // ============================================
+        if (window.innerWidth < 768) {
+            // Interceptar la creación del gráfico Chart.js
+            const originalChart = window.Chart;
+            if (originalChart) {
+                window.Chart = function(ctx, config) {
+                    if (config && config.type === 'line' && ctx.canvas && ctx.canvas.id === 'weatherChart') {
+                        // ===== OPTIMIZACIONES PROFESIONALES PARA MÓVIL =====
+                        
+                        // 1. Reducir datasets a solo 2-3 variables más importantes
+                        if (config.data && config.data.datasets && config.data.datasets.length > 3) {
+                            // Mantener solo Temperatura, Precipitación y opcionalmente Viento
+                            config.data.datasets = config.data.datasets.slice(0, 3);
+                        }
+                        
+                        // 2. Sampling de datos: mostrar solo cada N puntos
+                        if (config.data && config.data.labels && config.data.labels.length > 30) {
+                            const sampleRate = Math.ceil(config.data.labels.length / 30); // Máximo 30 puntos
+                            config.data.labels = config.data.labels.filter((_, index) => index % sampleRate === 0);
+                            config.data.datasets.forEach(dataset => {
+                                if (dataset.data) {
+                                    dataset.data = dataset.data.filter((_, index) => index % sampleRate === 0);
+                                }
+                            });
+                        }
+                        
+                        if (config.options) {
+                            // 3. Configuración de elementos visuales
+                            config.options.elements = config.options.elements || {};
+                            config.options.elements.point = {
+                                radius: 0, // Ocultar puntos
+                                hoverRadius: 8, // Mostrar grande al tocar
+                                hitRadius: 15, // Área de toque muy amplia
+                                borderWidth: 2
+                            };
+                            
+                            config.options.elements.line = {
+                                borderWidth: 3, // Líneas gruesas y visibles
+                                tension: 0.4, // Curvas suaves
+                                borderCapStyle: 'round',
+                                borderJoinStyle: 'round'
+                            };
+                            
+                            // 4. Escalas optimizadas
+                            config.options.scales = config.options.scales || {};
+                            
+                            // Eje X - Fechas
+                            config.options.scales.x = {
+                                display: true,
+                                grid: {
+                                    display: false // Ocultar líneas verticales
+                                },
+                                ticks: {
+                                    maxTicksLimit: 6, // Máximo 6 etiquetas
+                                    maxRotation: 45,
+                                    minRotation: 45,
+                                    font: {
+                                        size: 10,
+                                        family: 'Poppins, sans-serif'
+                                    },
+                                    color: '#7F8C8D',
+                                    autoSkip: true,
+                                    autoSkipPadding: 10
+                                }
+                            };
+                            
+                            // Eje Y - Valores
+                            config.options.scales.y = {
+                                display: true,
+                                position: 'left',
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)', // Líneas muy sutiles
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    maxTicksLimit: 5,
+                                    font: {
+                                        size: 10,
+                                        family: 'Poppins, sans-serif'
+                                    },
+                                    color: '#7F8C8D',
+                                    padding: 8
+                                }
+                            };
+                            
+                            // 5. Plugins optimizados
+                            config.options.plugins = config.options.plugins || {};
+                            
+                            // Tooltip mejorado para móvil
+                            config.options.plugins.tooltip = {
+                                enabled: true,
+                                mode: 'index',
+                                intersect: false,
+                                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                                titleColor: '#007A20',
+                                bodyColor: '#2C3E50',
+                                borderColor: '#E8ECEF',
+                                borderWidth: 1,
+                                padding: 12,
+                                titleFont: {
+                                    size: 13,
+                                    weight: 'bold',
+                                    family: 'Poppins, sans-serif'
+                                },
+                                bodyFont: {
+                                    size: 12,
+                                    family: 'Poppins, sans-serif'
+                                },
+                                displayColors: true,
+                                boxWidth: 12,
+                                boxHeight: 12,
+                                usePointStyle: true
+                            };
+                            
+                            // Leyenda compacta
+                            config.options.plugins.legend = {
+                                display: true,
+                                position: 'top',
+                                align: 'start',
+                                labels: {
+                                    font: {
+                                        size: 11,
+                                        family: 'Poppins, sans-serif'
+                                    },
+                                    boxWidth: 25,
+                                    boxHeight: 3,
+                                    padding: 10,
+                                    usePointStyle: false,
+                                    color: '#2C3E50'
+                                }
+                            };
+                            
+                            // 6. Interacción táctil optimizada
+                            config.options.interaction = {
+                                mode: 'index',
+                                intersect: false,
+                                axis: 'x'
+                            };
+                            
+                            // 7. Responsive y maintainAspectRatio
+                            config.options.responsive = true;
+                            config.options.maintainAspectRatio = true;
+                            config.options.aspectRatio = 1.3; // Ratio óptimo para móvil
+                            
+                            // 8. Animaciones suaves
+                            config.options.animation = {
+                                duration: 750,
+                                easing: 'easeInOutQuart'
+                            };
+                            
+                            // 9. Layout con padding
+                            config.options.layout = {
+                                padding: {
+                                    top: 10,
+                                    right: 10,
+                                    bottom: 10,
+                                    left: 10
+                                }
+                            };
+                        }
+                        
+                        // 10. Ocultar texto "Datos EOSDA Reales"
+                        setTimeout(() => {
+                            const chartTitle = document.querySelector('h4, h5, h3');
+                            if (chartTitle && chartTitle.textContent.includes('EOSDA')) {
+                                chartTitle.textContent = chartTitle.textContent.replace(/Datos EOSDA Reales/gi, '').replace(/-\s*$/,'').trim();
+                            }
+                        }, 100);
+                    }
+                    return new originalChart(ctx, config);
+                };
+                
+                // Copiar propiedades estáticas
+                Object.setPrototypeOf(window.Chart, originalChart);
+                Object.keys(originalChart).forEach(key => {
+                    window.Chart[key] = originalChart[key];
+                });
+            }
+        }
+    });
     </script>
 
     

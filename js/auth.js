@@ -1,27 +1,23 @@
-// 🔹 Solo función para redirigir al login desde index.html
+// 🔹 Función para verificar si el usuario está autenticado
+export function isAuthenticated() {
+    const token = localStorage.getItem("accessToken");
+    return token && token !== "null" && token !== "undefined" && token.trim() !== "";
+}
+
+// 🔹 Función para redirigir al login
 export function redirectToLogin() {
-    window.location.href = "https://site-production-208b.up.railway.app/templates/authentication/login.html";
+    window.location.href = "https://agrotechcolombia.netlify.app/templates/authentication/login.html";
 }
 
-// 🔹 Función para logout
+// 🔹 Función para redirigir al dashboard después del login
+export function redirectToDashboard() {
+    window.location.href = "https://agrotechcolombia.netlify.app/templates/vertical_base.html";
+}
+
+// 🔹 Función de Logout
 export function logout() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    window.location.href = "https://site-production-208b.up.railway.app/templates/authentication/login.html";
-}window.ApiUrls ? window.ApiUrls.auth() : `${window.location.origin}/api/authentication`;
-
-console.log("BASE_URL:", BASE_URL);
-console.log("axios:", typeof axios !== "undefined" ? "disponible" : "no disponible");
-
-// 🔹 Función de Login (Exportada)
-export function login() {
-    // Redirige al formulario de login del backend con next al dashboard del frontend
-    window.location.href = "https://agrotechcolombia.com/authentication/login/?next=https://site-production-208b.up.railway.app/vertical_base.html";
+    redirectToLogin();
 }
 
-// 🔹 Función de Logout (Exportada)
-export function logout() {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    window.location.href = "https://agrotechcolombia.com/authentication/login/?next=https://site-production-208b.up.railway.app/vertical_base.html";
-}

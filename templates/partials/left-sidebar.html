@@ -108,7 +108,7 @@
         <div class="brand">
             <a href="#" class="logo">
                 <span>
-                    <img src="/static/images/agrotech solo blanco.png" alt="logo-small" class="logo-sm">
+                    <img src="../images/agrotech solo blco.png" alt="logo-small" class="logo-sm">
                 </span>
             </a>
         </div>
@@ -118,26 +118,32 @@
             <li><a href="../employees/RRHH-dashboard.html"><i class="ti ti-user"></i> Recursos Humanos</a></li>
             <li><a href="../inventario/dashboard_inventario.html"><i class="ti ti-box"></i> Inventario</a></li>
             <li><a href="../settings.html"><i class="ti ti-settings"></i> Configuración</a></li>
-            <li><a href="parcels-dashboard.html" class="active"><i class="ti ti-map"></i> Parcelas</a></li>
+            <li><a href="../parcels/parcels-dashboard.html" class="active"><i class="ti ti-map"></i> Parcelas</a></li>
             <li><a href="../labores.html"><i class="fa fa-tasks"></i> Labores</a></li>
-            <li><a href="../crop/crop_list.html"><i class="fa fa-tasks"></i> Cultivos</a></li>
+            <li><a href="../crop/crop_list.html"><i class="fa fa-tasks"></i> Cultivossss</a></li>
         </ul>
     </div>
     <!-- Mejorar comportamiento táctil en móvil -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('[SIDEBAR] DOMContentLoaded');
         const sidebar = document.getElementById('sidebar');
         if (sidebar) {
+            console.log('[SIDEBAR] Sidebar encontrado');
             // Mejorar feedback táctil en móvil
             sidebar.querySelectorAll('a[href]').forEach(function(link) {
+                console.log('[SIDEBAR] Link encontrado:', link.href);
                 link.addEventListener('touchstart', function() {
                     this.style.backgroundColor = '#34495E';
+                    console.log('[SIDEBAR] touchstart en:', this.href);
                 });
-                
                 link.addEventListener('touchend', function() {
                     this.style.backgroundColor = '';
+                    console.log('[SIDEBAR] touchend en:', this.href);
                 });
             });
+        } else {
+            console.warn('[SIDEBAR] Sidebar NO encontrado');
         }
     });
     </script>
