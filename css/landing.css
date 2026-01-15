@@ -1172,3 +1172,78 @@ a:hover {
     height: 45px;
   }
 }
+/* ============================================
+   RESPONSIVE - ADDITIONAL MOBILE OPTIMIZATIONS
+   ============================================ */
+
+/* Historical Report Section - 3 Column Grid */
+@media (max-width: 900px) {
+  .neuro-card [style*="grid-template-columns: repeat(3, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Hero Buttons - Stack on Mobile */
+@media (max-width: 600px) {
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .hero-buttons .neuro-button {
+    width: 100%;
+    min-height: 48px;
+  }
+  
+  .hero-stat-value {
+    font-size: 2rem;
+  }
+  
+  .hero-stat-label {
+    font-size: 0.8rem;
+  }
+}
+
+/* Products Grid - Stack on Mobile */
+@media (max-width: 768px) {
+  .products-showcase {
+    grid-template-columns: 1fr;
+  }
+  
+  .product-image {
+    height: 250px;
+  }
+}
+
+/* Touch Targets - Minimum 44px for accessibility */
+.neuro-button,
+.nav-links a {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Improve readability on mobile */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+  
+  p {
+    font-size: 1rem;
+  }
+  
+  .hero-description {
+    font-size: 1.1rem;
+  }
+}
