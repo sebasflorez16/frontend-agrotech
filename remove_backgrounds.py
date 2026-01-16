@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+-#!/usr/bin/env python3
 """
 Script to remove white backgrounds from illustrations using rembg (AI-powered background removal)
 """

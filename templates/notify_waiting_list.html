@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Espera | AgroTech Colombia</title>
+    <meta name="description"
+        content="Únase a la lista de espera para nuestra plataforma de monitoreo satelital continuo en tiempo real.">
+    <meta name="author" content="AgroTech Colombia">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/landing.css">
+    <style>
+        .form-page-body {
+            background-image: url('../images/mujer-sosteniendo-una-tableta-junto-un-campo-agricola-con-espacio-de-copia.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        .form-page-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 14, 39, 0.9);
+            z-index: 1;
+        }
+
+        .form-card {
+            background: var(--dark-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--brand-orange);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--brand-green);
+        }
+    </style>
+</head>
+
+<body class="form-page-body">
+
+    <div class="form-card fade-in-up">
+        <a href="../index.html" class="back-link">
+            ← Volver al Inicio
+        </a>
+
+        <div style="margin-bottom: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+            <h1 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Próximamente</h1>
+            <p style="color: var(--text-secondary);">
+                Estamos finalizando nuestra plataforma de monitoreo continuo en tiempo real.
+            </p>
+        </div>
+
+        <form action="mailto:contacto@agrotechcolombia.com" method="post" enctype="text/plain">
+            <input type="hidden" name="subject" value="Lista de Espera - Monitoreo Continuo">
+            <input type="hidden" name="mensaje"
+                value="Hola, quiero unirme a la lista de espera para el monitoreo continuo.">
+
+            <label for="email"
+                style="display: block; margin-bottom: 1rem; color: var(--brand-orange-light); font-weight: 500;">
+                Sea el primero en saber cuando lancemos:
+            </label>
+
+            <input type="email" id="email" name="email" class="form-input" required
+                placeholder="Su correo electrónico aquí">
+
+            <button type="submit" class="neuro-button neuro-button-accent" style="width: 100%;">
+                Notificarme
+            </button>
+        </form>
+    </div>
+
+</body>
+
+</html>
