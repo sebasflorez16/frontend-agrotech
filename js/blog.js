@@ -4,6 +4,9 @@
  */
 
 const BLOG_DATA_URL = 'data/posts.json';
+const CONFIG = {
+    BACKEND_URL: 'https://agrotechcolombia.com'
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     // Detectar si estamos en la lista o en un post individual
@@ -75,7 +78,6 @@ async function loadSinglePost(id) {
     const titleEl = document.getElementById('post-title');
     const contentEl = document.getElementById('post-content');
     const metaEl = document.getElementById('post-meta');
-    const bgEl = document.getElementById('post-bg');
 
     if (!titleEl) return;
 
@@ -87,24 +89,91 @@ async function loadSinglePost(id) {
 
         if (!post) {
             titleEl.textContent = 'Artículo no encontrado';
-            contentEl.innerHTML = '<a href="blog.html" class="neuro-button neuro-button-primary">Volver al Blog</a>';
+            contentEl.innerHTML = '<div style="text-align: center;"><p>Lo sentimos, este artículo no existe.</p><a href="blog.html" class="neuro-button neuro-button-primary">Volver al Blog</a></div>';
             return;
         }
 
-        // Renderizar contenido
+        // Renderizar contenido básico
         document.title = `${post.title} | Blog AgroTech`; // Cambiar título de la pestaña
         titleEl.textContent = post.title;
         contentEl.innerHTML = post.content;
         metaEl.innerHTML = `Publicado el ${formatDate(post.date)} por <span style="color: var(--brand-green);">${post.author}</span>`;
 
-        // Background image opcional (si quieres que el hero tenga la imagen del post)
-        /* if (post.image && bgEl) {
-           bgEl.style.backgroundImage = `url('${post.image}')`;
-        } */
+        // --- SEO & Mejoras ---
+        updateMetaTags(post);
+        loadRelatedPosts(posts, post.id);
 
     } catch (error) {
         console.error('Error cargando el post:', error);
     }
+}
+
+/**
+ * Actualiza los meta tags dinámicos para SEO y Redes Sociales
+ */
+function updateMetaTags(post) {
+    // Description SEO
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.name = 'description';
+        document.head.appendChild(metaDesc);
+    }
+    metaDesc.content = post.summary;
+
+    // Open Graph / Social Media
+    const siteUrl = 'https://agrotechcolombia.com/'; // Debería venir de config pero hardcoded por seguridad
+    const imageUrl = post.image.startsWith('http') ? post.image : siteUrl + post.image;
+
+    const ogTags = {
+        'og:title': post.title,
+        'og:description': post.summary,
+        'og:image': imageUrl,
+        'og:url': window.location.href,
+        'og:type': 'article'
+    };
+
+    for (const [property, content] of Object.entries(ogTags)) {
+        let tag = document.querySelector(`meta[property="${property}"]`);
+        if (!tag) {
+            tag = document.createElement('meta');
+            tag.setAttribute('property', property);
+            document.head.appendChild(tag);
+        }
+        tag.content = content;
+    }
+}
+
+/**
+ * Carga 2 artículos relacionados (aleatorios o por tag)
+ */
+function loadRelatedPosts(allPosts, currentId) {
+    const relatedGrid = document.getElementById('related-posts-grid');
+    if (!relatedGrid) return;
+
+    // Filtrar el post actual
+    const otherPosts = allPosts.filter(p => p.id !== currentId);
+
+    // Mezclar aleatoriamente
+    const shuffled = otherPosts.sort(() => 0.5 - Math.random());
+
+    // Tomar los primeros 2
+    const selected = shuffled.slice(0, 2);
+
+    relatedGrid.innerHTML = '';
+
+    if (selected.length === 0) {
+        relatedGrid.parentElement.style.display = 'none'; // Ocultar sección si no hay
+        return;
+    }
+
+    selected.forEach(post => {
+        const card = createPostCard(post);
+        // Ajustar estilos para que se vean bien en el footer del post
+        card.style.background = 'rgba(255, 255, 255, 0.03)';
+        card.style.border = '1px solid rgba(255, 255, 255, 0.05)';
+        relatedGrid.appendChild(card);
+    });
 }
 
 /**

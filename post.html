@@ -13,59 +13,84 @@
 
     <style>
         .article-container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         .article-header {
-            padding: 150px 0 60px;
+            padding: 160px 0 80px;
             text-align: center;
+            background: radial-gradient(circle at center, rgba(76, 175, 80, 0.15) 0%, transparent 70%);
         }
 
         .article-meta {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 1rem;
             margin-bottom: var(--spacing-md);
             display: block;
+            font-weight: 500;
         }
 
         .article-content {
             background: var(--dark-card);
             padding: var(--spacing-xl);
+            /* 5rem padding */
             border-radius: var(--radius-lg);
             box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-            line-height: 1.8;
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.9;
+            font-size: 1.15rem;
+            /* Larger font for readability */
+            color: rgba(255, 255, 255, 0.95);
         }
 
         /* Typography inside articles */
         .article-content h2 {
             color: var(--brand-green);
-            margin-top: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
             margin-bottom: var(--spacing-sm);
+            font-size: 2rem;
         }
 
         .article-content h3 {
             color: var(--brand-orange);
-            margin-top: var(--spacing-md);
+            margin-top: var(--spacing-lg);
             margin-bottom: var(--spacing-sm);
+            font-size: 1.5rem;
         }
 
         .article-content p {
             margin-bottom: var(--spacing-md);
             color: var(--text-secondary);
+            max-width: 800px;
+            /* Keep text lines from getting too long for reading comfort */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .article-content ul,
         .article-content ol {
             margin-bottom: var(--spacing-md);
             padding-left: var(--spacing-lg);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .article-content li {
             margin-bottom: var(--spacing-xs);
             color: var(--text-secondary);
+        }
+
+        /* Highlighting intro */
+        .article-content .blog-intro {
+            font-size: 1.35rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            border-left: 4px solid var(--brand-green);
+            padding-left: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
         }
 
         @media (max-width: 768px) {
@@ -75,6 +100,10 @@
 
             .article-header {
                 padding: 120px 0 40px;
+            }
+
+            .article-content h2 {
+                font-size: 1.75rem;
             }
         }
     </style>
@@ -112,8 +141,19 @@
                 <div class="loading-spinner" style="margin: 0 auto;"></div>
             </div>
 
+            <!-- Related Posts Section -->
+            <div
+                style="margin-top: var(--spacing-xl); border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--spacing-lg);">
+                <h3 style="margin-bottom: var(--spacing-md); color: var(--text-primary);">También le puede interesar
+                </h3>
+                <div id="related-posts-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-md);">
+                    <!-- JS will load related posts here -->
+                </div>
+            </div>
+
             <div style="margin-top: var(--spacing-xl); text-align: center;">
-                <a href="blog.html" class="neuro-button neuro-button-primary">Ver más artículos</a>
+                <a href="blog.html" class="neuro-button neuro-button-primary">Volver al Blog</a>
             </div>
         </div>
     </section>
