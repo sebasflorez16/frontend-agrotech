@@ -48,8 +48,8 @@ async function loadBlogGrid() {
  */
 function createPostCard(post) {
     const card = document.createElement('div');
-    card.className = 'blog-card reveal';
-    
+    card.className = 'blog-card';
+
     // Fallback image si no existe
     const imageUrl = post.image || 'images/agrotech satelite 1.png';
 
@@ -82,7 +82,7 @@ async function loadSinglePost(id) {
     try {
         const response = await fetch(BLOG_DATA_URL);
         const posts = await response.json();
-        
+
         const post = posts.find(p => p.id === id);
 
         if (!post) {
@@ -96,7 +96,7 @@ async function loadSinglePost(id) {
         titleEl.textContent = post.title;
         contentEl.innerHTML = post.content;
         metaEl.innerHTML = `Publicado el ${formatDate(post.date)} por <span style="color: var(--brand-green);">${post.author}</span>`;
-        
+
         // Background image opcional (si quieres que el hero tenga la imagen del post)
         /* if (post.image && bgEl) {
            bgEl.style.backgroundImage = `url('${post.image}')`;
