@@ -1,13 +1,31 @@
 [
   {
+    "id": "decisiones-agricolas-datos",
+    "title": "Por qué hoy tomar decisiones sin datos es perder dinero (y cómo evitarlo)",
+    "summary": "Durante años hemos sembrado mirando el cielo y confiando en la experiencia. Pero hoy, eso ya no es suficiente. Descubra el costo invisible de trabajar a ciegas.",
+    "content": "<p class=\"blog-intro\">Durante años hemos sembrado mirando el cielo, caminando el lote y confiando en la experiencia. Y aunque eso sigue siendo valioso, hoy ya no es suficiente.</p><h2>El problema del que nadie habla</h2><p>El cultivo se ve bien… pero rinde menos de lo esperado. Una zona del lote siempre falla y no sabemos por qué. Se fertiliza parejo, pero no todo responde igual. Cuando el problema se nota a simple vista, ya es tarde.</p><h3>El costo invisible de trabajar a ciegas</h3><p>El problema no es equivocarse, <strong>el problema es no saber que te estás equivocando</strong>.</p><ul><li>Fertilizar de más donde no hace falta.</li><li>Regar donde el suelo aún tiene humedad.</li><li>No detectar el estrés hídrico de una planta hasta que se marchita.</li><li>Tomar decisiones de toda la cosecha basados en una sola visita rápida al lote.</li></ul><h2>El cambio de mentalidad</h2><p>Hoy la tierra también se puede leer desde arriba. No se trata de magia, se trata de ver la historia del lote, comparar cómo se comportó en meses anteriores y entender las tendencias reales.</p><p><strong>No se trata de reemplazar al agricultor, sino de darle mejores ojos.</strong></p><h3>Qué significa usar datos en el campo</h3><p>Significa ver cómo evoluciona la vegetación semana a semana. Significa identificar zonas con bajo desempeño antes de que pierda dinero en ellas. Significa comparar el mismo lote en el tiempo para saber si sus decisiones están funcionando.</p><h2>Aquí es donde entra AgroTech</h2><p>En AgroTech construimos informes que convierten imágenes satelitales complejas en decisiones claras, entendibles y accionables para el campo colombiano.</p><p>Le entregamos mapas de salud de su cultivo, historias de lluvias y análisis de terreno simples de leer.</p><p class=\"blog-outro\">La experiencia sigue siendo clave. Pero cuando se une con datos, el campo deja de ser una apuesta y se convierte en una estrategia.</p>",
+    "date": "2026-01-29",
+    "author": "Equipo AgroTech",
+    "image": "images/farmer-rice-field-with-laptop.jpg",
+    "tags": [
+      "Estrategia",
+      "Tecnología",
+      "Rentabilidad"
+    ]
+  },
+  {
     "id": "predicciones-climaticas-2026",
     "title": "Predicciones Climáticas para el Agro en 2026",
     "summary": "Analizamos los patrones de El Niño y La Niña para este año y cómo afectarán sus cultivos en la región de Casanare y Meta.",
     "content": "<h2>El Clima en 2026: Lo que debe saber</h2><p>Este año se presenta con desafíos interesantes para el sector agrícola en Colombia. Según nuestros últimos análisis satelitales y modelos predictivos, esperamos una transición neutra hacia mediados de año.</p><h3>¿Qué significa esto para su cosecha?</h3><p>Las lluvias podrían retrasarse levemente en el primer semestre. Recomendamos preparar sistemas de riego y monitorear la humedad del suelo constantemente usando nuestra herramienta de análisis histórico para ver patrones similares en años anteriores.</p><p>El uso de tecnología satelital le permitirá anticiparse a estos cambios y proteger su inversión.</p>",
     "date": "2026-01-28",
     "author": "Ing. Carlos Rodríguez",
-    "image": "images/blog/clima-2026.jpg",
-    "tags": ["Clima", "Tecnología", "Predicción"]
+    "image": "images/agrotech satelite 1.png",
+    "tags": [
+      "Clima",
+      "Tecnología",
+      "Predicción"
+    ]
   },
   {
     "id": "ndvi-guia-completa",
@@ -16,17 +34,11 @@
     "content": "<h2>¿Qué es el NDVI?</h2><p>El Índice de Vegetación de Diferencia Normalizada (NDVI) es, en palabras sencillas, una radiografía de su cultivo. Mide qué tan 'verdes' y sanas están sus plantas basándose en cómo reflejan la luz del sol.</p><h3>¿Cómo interpretarlo?</h3><ul><li><strong>Valores bajos (0.1 - 0.2):</strong> Suelo desnudo o roca.</li><li><strong>Valores medios (0.2 - 0.5):</strong> Arbustos o vegetación escasa/enferma.</li><li><strong>Valores altos (0.6 - 0.9):</strong> Cultivos densos y muy saludables.</li></ul><p>En AgroTech, le entregamos mapas fáciles de leer con estos colores para que sepa exactamente dónde aplicar fertilizante.</p>",
     "date": "2026-01-15",
     "author": "Dra. María González",
-    "image": "images/blog/ndvi-guia.jpg",
-    "tags": ["NDVI", "Educación", "Satélites"]
-  },
-  {
-    "id": "casanare-potencial-agricola",
-    "title": "El Renacer Agrícola del Casanare",
-    "summary": "Casanare se está posicionando como la despensa agrícola del futuro. Descubra las oportunidades de inversión en la región.",
-    "content": "<h2>Casanare: Tierra de Oportunidades</h2><p>Con millones de hectáreas aptas para el cultivo de arroz, palma y ahora incursionando en nuevos mercados, el departamento del Casanare está en la mira de los grandes inversionistas.</p><p>La clave ha sido la adopción de tecnologías de agricultura de precisión que permiten mitigar los riesgos del clima llanero.</p>",
-    "date": "2025-12-20",
-    "author": "Equipo AgroTech",
-    "image": "images/blog/casanare.jpg",
-    "tags": ["Casanare", "Inversión", "Noticias"]
+    "image": "images/iot-de-agricultura-inteligente-con-fondo-de-arbol-de-plantacion-manual.jpg",
+    "tags": [
+      "NDVI",
+      "Educación",
+      "Satélites"
+    ]
   }
 ]
