@@ -126,6 +126,7 @@
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#funcionalidades">¿Qué hacemos?</a></li>
                     <li><a href="#productos">Servicios</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                     <li><a href="#contacto">Contacto</a></li>
                     <li><a href="#" class="neuro-button neuro-button-primary" onclick="redirectToLogin()">Ingresar</a>
                     </li>
@@ -635,23 +636,6 @@
         function redirectToLogin() {
             window.location.href = 'https://agrotechcolombia.netlify.app/templates/authentication/login.html';
         }
-
-        // Mobile menu toggle
-        const navBurger = document.getElementById('navBurger');
-        const navLinks = document.getElementById('navLinks');
-
-        navBurger.addEventListener('click', () => {
-            navBurger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navBurger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
 
         // Header scroll effect
         const header = document.getElementById('header');

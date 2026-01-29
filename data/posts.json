@@ -1,0 +1,32 @@
+[
+  {
+    "id": "predicciones-climaticas-2026",
+    "title": "Predicciones Climáticas para el Agro en 2026",
+    "summary": "Analizamos los patrones de El Niño y La Niña para este año y cómo afectarán sus cultivos en la región de Casanare y Meta.",
+    "content": "<h2>El Clima en 2026: Lo que debe saber</h2><p>Este año se presenta con desafíos interesantes para el sector agrícola en Colombia. Según nuestros últimos análisis satelitales y modelos predictivos, esperamos una transición neutra hacia mediados de año.</p><h3>¿Qué significa esto para su cosecha?</h3><p>Las lluvias podrían retrasarse levemente en el primer semestre. Recomendamos preparar sistemas de riego y monitorear la humedad del suelo constantemente usando nuestra herramienta de análisis histórico para ver patrones similares en años anteriores.</p><p>El uso de tecnología satelital le permitirá anticiparse a estos cambios y proteger su inversión.</p>",
+    "date": "2026-01-28",
+    "author": "Ing. Carlos Rodríguez",
+    "image": "images/blog/clima-2026.jpg",
+    "tags": ["Clima", "Tecnología", "Predicción"]
+  },
+  {
+    "id": "ndvi-guia-completa",
+    "title": "NDVI: La Guía Completa para Agricultores Modernos",
+    "summary": "¿Escucha hablar del NDVI pero no sabe exactamente qué es? Le explicamos cómo este índice le dice la salud exacta de sus plantas.",
+    "content": "<h2>¿Qué es el NDVI?</h2><p>El Índice de Vegetación de Diferencia Normalizada (NDVI) es, en palabras sencillas, una radiografía de su cultivo. Mide qué tan 'verdes' y sanas están sus plantas basándose en cómo reflejan la luz del sol.</p><h3>¿Cómo interpretarlo?</h3><ul><li><strong>Valores bajos (0.1 - 0.2):</strong> Suelo desnudo o roca.</li><li><strong>Valores medios (0.2 - 0.5):</strong> Arbustos o vegetación escasa/enferma.</li><li><strong>Valores altos (0.6 - 0.9):</strong> Cultivos densos y muy saludables.</li></ul><p>En AgroTech, le entregamos mapas fáciles de leer con estos colores para que sepa exactamente dónde aplicar fertilizante.</p>",
+    "date": "2026-01-15",
+    "author": "Dra. María González",
+    "image": "images/blog/ndvi-guia.jpg",
+    "tags": ["NDVI", "Educación", "Satélites"]
+  },
+  {
+    "id": "casanare-potencial-agricola",
+    "title": "El Renacer Agrícola del Casanare",
+    "summary": "Casanare se está posicionando como la despensa agrícola del futuro. Descubra las oportunidades de inversión en la región.",
+    "content": "<h2>Casanare: Tierra de Oportunidades</h2><p>Con millones de hectáreas aptas para el cultivo de arroz, palma y ahora incursionando en nuevos mercados, el departamento del Casanare está en la mira de los grandes inversionistas.</p><p>La clave ha sido la adopción de tecnologías de agricultura de precisión que permiten mitigar los riesgos del clima llanero.</p>",
+    "date": "2025-12-20",
+    "author": "Equipo AgroTech",
+    "image": "images/blog/casanare.jpg",
+    "tags": ["Casanare", "Inversión", "Noticias"]
+  }
+]

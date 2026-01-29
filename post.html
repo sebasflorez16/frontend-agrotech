@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artículo | Blog AgroTech</title>
+
+    <!-- Fonts & CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/landing.css">
+
+    <style>
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-header {
+            padding: 150px 0 60px;
+            text-align: center;
+        }
+
+        .article-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-md);
+            display: block;
+        }
+
+        .article-content {
+            background: var(--dark-card);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Typography inside articles */
+        .article-content h2 {
+            color: var(--brand-green);
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .article-content h3 {
+            color: var(--brand-orange);
+            margin-top: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .article-content p {
+            margin-bottom: var(--spacing-md);
+            color: var(--text-secondary);
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin-bottom: var(--spacing-md);
+            padding-left: var(--spacing-lg);
+        }
+
+        .article-content li {
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .article-content {
+                padding: var(--spacing-md);
+            }
+
+            .article-header {
+                padding: 120px 0 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="nav-logo">
+                    <img src="images/agrotech solo blanco.png" alt="Agrotech Digital" class="nav-logo-image">
+                    <span>agrotech.</span>
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="blog.html">← Volver al Blog</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Header -->
+    <section class="section article-header">
+        <div class="container article-container">
+            <span class="section-badge">Blog AgroTech</span>
+            <h1 id="post-title">Cargando artículo...</h1>
+            <div id="post-meta" class="article-meta"></div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="section" style="padding-top: 0;">
+        <div class="container article-container">
+            <div id="post-content" class="article-content reveal active">
+                <div class="loading-spinner" style="margin: 0 auto;"></div>
+            </div>
+
+            <div style="margin-top: var(--spacing-xl); text-align: center;">
+                <a href="blog.html" class="neuro-button neuro-button-primary">Ver más artículos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy;
+                    <script>document.write(new Date().getFullYear())</script> Agrotech Digital.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="js/blog.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | AgroTech Colombia</title>
+    <meta name="description"
+        content="Noticias, análisis y tecnología agrícola. Manténgase informado con el blog de AgroTech.">
+
+    <!-- Fonts & CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/landing.css">
+
+    <!-- Blog Specific CSS -->
+    <style>
+        .blog-header {
+            padding: 150px 0 80px;
+            text-align: center;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            padding: var(--spacing-lg) 0;
+        }
+
+        .blog-card {
+            background: var(--dark-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+            transition: var(--transition-normal);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
+        }
+
+        .blog-card-image {
+            height: 200px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .blog-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-card-image img {
+            transform: scale(1.05);
+        }
+
+        .blog-card-content {
+            padding: var(--spacing-md);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-date {
+            color: var(--brand-green);
+            font-size: 0.85rem;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 600;
+        }
+
+        .blog-title {
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        .blog-summary {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            flex-grow: 1;
+        }
+
+        .blog-link {
+            color: var(--brand-green-light);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .blog-link:hover {
+            color: var(--brand-green);
+            gap: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="nav-logo">
+                    <img src="images/agrotech solo blanco.png" alt="Agrotech Digital" class="nav-logo-image">
+                    <span>agrotech.</span>
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html#funcionalidades">Qué hacemos</a></li>
+                    <li><a href="index.html#productos">Servicios</a></li>
+                    <li><a href="blog.html" class="active" style="color: var(--brand-green);">Blog</a></li>
+                    <li><a href="index.html#contacto">Contacto</a></li>
+                    <li><a href="#" class="neuro-button neuro-button-primary" onclick="redirectToLogin()">Ingresar</a>
+                    </li>
+                </ul>
+                <button class="nav-burger" id="navBurger">
+                    <span></span><span></span><span></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="section blog-header">
+        <div class="container">
+            <span class="section-badge">Actualidad y Tecnología</span>
+            <h1>Blog AgroTech</h1>
+            <p class="section-description">
+                Noticias, consejos de siembra y todo sobre tecnología satelital para el campo colombiano.
+            </p>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="section">
+        <div class="container">
+            <div id="blog-grid" class="blog-grid">
+                <!-- Javascript will load posts here -->
+                <div style="text-align: center; grid-column: 1 / -1; color: var(--text-secondary);">
+                    <div class="loading-spinner" style="margin: 0 auto 20px;"></div>
+                    <p>Cargando artículos...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy;
+                    <script>document.write(new Date().getFullYear())</script> Agrotech Digital.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="js/blog.js"></script>
+    <script>
+        // Mobile menu toggle (Copied from landing)
+        const navBurger = document.getElementById('navBurger');
+        const navLinks = document.getElementById('navLinks');
+        navBurger.addEventListener('click', () => {
+            navBurger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        function redirectToLogin() {
+            window.location.href = 'https://agrotechcolombia.netlify.app/templates/authentication/login.html';
+        }
+    </script>
+</body>
+
+</html>

@@ -1367,18 +1367,30 @@ a:hover {
     text-align: center;
     max-width: 600px;
     margin: 0 auto;
+    /* Remove padding to let image go edge-to-edge if needed */
+    padding: 0;
+    overflow: hidden;
   }
 
   .cta-image-wrapper {
     flex: none;
     width: 100%;
-    height: 300px;
-    min-height: auto;
+    /* Allow height to adjust to content */
+    height: auto;
+    /* Top padding only, no side padding to maximize width */
+    padding: var(--spacing-md) 0 0;
   }
 
   .cta-image-wrapper img {
-    height: 100%;
-    object-position: center 20%;
+    /* Full width of the container */
+    width: 100%;
+    /* Auto height to maintain aspect ratio */
+    height: auto;
+    /* Significantly increased max height */
+    max-height: 400px;
+    /* Default centering */
+    object-position: center bottom;
+    object-fit: contain;
   }
 
   .cta-text-content {
