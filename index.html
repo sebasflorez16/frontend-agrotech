@@ -9,7 +9,7 @@
     <meta name="description"
         content="Conozca su terreno antes de invertir. Análisis satelital histórico NDVI para tomar decisiones informadas. Evalúe terrenos, reduzca riesgos y optimice su inversión agrícola en Colombia.">
     <meta name="keywords"
-        content="informe satelital agrícola, análisis NDVI histórico, evaluación de terrenos Colombia, agricultura de precisión, análisis satelital cultivos, decisiones pre-siembra, tecnología agrícola Colombia, monitoreo satelital, NDMI, EVI, datos climáticos históricos">
+        content="informe satelital agrícola, análisis NDVI histórico, evaluación de terrenos Colombia, agricultura de precisión, análisis satelital cultivos, decisiones pre-siembra, tecnología agrícola Colombia, monitoreo satelital, NDMI, SAVI, datos climáticos históricos">
     <meta name="author" content="Agrotech Digital">
     <meta name="robots" content="index, follow">
     <meta name="language" content="Spanish">
@@ -51,6 +51,13 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Informes Satelitales Históricos para Agricultura | AgroTech Colombia">
     <meta name="twitter:description" content="Análisis satelital histórico para decisiones agrícolas informadas">
+    <meta name="twitter:image" content="https://agrotechcolombia.com/images/agrotech-og-image.png">
+
+    <!-- Open Graph Image -->
+    <meta property="og:image" content="https://agrotechcolombia.com/images/agrotech-og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="AgroTech Colombia - Informes Satelitales Históricos para Agricultura">
 
     <!-- Schema.org JSON-LD for SEO -->
     <script type="application/ld+json">
@@ -98,11 +105,69 @@
             "@type": "Country",
             "name": "Colombia"
           },
-          "description": "Análisis satelital histórico de terrenos agrícolas utilizando índices NDVI, NDMI y EVI. Evaluación de terrenos para primera siembra, análisis de cultivos existentes, identificación de riesgos históricos y recomendaciones prácticas para optimizar inversiones agrícolas.",
+          "description": "Análisis satelital histórico de terrenos agrícolas utilizando índices NDVI, NDMI y SAVI. Evaluación de terrenos para primera siembra, análisis de cultivos existentes, identificación de riesgos históricos y recomendaciones prácticas para optimizar inversiones agrícolas.",
           "offers": {
             "@type": "Offer",
-            "availability": "https://schema.org/InStock"
+            "availability": "https://schema.org/InStock",
+            "priceCurrency": "COP",
+            "price": "7000",
+            "unitText": "por hectárea",
+            "description": "Estudio Histórico Satelital desde $7.000 COP por hectárea. Incluye análisis NDVI, NDMI, SAVI, datos climáticos y recomendaciones."
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://agrotechcolombia.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "¿Qué necesito para pedir el estudio?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Solo necesitamos la ubicación de su lote (coordenadas, punto en Google Maps o dirección). No necesita instalar nada ni ir al terreno. Nosotros hacemos todo el trabajo con imágenes satelitales."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cuánto se demora el informe?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "La generación del informe es casi inmediata. Le entregamos en 1 a 3 días hábiles después de confirmar el pago y recibir las coordenadas."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Los datos son confiables?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí. Usamos imágenes de los satélites Sentinel-2 (Agencia Espacial Europea) y Landsat (NASA), las mismas fuentes que usan gobiernos e instituciones científicas en todo el mundo."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cómo pago?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Aceptamos Mercado Pago (pago seguro con tarjeta, PSE o efectivo), Nequi, Daviplata y transferencia bancaria. Si por alguna razón técnica no podemos generar el informe, le devolvemos el 100% de su dinero."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Sirve para cualquier cultivo o región?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí. Analizamos cualquier terreno agrícola en Colombia: plátano, arroz, palma, café, maíz, ganadería, etc. Los satélites cubren todo el territorio nacional."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Qué recibo al final?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Recibe una solución completa para tomar mejores decisiones sobre su terreno: mapas satelitales a color, gráficos de evolución temporal, datos climáticos históricos y recomendaciones concretas. Todo organizado en un documento profesional enviado por WhatsApp y correo."
+              }
+            }
+          ]
         },
         {
           "@type": "WebSite",
@@ -133,6 +198,7 @@
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#funcionalidades">¿Qué hacemos?</a></li>
                     <li><a href="#productos">Servicios</a></li>
+                    <li><a href="#precios">Precios</a></li>
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="#contacto">Contacto</a></li>
                     <li><a href="#" class="neuro-button neuro-button-primary" onclick="redirectToLogin()">Ingresar</a>
@@ -161,21 +227,21 @@
                 </p>
                 <div class="hero-buttons">
                     <a href="https://wa.me/573223088873?text=Hola,%20quisiera%20más%20información%20sobre%20el%20estudio%20histórico"
-                        class="neuro-button neuro-button-primary" target="_blank">
+                        class="neuro-button neuro-button-primary" target="_blank" rel="noopener noreferrer">
                         Pedir mi Estudio
                     </a>
                     <a href="templates/contact_expert.html" class="neuro-button neuro-button-accent">
-                        Hablar con un Ingeniero
+                        Tengo Preguntas
                     </a>
                 </div>
                 <div class="hero-stats">
                     <div class="hero-stat">
-                        <span class="hero-stat-value">+130</span>
-                        <span class="hero-stat-label">Hectáreas Revisadas</span>
+                        <span class="hero-stat-value">+500</span>
+                        <span class="hero-stat-label">Hectáreas Analizadas</span>
                     </div>
                     <div class="hero-stat">
-                        <span class="hero-stat-value">100%</span>
-                        <span class="hero-stat-label">Datos Reales</span>
+                        <span class="hero-stat-value">3+</span>
+                        <span class="hero-stat-label">Años de Historial</span>
                     </div>
                     <div class="hero-stat">
                         <span class="hero-stat-value">24 Horas</span>
@@ -210,7 +276,7 @@
                 <div class="feature-card reveal">
                     <div class="feature-icon">
                         <img src="images/iot-de-agricultura-inteligente-con-fondo-de-arbol-de-plantacion-manual.jpg"
-                            alt="Gráficos claros">
+                            alt="Informes agrícolas claros y fáciles de entender">
                     </div>
                     <h3 class="feature-title">Todo Claro y Fácil</h3>
                     <p class="feature-description">
@@ -220,7 +286,7 @@
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon">
-                        <img src="images/iot-agricola-con-fondo-de-campo-de-arroz.jpg" alt="El Clima">
+                        <img src="images/iot-agricola-con-fondo-de-campo-de-arroz.jpg" alt="Análisis climático histórico para agricultura en Colombia">
                     </div>
                     <h3 class="feature-title">El Clima</h3>
                     <p class="feature-description">
@@ -230,7 +296,7 @@
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon">
-                        <img src="images/agricultura-inteligente-con-agricultura-iot.jpg" alt="Humedad">
+                        <img src="images/agricultura-inteligente-con-agricultura-iot.jpg" alt="Análisis de estrés hídrico y humedad en cultivos">
                     </div>
                     <h3 class="feature-title">¿Le faltó agua?</h3>
                     <p class="feature-description">
@@ -241,7 +307,7 @@
                 <div class="feature-card reveal">
                     <div class="feature-icon">
                         <img src="images/mujer-sosteniendo-una-tableta-junto-un-campo-agricola-con-espacio-de-copia.jpg"
-                            alt="Organización">
+                            alt="Gestión de parcelas y lotes agrícolas con tecnología">
                     </div>
                     <h3 class="feature-title">Organice su Finca</h3>
                     <p class="feature-description">
@@ -251,7 +317,7 @@
                 </div>
                 <div class="feature-card reveal">
                     <div class="feature-icon">
-                        <img src="images/farmer-rice-field-with-laptop.jpg" alt="Vista 3D">
+                        <img src="images/farmer-rice-field-with-laptop.jpg" alt="Visualización 3D de terrenos agrícolas desde satélite">
                     </div>
                     <h3 class="feature-title">Vea su Finca desde Arriba</h3>
                     <p class="feature-description">
@@ -298,9 +364,9 @@
                         <ul style="list-style: none; padding: 0; color: var(--text-secondary); line-height: 1.8;">
                             <li style="margin-bottom: var(--spacing-sm);">✓ Historia completa del terreno</li>
                             <li style="margin-bottom: var(--spacing-sm);">✓ Mapas de salud de la vegetación</li>
-                            <li style="margin-bottom: var(--spacing-sm);">✓ Datos de lluvias y sol del pasado</li>
+                            <li style="margin-bottom: var(--spacing-sm);">✓ Datos de lluvia y clima del pasado</li>
                             <li style="margin-bottom: var(--spacing-sm);">✓ Zonas buenas y zonas malas del lote</li>
-                            <li style="margin-bottom: var(--spacing-sm);">✓ Consejos de nuestros ingenieros</li>
+                            <li style="margin-bottom: var(--spacing-sm);">✓ Recomendaciones prácticas para su lote</li>
                         </ul>
                     </div>
                     <div>
@@ -326,6 +392,135 @@
         </div>
     </section>
 
+    <!-- Pricing Section -->
+    <section class="section" id="precios" style="background: var(--dark-bg); position: relative; overflow: hidden;">
+        <div class="container" style="position: relative; z-index: 1;">
+            <div class="section-header">
+                <span class="section-badge">Precios Transparentes</span>
+                <h2 class="section-title">Invierta poco, ahorre mucho</h2>
+                <p class="section-description">
+                    Precios justos para el campo colombiano. Saber lo que pisa antes de sembrar es la mejor inversión.
+                </p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-lg); max-width: 1050px; margin: 0 auto;">
+                <!-- Plan Esencial -->
+                <div class="neuro-card reveal" style="text-align: center; position: relative; border: 2px solid transparent;">
+                    <span style="display: inline-block; background: rgba(76, 175, 80, 0.15); color: var(--brand-green); padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: var(--spacing-md); letter-spacing: 0.5px;">ESENCIAL</span>
+                    <div style="margin-bottom: var(--spacing-sm);">
+                        <span style="font-size: 2.8rem; font-weight: 800; color: var(--text-primary);">$7.000</span>
+                        <span style="font-size: 1rem; color: var(--text-secondary);">/hectárea</span>
+                    </div>
+                    <p style="color: var(--brand-green-light); font-size: 1.05rem; font-weight: 600; margin-bottom: var(--spacing-xs);">50 – 100 hectáreas</p>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: var(--spacing-md);">1 año de historia · Entrega en 1–3 días</p>
+                    <ul style="list-style: none; padding: 0; color: var(--text-secondary); text-align: left; margin-bottom: var(--spacing-lg); line-height: 2; font-size: 0.9rem;">
+                        <li>✅ Análisis NDVI (salud vegetal)</li>
+                        <li>✅ Análisis NDMI (estrés hídrico)</li>
+                        <li>✅ Análisis SAVI (cobertura del suelo)</li>
+                        <li>✅ Datos climáticos históricos</li>
+                        <li>✅ Informe completo con mapas y recomendaciones</li>
+                    </ul>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--spacing-sm);">Ejemplo: 80 ha → <strong style="color: var(--text-primary);">$560.000</strong></p>
+                    <a href="https://wa.me/573223088873?text=Hola,%20me%20interesa%20el%20plan%20Esencial%20para%20mi%20lote" class="neuro-button neuro-button-primary" target="_blank" rel="noopener noreferrer" style="width: 100%;">
+                        Solicitar Estudio
+                    </a>
+                </div>
+                <!-- Plan Profesional -->
+                <div class="neuro-card reveal" style="text-align: center; position: relative; border: 2px solid var(--brand-green); transform: scale(1.03);">
+                    <span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--brand-green); color: #000; padding: 5px 20px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; white-space: nowrap;">⭐ MÁS POPULAR</span>
+                    <span style="display: inline-block; background: rgba(76, 175, 80, 0.15); color: var(--brand-green); padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: var(--spacing-md); margin-top: var(--spacing-sm); letter-spacing: 0.5px;">PROFESIONAL</span>
+                    <div style="margin-bottom: var(--spacing-sm);">
+                        <span style="font-size: 2.8rem; font-weight: 800; color: var(--text-primary);">$5.500</span>
+                        <span style="font-size: 1rem; color: var(--text-secondary);">/hectárea</span>
+                    </div>
+                    <p style="color: var(--brand-green-light); font-size: 1.05rem; font-weight: 600; margin-bottom: var(--spacing-xs);">100 – 300 hectáreas</p>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: var(--spacing-md);">1 año de historia · Entrega en 1–3 días</p>
+                    <ul style="list-style: none; padding: 0; color: var(--text-secondary); text-align: left; margin-bottom: var(--spacing-lg); line-height: 2; font-size: 0.9rem;">
+                        <li>✅ Todo lo del plan Esencial</li>
+                        <li>✅ Comparación temporal mes a mes</li>
+                        <li>✅ Zonificación detallada del lote</li>
+                        <li>✅ Identificación de zonas críticas</li>
+                        <li>✅ Soporte post-entrega por WhatsApp</li>
+                    </ul>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--spacing-sm);">Ejemplo: 200 ha → <strong style="color: var(--text-primary);">$1.100.000</strong></p>
+                    <a href="https://wa.me/573223088873?text=Hola,%20me%20interesa%20el%20plan%20Profesional%20para%20mi%20lote" class="neuro-button neuro-button-primary" target="_blank" rel="noopener noreferrer" style="width: 100%;">
+                        Solicitar Estudio
+                    </a>
+                </div>
+                <!-- Plan Empresarial -->
+                <div class="neuro-card reveal" style="text-align: center; position: relative; border: 2px solid transparent;">
+                    <span style="display: inline-block; background: rgba(255, 152, 0, 0.15); color: #FF9800; padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: var(--spacing-md); letter-spacing: 0.5px;">EMPRESARIAL</span>
+                    <div style="margin-bottom: var(--spacing-sm);">
+                        <span style="font-size: 2.8rem; font-weight: 800; color: var(--text-primary);">A medida</span>
+                    </div>
+                    <p style="color: #FF9800; font-size: 1.05rem; font-weight: 600; margin-bottom: var(--spacing-xs);">+300 hectáreas</p>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: var(--spacing-md);">Cotización personalizada y gratuita</p>
+                    <ul style="list-style: none; padding: 0; color: var(--text-secondary); text-align: left; margin-bottom: var(--spacing-lg); line-height: 2; font-size: 0.9rem;">
+                        <li>✅ Todo lo del plan Profesional</li>
+                        <li>✅ Múltiples lotes en un solo informe</li>
+                        <li>✅ Historial de más de 1 año (negociable)</li>
+                        <li>✅ Entrega prioritaria</li>
+                        <li>✅ Asesoría personalizada de resultados</li>
+                    </ul>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--spacing-sm);">Le armamos un plan a la medida de su operación</p>
+                    <a href="https://wa.me/573223088873?text=Hola,%20tengo%20más%20de%20300%20hectáreas%20y%20quisiera%20una%20cotización%20empresarial" class="neuro-button neuro-button-accent" target="_blank" rel="noopener noreferrer" style="width: 100%;">
+                        Pedir Cotización
+                    </a>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: var(--spacing-lg); color: var(--text-secondary); font-size: 0.9rem;">
+                ¿Tiene menos de 50 hectáreas? <a href="https://wa.me/573223088873?text=Hola,%20tengo%20un%20lote%20pequeño%20y%20quisiera%20cotización" target="_blank" rel="noopener noreferrer" style="color: var(--brand-green); font-weight: 600;">Escríbanos</a> — le hacemos cotización personalizada sin costo.
+            </p>
+            <p style="text-align: center; margin-top: var(--spacing-xs); color: var(--text-secondary); font-size: 0.85rem;">
+                🔒 Pagos seguros con <strong>Mercado Pago</strong>, Nequi, Daviplata o transferencia bancaria.
+            </p>
+        </div>
+    </section>
+
+    <!-- Sample Satellite Analysis Gallery -->
+    <section class="section" style="background: var(--dark-bg-secondary);">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Datos Reales</span>
+                <h2 class="section-title">Así se ve un análisis satelital</h2>
+                <p class="section-description">
+                    Estas son imágenes reales extraídas de informes que hemos entregado. Cada mapa le cuenta la historia de su terreno.
+                </p>
+            </div>
+            <div class="satellite-gallery" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--spacing-xl, 2rem); max-width: 960px; margin: 0 auto;">
+                <div class="neuro-card reveal" style="padding: var(--spacing-lg, 1.5rem); text-align: center;">
+                    <div style="background: rgba(76, 175, 80, 0.08); border-radius: var(--radius-md); padding: var(--spacing-md); margin-bottom: var(--spacing-md);">
+                        <img src="images/informe-demo/ndvi-salud-vegetal.png" alt="Mapa NDVI - Salud vegetal del cultivo" style="width: 100%; max-width: 220px; border-radius: var(--radius-sm); image-rendering: crisp-edges;">
+                    </div>
+                    <p style="font-size: 1rem; color: var(--brand-green); font-weight: 700;">NDVI</p>
+                    <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600;">Salud Vegetal</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">¿Qué tan verdes y sanas están las plantas?</p>
+                </div>
+                <div class="neuro-card reveal" style="padding: var(--spacing-lg, 1.5rem); text-align: center;">
+                    <div style="background: rgba(33, 150, 243, 0.08); border-radius: var(--radius-md); padding: var(--spacing-md); margin-bottom: var(--spacing-md);">
+                        <img src="images/informe-demo/ndmi-humedad.png" alt="Mapa NDMI - Estrés hídrico del terreno" style="width: 100%; max-width: 220px; border-radius: var(--radius-sm); image-rendering: crisp-edges;">
+                    </div>
+                    <p style="font-size: 1rem; color: #2196F3; font-weight: 700;">NDMI</p>
+                    <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600;">Estrés Hídrico</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">¿Le falta o le sobra agua al terreno?</p>
+                </div>
+                <div class="neuro-card reveal" style="padding: var(--spacing-lg, 1.5rem); text-align: center;">
+                    <div style="background: rgba(255, 152, 0, 0.08); border-radius: var(--radius-md); padding: var(--spacing-md); margin-bottom: var(--spacing-md);">
+                        <img src="images/informe-demo/savi-cobertura.png" alt="Mapa SAVI - Cobertura del suelo" style="width: 100%; max-width: 220px; border-radius: var(--radius-sm); image-rendering: crisp-edges;">
+                    </div>
+                    <p style="font-size: 1rem; color: #FF9800; font-weight: 700;">SAVI</p>
+                    <p style="font-size: 0.95rem; color: var(--text-primary); font-weight: 600;">Cobertura del Suelo</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">¿Cuánto suelo está cubierto por vegetación?</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: var(--spacing-lg);">
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: var(--spacing-md);">Cada color cuenta una historia. <strong style="color: var(--text-primary);">¿Quiere ver un ejemplo completo?</strong></p>
+                <a href="https://wa.me/573223088873?text=Hola,%20me%20gustaría%20ver%20un%20ejemplo%20de%20informe%20completo" class="neuro-button neuro-button-primary" target="_blank" rel="noopener noreferrer">
+                    Ver Ejemplo de Informe Gratis
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Products Section -->
     <section class="products section" id="productos" style="position: relative; overflow: hidden;">
         <!-- Decorative Illustration - 3D Terrain -->
@@ -343,52 +538,60 @@
                     Estudios del pasado para asegurar su inversión hoy, y pronto vigilancia día a día.
                 </p>
             </div>
+            <!-- Producto Principal -->
             <div class="products-showcase">
                 <div class="product-card reveal">
                     <div class="product-image">
                         <img src="images/ingeniero-agronomo-control-de-cultivos-en-el-campo-con-tablet-pc.jpg"
-                            alt="Ingeniero en campo">
+                            alt="Análisis de cultivos en campo con tecnología">
                     </div>
                     <div class="product-content">
-                        <span class="product-badge">Disponible Ahora</span>
+                        <span class="product-badge" style="background: var(--brand-green); color: #000;">✅ Disponible Ahora</span>
                         <h3 class="product-title">Estudio Histórico del Lote</h3>
                         <p class="product-description">
                             Revisamos qué ha pasado en su finca años atrás.
                             Ideal si va a comprar tierra, arrendar o sembrar en un lote nuevo.
                         </p>
                         <ul class="product-features">
-                            <li>Historia del terreno</li>
-                            <li>Mapas de salud vegetal</li>
-                            <li>Historia del clima</li>
-                            <li>Ubicación de zonas riesgosas</li>
-                            <li>Recomendaciones de expertos</li>
+                            <li>Historia del terreno (NDVI, NDMI, SAVI)</li>
+                            <li>Mapas de salud vegetal a color</li>
+                            <li>Datos climáticos históricos</li>
+                            <li>Identificación de zonas críticas</li>
+                            <li>Recomendaciones prácticas para decidir</li>
                         </ul>
-                        <a href="#contacto" class="neuro-button neuro-button-primary">
+                        <a href="https://wa.me/573223088873?text=Hola,%20quiero%20el%20Estudio%20Histórico%20para%20mi%20lote" class="neuro-button neuro-button-primary" target="_blank" rel="noopener noreferrer">
                             Quiero Analizar mi Terreno
                         </a>
                     </div>
                 </div>
-                <div class="product-card reveal">
-                    <div class="product-image">
-                        <img src="images/mujer-sosteniendo-una-tableta-junto-un-campo-agricola-con-espacio-de-copia.jpg"
-                            alt="Agricultora monitoreando">
-                    </div>
-                    <div class="product-content">
-                        <span class="product-badge">Próximamente</span>
-                        <h3 class="product-title">Vigilancia Satelital Permanente</h3>
-                        <p class="product-description">
-                            Una plataforma que vigila su cultivo todos los días y le avisa si hay problemas.
-                            Acompañamiento durante toda la cosecha.
+            </div>
+
+            <!-- Roadmap: Próximamente -->
+            <div class="neuro-card reveal" style="margin-top: var(--spacing-xl); max-width: 900px; margin-left: auto; margin-right: auto; position: relative; overflow: hidden;">
+                <div style="display: flex; align-items: center; gap: var(--spacing-md); flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 280px;">
+                        <div style="display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm);">
+                            <span style="display: inline-block; background: rgba(255, 152, 0, 0.15); color: #FF9800; padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; animation: pulse 2s infinite;">🚀 EN DESARROLLO</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: var(--spacing-xs); color: var(--text-primary);">Vigilancia Satelital Permanente</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: var(--spacing-md);">
+                            Pronto: una plataforma que vigila su cultivo todos los días, le avisa si hay problemas y le entrega reportes automáticos.
                         </p>
-                        <ul class="product-features">
-                            <li>Vigilancia las 24 horas</li>
-                            <li>Alertas al celular</li>
-                            <li>Pronóstico del tiempo</li>
-                            <li>Seguimiento del crecimiento</li>
-                            <li>Reportes automáticos</li>
-                        </ul>
+                        <!-- Progress Bar -->
+                        <div style="margin-bottom: var(--spacing-sm);">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">Progreso de desarrollo</span>
+                                <span style="font-size: 0.8rem; color: var(--brand-green); font-weight: 600;">70%</span>
+                            </div>
+                            <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+                                <div style="width: 70%; height: 100%; background: linear-gradient(90deg, var(--brand-green), #FF9800); border-radius: 4px; animation: progressPulse 2s ease-in-out infinite;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 0 0 auto; text-align: center;">
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: var(--spacing-sm);">Sea el primero en probarlo:</p>
                         <a href="templates/notify_waiting_list.html" class="neuro-button neuro-button-accent">
-                            Avísenme cuando esté listo
+                            Unirme a la Lista
                         </a>
                     </div>
                 </div>
@@ -396,7 +599,13 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
+    <style>
+    @keyframes progressPulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+    </style>
+
     <!-- Stats Section -->
     <section class="stats section">
         <div class="container">
@@ -406,16 +615,16 @@
                         <img src="images/illustration-3d-terrain-no-bg.png" alt="Hectáreas"
                             style="object-fit: contain;">
                     </div>
-                    <span class="stat-value">+130</span>
-                    <span class="stat-label">Hectáreas Revisadas</span>
+                    <span class="stat-value">+500</span>
+                    <span class="stat-label">Hectáreas Analizadas</span>
                 </div>
                 <div class="stat-card reveal">
                     <div class="stat-icon">
                         <img src="images/illustration-satellite-field-no-bg.png" alt="Datos Reales"
                             style="object-fit: contain;">
                     </div>
-                    <span class="stat-value">100%</span>
-                    <span class="stat-label">Datos Reales y Útiles</span>
+                    <span class="stat-value">3+</span>
+                    <span class="stat-label">Años de Historial</span>
                 </div>
                 <div class="stat-card reveal">
                     <div class="stat-icon">
@@ -503,6 +712,42 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="section" style="background: var(--dark-bg-secondary);">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Preguntas Frecuentes</span>
+                <h2 class="section-title">Lo que más nos preguntan</h2>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <details class="neuro-card reveal" style="margin-bottom: var(--spacing-sm); cursor: pointer;">
+                    <summary style="font-weight: 600; color: var(--text-primary); font-size: 1.05rem; padding: var(--spacing-xs) 0;">¿Qué necesito para pedir el estudio?</summary>
+                    <p style="color: var(--text-secondary); margin-top: var(--spacing-sm); line-height: 1.7;">Solo necesitamos la ubicación de su lote (coordenadas, punto en Google Maps o dirección). No necesita instalar nada ni ir al terreno. Nosotros hacemos todo el trabajo con imágenes satelitales.</p>
+                </details>
+                <details class="neuro-card reveal" style="margin-bottom: var(--spacing-sm); cursor: pointer;">
+                    <summary style="font-weight: 600; color: var(--text-primary); font-size: 1.05rem; padding: var(--spacing-xs) 0;">¿Cuánto se demora el informe?</summary>
+                    <p style="color: var(--text-secondary); margin-top: var(--spacing-sm); line-height: 1.7;">La generación del informe es casi inmediata. Le entregamos en <strong>1 a 3 días hábiles</strong> después de confirmar el pago y recibir las coordenadas. Ese margen nos permite revisar la calidad de los datos y asegurar que todo esté perfecto antes de enviar.</p>
+                </details>
+                <details class="neuro-card reveal" style="margin-bottom: var(--spacing-sm); cursor: pointer;">
+                    <summary style="font-weight: 600; color: var(--text-primary); font-size: 1.05rem; padding: var(--spacing-xs) 0;">¿Los datos son confiables?</summary>
+                    <p style="color: var(--text-secondary); margin-top: var(--spacing-sm); line-height: 1.7;">Sí. Usamos imágenes de los satélites <strong>Sentinel-2</strong> (Agencia Espacial Europea) y <strong>Landsat</strong> (NASA), las mismas fuentes que usan gobiernos e instituciones científicas en todo el mundo.</p>
+                </details>
+                <details class="neuro-card reveal" style="margin-bottom: var(--spacing-sm); cursor: pointer;">
+                    <summary style="font-weight: 600; color: var(--text-primary); font-size: 1.05rem; padding: var(--spacing-xs) 0;">¿Cómo pago?</summary>
+                    <p style="color: var(--text-secondary); margin-top: var(--spacing-sm); line-height: 1.7;">Aceptamos <strong>Mercado Pago</strong> (pago seguro con tarjeta, PSE o efectivo), <strong>Nequi, Daviplata y transferencia bancaria</strong>. El pago se hace antes de iniciar el análisis. Si por alguna razón técnica no podemos generar el informe, le devolvemos el 100% de su dinero.</p>
+                </details>
+                <details class="neuro-card reveal" style="margin-bottom: var(--spacing-sm); cursor: pointer;">
+                    <summary style="font-weight: 600; color: var(--text-primary); font-size: 1.05rem; padding: var(--spacing-xs) 0;">¿Sirve para cualquier cultivo o región?</summary>
+                    <p style="color: var(--text-secondary); margin-top: var(--spacing-sm); line-height: 1.7;">Sí. Analizamos <strong>cualquier terreno agrícola en Colombia</strong>: plátano, arroz, palma, café, maíz, ganadería, etc. Los satélites cubren todo el territorio nacional.</p>
+                </details>
+                <details class="neuro-card reveal" style="margin-bottom: var(--spacing-sm); cursor: pointer;">
+                    <summary style="font-weight: 600; color: var(--text-primary); font-size: 1.05rem; padding: var(--spacing-xs) 0;">¿Qué recibo al final?</summary>
+                    <p style="color: var(--text-secondary); margin-top: var(--spacing-sm); line-height: 1.7;">Recibe una <strong>solución completa para tomar mejores decisiones</strong> sobre su terreno: mapas satelitales a color que le muestran exactamente dónde están los problemas y las fortalezas, gráficos de evolución temporal, datos climáticos históricos y recomendaciones concretas en lenguaje claro. Todo organizado en un documento profesional que se lo enviamos por WhatsApp y correo. Es como tener un diagnóstico médico de su finca: <strong>usted sabe qué tiene, dónde y qué hacer al respecto.</strong></p>
+                </details>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="cta section" style="position: relative; overflow: hidden;">
         <div class="container" style="position: relative; z-index: 1;">
@@ -519,11 +764,11 @@
                     </p>
                     <div class="cta-buttons">
                         <a href="https://wa.me/573223088873?text=Hola,%20quisiera%20más%20información%20sobre%20el%20estudio%20histórico"
-                            class="neuro-button neuro-button-primary" target="_blank">
+                            class="neuro-button neuro-button-primary" target="_blank" rel="noopener noreferrer">
                             Pedir mi Estudio
                         </a>
                         <a href="templates/contact_expert.html" class="neuro-button neuro-button-accent">
-                            Hablar con un Ingeniero
+                            Tengo Preguntas
                         </a>
                     </div>
                 </div>
@@ -596,13 +841,13 @@
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h3>Productos</h3>
+                    <h3>Servicios</h3>
                     <ul class="footer-links">
-                        <li><a href="#">→ Monitoreo de Cultivos</a></li>
-                        <li><a href="#">→ Análisis NDVI</a></li>
-                        <li><a href="#">→ Pronósticos Meteorológicos</a></li>
-                        <li><a href="#">→ Estrés Hídrico</a></li>
-                        <li><a href="#">→ Gestión de Parcelas</a></li>
+                        <li><a href="#productos">→ Estudio Histórico del Lote</a></li>
+                        <li><a href="#funcionalidades">→ Análisis NDVI</a></li>
+                        <li><a href="#funcionalidades">→ Estrés Hídrico</a></li>
+                        <li><a href="#precios">→ Precios</a></li>
+                        <li><a href="blog.html">→ Blog</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -622,8 +867,8 @@
                     reservados.
                 </p>
                 <p style="font-size: 0.85rem; margin-top: 5px;">
-                    <a href="#" style="color: var(--brand-green);">Política de Privacidad</a> |
-                    <a href="#" style="color: var(--brand-green);">Términos de Servicio</a>
+                    <a href="legal/privacidad.html" style="color: var(--brand-green);">Política de Privacidad</a> |
+                    <a href="legal/terminos.html" style="color: var(--brand-green);">Términos de Servicio</a>
                 </p>
             </div>
         </div>

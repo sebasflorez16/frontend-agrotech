@@ -1,0 +1,25 @@
+# robots.txt - AgroTech Colombia
+# https://agrotechcolombia.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://agrotechcolombia.com/sitemap.xml
+
+# Bloquear carpetas internas
+Disallow: /templates/authentication/
+Disallow: /templates/dashboard/
+Disallow: /templates/apps/
+Disallow: /source/
+Disallow: /libs/
+Disallow: /fonts/
+Disallow: /js/auth/
+Disallow: /js/employees/
+Disallow: /js/inventario/
+
+# Permitir recursos necesarios para renderizado
+Allow: /css/
+Allow: /js/landing.js
+Allow: /js/blog.js
+Allow: /images/

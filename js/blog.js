@@ -121,15 +121,24 @@ function updateMetaTags(post) {
     }
     metaDesc.content = post.summary;
 
+    // Canonical URL for the specific post
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+        canonical = document.createElement('link');
+        canonical.rel = 'canonical';
+        document.head.appendChild(canonical);
+    }
+    canonical.href = `https://agrotechcolombia.com/post.html?id=${post.id}`;
+
     // Open Graph / Social Media
-    const siteUrl = 'https://agrotechcolombia.com/'; // Debería venir de config pero hardcoded por seguridad
+    const siteUrl = 'https://agrotechcolombia.com/';
     const imageUrl = post.image.startsWith('http') ? post.image : siteUrl + post.image;
 
     const ogTags = {
         'og:title': post.title,
         'og:description': post.summary,
         'og:image': imageUrl,
-        'og:url': window.location.href,
+        'og:url': `${siteUrl}post.html?id=${post.id}`,
         'og:type': 'article'
     };
 
@@ -142,6 +151,52 @@ function updateMetaTags(post) {
         }
         tag.content = content;
     }
+
+    // Twitter Card
+    const twitterTags = {
+        'twitter:title': post.title,
+        'twitter:description': post.summary,
+        'twitter:image': imageUrl
+    };
+    for (const [name, content] of Object.entries(twitterTags)) {
+        let tag = document.querySelector(`meta[name="${name}"]`);
+        if (!tag) {
+            tag = document.createElement('meta');
+            tag.name = name;
+            document.head.appendChild(tag);
+        }
+        tag.content = content;
+    }
+
+    // Article Schema JSON-LD
+    const articleSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        'headline': post.title,
+        'description': post.summary,
+        'image': imageUrl,
+        'datePublished': post.date,
+        'author': {
+            '@type': 'Person',
+            'name': post.author
+        },
+        'publisher': {
+            '@type': 'Organization',
+            'name': 'AgroTech Colombia',
+            'logo': {
+                '@type': 'ImageObject',
+                'url': siteUrl + 'images/agrotech solo blanco.png'
+            }
+        },
+        'mainEntityOfPage': {
+            '@type': 'WebPage',
+            '@id': `${siteUrl}post.html?id=${post.id}`
+        }
+    };
+    const scriptEl = document.createElement('script');
+    scriptEl.type = 'application/ld+json';
+    scriptEl.textContent = JSON.stringify(articleSchema);
+    document.head.appendChild(scriptEl);
 }
 
 /**

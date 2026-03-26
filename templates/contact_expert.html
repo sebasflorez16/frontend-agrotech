@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hablar con un Ingeniero | AgroTech Colombia</title>
+    <title>Contacto | AgroTech Colombia</title>
     <meta name="description"
-        content="Contacte con un experto en agrotecnología para recibir asesoría sobre el análisis histórico de sus cultivos.">
+        content="Contáctenos para recibir asesoría sobre el análisis histórico de sus cultivos.">
     <meta name="author" content="AgroTech Colombia">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,12 +108,13 @@
         </a>
 
         <div class="text-center mb-3">
-            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Hable con un experto</h1>
-            <p>Cuéntenos sobre su tierra y un ingeniero lo contactará pronto.</p>
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Cuéntenos sobre su terreno</h1>
+            <p>Déjenos sus datos y lo contactamos pronto.</p>
         </div>
 
-        <form action="mailto:contacto@agrotechcolombia.com" method="post" enctype="text/plain">
-            <input type="hidden" name="subject" value="Solicitud de Asesoría - Agrotech">
+        <form name="contact-expert" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/templates/gracias.html">
+            <input type="hidden" name="form-name" value="contact-expert">
+            <p style="display:none"><label>No llenar: <input name="bot-field"></label></p>
 
             <div class="form-group">
                 <label class="form-label" for="nombre">Nombre Completo</label>
@@ -152,7 +153,7 @@
                 Enviar Solicitud
             </button>
             <p class="text-center" style="font-size: 0.8rem; margin-top: 1rem; color: var(--text-secondary);">
-                Al enviar, se abrirá su correo para confirmar el mensaje.
+                Sus datos están protegidos. Revise nuestra <a href="../legal/privacidad.html" style="color: var(--brand-green);">Política de Privacidad</a>.
             </p>
         </form>
     </div>

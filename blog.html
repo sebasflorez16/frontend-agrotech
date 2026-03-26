@@ -4,10 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | AgroTech Colombia</title>
-    <meta name="description" <meta name="description"
-        content="Noticias, análisis y tecnología agrícola. Manténgase informado con el blog de AgroTech.">
+    <title>Blog de Agricultura Satelital y Tecnología Agrícola | AgroTech Colombia</title>
+    <meta name="description"
+        content="Aprenda sobre análisis satelital NDVI, monitoreo de cultivos, agricultura de precisión y tecnología para el campo colombiano. Guías prácticas y artículos para agricultores.">
+    <meta name="keywords" content="blog agricultura satelital, NDVI cultivos, monitoreo satelital agrícola, tecnología agrícola Colombia, agricultura de precisión, análisis de terrenos">
+    <meta name="robots" content="index, follow">
     <meta name="google-site-verification" content="vlbqIbSDw457ulnE7xiQu8LEYdyf4-rp9wgbwV1yZME" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://agrotechcolombia.com/blog.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Blog de Agricultura Satelital | AgroTech Colombia">
+    <meta property="og:description" content="Guías prácticas sobre análisis satelital, NDVI, monitoreo de cultivos y tecnología para el campo colombiano.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://agrotechcolombia.com/blog.html">
+    <meta property="og:site_name" content="AgroTech Colombia">
+    <meta property="og:locale" content="es_CO">
+    <meta property="og:image" content="https://agrotechcolombia.com/images/agrotech-og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blog de Agricultura Satelital | AgroTech Colombia">
+    <meta name="twitter:description" content="Guías prácticas sobre análisis satelital, NDVI y tecnología para el campo colombiano.">
+    <meta name="twitter:image" content="https://agrotechcolombia.com/images/agrotech-og-image.png">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
@@ -24,6 +44,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/landing.css">
+
+    <!-- Blog Schema JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Blog de Agricultura Satelital | AgroTech Colombia",
+      "description": "Artículos sobre análisis satelital NDVI, monitoreo de cultivos y agricultura de precisión para el campo colombiano.",
+      "url": "https://agrotechcolombia.com/blog.html",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "url": "https://agrotechcolombia.com/post.html?id=tecnologia-satelital-aliado-agricultor",
+            "name": "Lo que sus ojos no ven: Por qué el satélite es el mejor aliado del agricultor moderno"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "url": "https://agrotechcolombia.com/post.html?id=decisiones-agricolas-datos",
+            "name": "Por qué hoy tomar decisiones sin datos es perder dinero (y cómo evitarlo)"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "url": "https://agrotechcolombia.com/post.html?id=predicciones-climaticas-2026",
+            "name": "Predicciones Climáticas para el Agro en 2026"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "url": "https://agrotechcolombia.com/post.html?id=ndvi-guia-completa",
+            "name": "NDVI: La Guía Completa para Agricultores Modernos"
+          }
+        ]
+      }
+    }
+    </script>
 
     <!-- Blog Specific CSS -->
     <style>
@@ -161,6 +221,17 @@
                     <p>Cargando artículos...</p>
                 </div>
             </div>
+
+            <!-- Fallback estático para crawlers que no ejecutan JS -->
+            <noscript>
+                <h2>Artículos Recientes</h2>
+                <ul>
+                    <li><a href="post.html?id=tecnologia-satelital-aliado-agricultor">Lo que sus ojos no ven: Por qué el satélite es el mejor aliado del agricultor moderno</a> — Descubra por qué entender la historia de su terreno es la única forma de dejar de perder dinero.</li>
+                    <li><a href="post.html?id=decisiones-agricolas-datos">Por qué hoy tomar decisiones sin datos es perder dinero</a> — El costo invisible de trabajar a ciegas en el agro colombiano.</li>
+                    <li><a href="post.html?id=predicciones-climaticas-2026">Predicciones Climáticas para el Agro en 2026</a> — Patrones de El Niño y La Niña y cómo afectarán sus cultivos.</li>
+                    <li><a href="post.html?id=ndvi-guia-completa">NDVI: La Guía Completa para Agricultores Modernos</a> — Qué es el NDVI y cómo este índice le dice la salud exacta de sus plantas.</li>
+                </ul>
+            </noscript>
         </div>
     </section>
 

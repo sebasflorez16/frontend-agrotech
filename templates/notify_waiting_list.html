@@ -101,10 +101,9 @@
             </p>
         </div>
 
-        <form action="mailto:contacto@agrotechcolombia.com" method="post" enctype="text/plain">
-            <input type="hidden" name="subject" value="Lista de Espera - Monitoreo Continuo">
-            <input type="hidden" name="mensaje"
-                value="Hola, quiero unirme a la lista de espera para el monitoreo continuo.">
+        <form name="waiting-list" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/templates/gracias-waitlist.html">
+            <input type="hidden" name="form-name" value="waiting-list">
+            <p style="display:none"><label>No llenar: <input name="bot-field"></label></p>
 
             <label for="email"
                 style="display: block; margin-bottom: 1rem; color: var(--brand-orange-light); font-weight: 500;">

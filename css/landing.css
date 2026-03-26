@@ -1079,6 +1079,20 @@ a:hover {
   .cta-content {
     padding: var(--spacing-lg);
   }
+
+  /* Satellite gallery: bigger images on mobile */
+  .satellite-gallery {
+    grid-template-columns: 1fr !important;
+    max-width: 340px !important;
+    gap: var(--spacing-lg) !important;
+  }
+  .satellite-gallery .neuro-card {
+    padding: var(--spacing-lg, 1.5rem);
+  }
+  .satellite-gallery img {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 480px) {
