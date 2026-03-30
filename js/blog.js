@@ -185,7 +185,7 @@ function updateMetaTags(post) {
             'name': 'AgroTech Colombia',
             'logo': {
                 '@type': 'ImageObject',
-                'url': siteUrl + 'images/agrotech solo blanco.png'
+                'url': siteUrl + 'images/agrotech-logo.webp'
             }
         },
         'mainEntityOfPage': {

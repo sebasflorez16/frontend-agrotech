@@ -19,7 +19,7 @@
     <meta property="og:url" content="https://agrotechcolombia.com/blog/ndvi-guia-completa.html">
     <meta property="og:site_name" content="AgroTech Colombia">
     <meta property="og:locale" content="es_CO">
-    <meta property="og:image" content="https://agrotechcolombia.com/images/iot-de-agricultura-inteligente-con-fondo-de-arbol-de-plantacion-manual.jpg">
+    <meta property="og:image" content="https://agrotechcolombia.com/images/iot-de-agricultura-inteligente-con-fondo-de-arbol-de-plantacion-manual.webp">
     <meta property="og:image:alt" content="Agricultura inteligente con monitoreo NDVI - Guía completa">
     <meta property="article:published_time" content="2026-01-15">
     <meta property="article:modified_time" content="2026-03-30">
@@ -33,7 +33,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="NDVI: La Guía Completa para Agricultores Modernos">
     <meta name="twitter:description" content="Qué es el NDVI y cómo este índice le dice la salud exacta de sus plantas.">
-    <meta name="twitter:image" content="https://agrotechcolombia.com/images/iot-de-agricultura-inteligente-con-fondo-de-arbol-de-plantacion-manual.jpg">
+    <meta name="twitter:image" content="https://agrotechcolombia.com/images/iot-de-agricultura-inteligente-con-fondo-de-arbol-de-plantacion-manual.webp">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
@@ -44,10 +44,13 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#4CAF50">
 
-    <!-- Fonts & CSS -->
+    <!-- Fonts & CSS - Async loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="../css/landing.css">
     <link rel="stylesheet" href="../css/blog-article.css">
 
@@ -71,7 +74,7 @@
       "@type": "Article",
       "headline": "NDVI: La Guía Completa para Agricultores Modernos",
       "description": "¿Escucha hablar del NDVI pero no sabe exactamente qué es? Le explicamos cómo este índice de vegetación le dice la salud exacta de sus plantas.",
-      "image": "https://agrotechcolombia.com/images/iot-de-agricultura-inteligente-con-fondo-de-arbol-de-plantacion-manual.jpg",
+      "image": "https://agrotechcolombia.com/images/iot-de-agricultura-inteligente-con-fondo-de-arbol-de-plantacion-manual.webp",
       "datePublished": "2026-01-15",
       "dateModified": "2026-03-30",
       "author": {
@@ -138,7 +141,7 @@
                             <p>Y aquí está la clave: una planta sana, que está haciendo fotosíntesis activamente, <strong>absorbe la luz roja</strong> (la usa como energía para crecer) y <strong>refleja la luz infrarroja</strong>. Cuando la planta está enferma o estresada, deja de absorber tanta luz roja y deja de reflejar tanta infrarroja. Es como si la planta hablara otro idioma que solo el satélite puede escuchar.</p>
                         </div>
                         <div class="blog-col-image">
-                            <img src="/images/iot-de-agricultura-inteligente-con-fondo-de-arbol-de-plantacion-manual.jpg" alt="Tecnología de agricultura inteligente monitoreando la salud de las plantas" loading="lazy" width="350" height="233">
+                            <img src="/images/iot-de-agricultura-inteligente-con-fondo-de-arbol-de-plantacion-manual.webp" alt="Tecnología de agricultura inteligente monitoreando la salud de las plantas" loading="lazy" width="350" height="233">
                             <p class="image-caption">Lo que sus ojos ven es solo una fracción de la información que la planta emite.</p>
                         </div>
                     </div>
@@ -166,7 +169,7 @@
 
                     <div class="blog-row reverse">
                         <div class="blog-col-image">
-                            <img src="/images/blog/pexels-tomfisk-1595104.jpg" alt="Vista aérea de un campo agrícola que muestra la variabilidad del cultivo" loading="lazy" width="350" height="233">
+                            <img src="/images/blog/pexels-tomfisk-1595104.webp" alt="Vista aérea de un campo agrícola que muestra la variabilidad del cultivo" loading="lazy" width="350" height="233">
                             <p class="image-caption">Desde arriba, el satélite revela patrones que desde el suelo son imposibles de percibir.</p>
                         </div>
                         <div class="blog-col-text">
@@ -209,7 +212,7 @@
                             <p>Eso es <a href="/blog/decisiones-agricolas-datos.html">decidir con datos</a>. No reemplaza su experiencia, la potencia.</p>
                         </div>
                         <div class="blog-col-image">
-                            <img src="/images/blog/pexels-shvetsa-5230983.jpg" alt="Agricultor analizando la salud de su cultivo en campo" loading="lazy" width="350" height="233">
+                            <img src="/images/blog/pexels-shvetsa-5230983.webp" alt="Agricultor analizando la salud de su cultivo en campo" loading="lazy" width="350" height="233">
                             <p class="image-caption">El satélite le dice dónde mirar. Su experiencia le dice qué hacer.</p>
                         </div>
                     </div>

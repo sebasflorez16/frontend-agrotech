@@ -29,14 +29,42 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#4CAF50">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts - Async loading to avoid render blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
-    <!-- CSS Styles -->
-    <link rel="stylesheet" href="css/landing.css">
+    <!-- Critical CSS inline for above-the-fold content -->
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth;font-size:16px}
+        body{font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:#1a1a1a;color:#fff;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+        .container{max-width:1200px;margin:0 auto;padding:0 2rem;width:100%}
+        .header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(26,26,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05)}
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+        .nav-logo{display:flex;align-items:center;gap:1rem;font-size:1.5rem;font-weight:700;color:#fff;text-decoration:none}
+        .nav-logo-image{height:45px;width:45px;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(76,175,80,.3))}
+        .nav-links{display:flex;list-style:none;gap:2rem;align-items:center}
+        .nav-links a{color:#b0b0b0;font-weight:500;padding:.5rem 1rem;border-radius:8px;transition:color .2s;text-decoration:none}
+        .nav-burger{display:none}
+        .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding-top:100px}
+        .hero-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;background-image:url('images/agrotech-satelite-1.webp');background-size:cover;background-position:center;background-repeat:no-repeat}
+        .hero-bg::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(10,14,39,.92) 0%,rgba(10,14,39,.85) 40%,rgba(76,175,80,.15) 100%);z-index:1}
+        .hero-content{position:relative;z-index:3;text-align:center;max-width:900px}
+        h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:700;line-height:1.1;background:linear-gradient(135deg,#4CAF50,#FF6F00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero-description{font-size:1.3rem;color:#b0b0b0;margin-bottom:2rem;max-width:700px;margin-left:auto;margin-right:auto}
+        .neuro-button{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:12px;font-weight:600;font-size:1rem;transition:all .3s;cursor:pointer;text-decoration:none;border:none}
+        .neuro-button-primary{background:linear-gradient(135deg,#4CAF50,#388E3C);color:#fff;box-shadow:0 4px 15px rgba(76,175,80,.3)}
+        @media(max-width:968px){.nav-links{display:none}.nav-burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem}.nav-burger span{width:25px;height:3px;background:#fff;border-radius:2px;display:block}}
+    </style>
+
+    <!-- Full CSS - loaded async to avoid render blocking -->
+    <link rel="preload" as="style" href="css/landing.css">
+    <link rel="stylesheet" href="css/landing.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="css/landing.css"></noscript>
 
     <!-- Preload hero background image for faster LCP -->
     <link rel="preload" as="image" type="image/webp" href="images/agrotech-satelite-1.webp">
@@ -73,7 +101,7 @@
           "name": "AgroTech Colombia",
           "alternateName": "Agrotech Digital",
           "url": "https://agrotechcolombia.com/",
-          "logo": "https://agrotechcolombia.com/images/agrotech solo blanco.png",
+          "logo": "https://agrotechcolombia.com/images/agrotech-logo.webp",
           "description": "Empresa líder en análisis satelital histórico para agricultura de precisión en Colombia. Ayudamos a agricultores a tomar decisiones informadas antes de sembrar.",
           "address": {
             "@type": "PostalAddress",
@@ -193,7 +221,7 @@
         <div class="container">
             <nav class="nav" aria-label="Navegación principal">
                 <a href="#" class="nav-logo">
-                    <img src="images/agrotech solo blanco.png" alt="Agrotech Digital" class="nav-logo-image" width="40" height="40">
+                    <img src="images/agrotech-logo.webp" alt="Agrotech Digital" class="nav-logo-image" width="40" height="40">
                     <span>agrotech.</span>
                 </a>
                 <ul class="nav-links" id="navLinks">
@@ -336,7 +364,7 @@
         <!-- Decorative Illustration - Satellite Field -->
         <div class="parallax-satellite"
             style="position: absolute; top: -150px; right: -250px; width: 1100px; height: 1100px; opacity: 0.5; pointer-events: none; z-index: 0; transition: transform 0.1s ease-out;">
-            <img src="images/illustration-satellite-field-no-bg.png" alt="Ilustración de campo con análisis satelital" loading="lazy"
+            <img src="images/illustration-satellite-field-no-bg.webp" alt="Ilustración de campo con análisis satelital" loading="lazy"
                 style="width: 100%; height: 100%; object-fit: contain; transform: rotate(15deg); filter: drop-shadow(0 0 30px rgba(74, 222, 128, 0.2));">
         </div>
 
@@ -528,7 +556,7 @@
         <!-- Decorative Illustration - 3D Terrain -->
         <div
             style="position: absolute; top: 50%; right: -50px; width: 1000px; height: 1000px; opacity: 0.4; pointer-events: none; z-index: 0; transform: translateY(-50%) rotate(-5deg);">
-            <img src="images/illustration-3d-terrain-no-bg.png" alt="Ilustración terreno 3D agricultura de precisión" loading="lazy"
+            <img src="images/illustration-3d-terrain-no-bg.webp" alt="Ilustración terreno 3D agricultura de precisión" loading="lazy"
                 style="width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.15));">
         </div>
 
@@ -614,7 +642,7 @@
             <div class="stats-grid">
                 <div class="stat-card reveal">
                     <div class="stat-icon">
-                        <img src="images/illustration-3d-terrain-no-bg.png" alt="Hectáreas analizadas con tecnología satelital"
+                        <img src="images/illustration-3d-terrain-no-bg.webp" alt="Hectáreas analizadas con tecnología satelital"
                             style="object-fit: contain;" loading="lazy">
                     </div>
                     <span class="stat-value">+500</span>
@@ -622,7 +650,7 @@
                 </div>
                 <div class="stat-card reveal">
                     <div class="stat-icon">
-                        <img src="images/illustration-satellite-field-no-bg.png" alt="Años de historial satelital disponibles"
+                        <img src="images/illustration-satellite-field-no-bg.webp" alt="Años de historial satelital disponibles"
                             style="object-fit: contain;" loading="lazy">
                     </div>
                     <span class="stat-value">3+</span>
@@ -630,7 +658,7 @@
                 </div>
                 <div class="stat-card reveal">
                     <div class="stat-icon">
-                        <img src="images/illustration-farmer-no-bg.png" alt="Soporte al agricultor por WhatsApp 24 horas" style="object-fit: contain;" loading="lazy">
+                        <img src="images/illustration-farmer-no-bg.webp" alt="Soporte al agricultor por WhatsApp 24 horas" style="object-fit: contain;" loading="lazy">
                     </div>
                     <span class="stat-value">24 Horas</span>
                     <span class="stat-label">Ayuda por WhatsApp</span>
@@ -783,7 +811,7 @@
         <div class="container" style="position: relative; z-index: 1;">
             <div class="cta-content reveal">
                 <div class="cta-image-wrapper">
-                    <img src="images/illustration-farmer-no-bg.png"
+                    <img src="images/illustration-farmer-no-bg.webp"
                         alt="Agricultor profesional revisando datos de cultivo en campo" loading="lazy" width="400" height="400">
                 </div>
                 <div class="cta-text-content">

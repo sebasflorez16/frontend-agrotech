@@ -44,10 +44,13 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#4CAF50">
 
-    <!-- Fonts & CSS -->
+    <!-- Fonts & CSS - Async loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="../css/landing.css">
     <link rel="stylesheet" href="../css/blog-article.css">
 
@@ -162,7 +165,7 @@
 
                     <div class="blog-row reverse">
                         <div class="blog-col-image">
-                            <img src="/images/iot-agricola-con-fondo-de-campo-de-arroz.jpg" alt="Campo de arroz inundado - Monitoreo de condiciones hídricas con tecnología IoT" loading="lazy" width="350" height="233">
+                            <img src="/images/iot-agricola-con-fondo-de-campo-de-arroz.webp" alt="Campo de arroz inundado - Monitoreo de condiciones hídricas con tecnología IoT" loading="lazy" width="350" height="233">
                             <p class="image-caption">El exceso de agua puede ser tan dañino como la sequía. Monitorear la humedad del suelo es clave.</p>
                         </div>
                         <div class="blog-col-text">
@@ -199,7 +202,7 @@
                             <p>Con un monitoreo NDVI semanal, usted puede ver en tiempo real cómo la sequía afecta de forma diferente a cada zona de su finca. Quizás descubra que las hectáreas junto al caño mantienen buen vigor mientras que la loma se seca rápido. Eso le permite priorizar riego, ajustar planes de fertilización y proteger las zonas más vulnerables antes de que sea demasiado tarde.</p>
                         </div>
                         <div class="blog-col-image">
-                            <img src="/images/agricultura-inteligente-con-agricultura-iot.jpg" alt="Monitoreo inteligente de agricultura con tecnología IoT y análisis de vegetación" loading="lazy" width="350" height="233">
+                            <img src="/images/agricultura-inteligente-con-agricultura-iot.webp" alt="Monitoreo inteligente de agricultura con tecnología IoT y análisis de vegetación" loading="lazy" width="350" height="233">
                             <p class="image-caption">El NDVI traduce el impacto del clima en mapas que usted puede usar para actuar rápido.</p>
                         </div>
                     </div>

@@ -38,11 +38,13 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#4CAF50">
 
-    <!-- Fonts & CSS -->
+    <!-- Fonts & CSS - Async loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="css/landing.css">
 
     <!-- Breadcrumb Schema -->
@@ -193,7 +195,7 @@
         <div class="container">
             <nav class="nav">
                 <a href="index.html" class="nav-logo">
-                    <img src="images/agrotech solo blanco.png" alt="Agrotech Digital" class="nav-logo-image">
+                    <img src="images/agrotech-logo.webp" alt="Agrotech Digital" class="nav-logo-image">
                     <span>agrotech.</span>
                 </a>
                 <ul class="nav-links" id="navLinks">
