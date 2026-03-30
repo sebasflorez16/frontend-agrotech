@@ -100,7 +100,7 @@
 
 .blog-col-text {
     flex: 1;
-    min-width: 300px;
+    min-width: 0;
 }
 
 .blog-col-image {
@@ -224,6 +224,24 @@
 /* ==========================================================================
    Responsive
    ========================================================================== */
+@media (max-width: 900px) {
+    .blog-row,
+    .blog-row.reverse {
+        flex-direction: column;
+    }
+
+    .blog-col-image,
+    .blog-col-text {
+        width: 100%;
+        flex: none;
+        min-width: 0;
+    }
+
+    .blog-col-image {
+        margin-bottom: var(--spacing-md);
+    }
+}
+
 @media (max-width: 768px) {
     .article-content {
         padding: var(--spacing-md);
@@ -236,10 +254,29 @@
 
     .article-content h2,
     .blog-section-title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
+    }
+
+    .article-content .blog-intro {
+        font-size: 1.1rem;
     }
 
     .blog-col-image {
         flex: 0 0 100%;
+    }
+
+    .blog-hero-image {
+        border-radius: 8px;
+    }
+
+    .share-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .share-btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
     }
 }
