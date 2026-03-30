@@ -1,0 +1,245 @@
+/* ==========================================================================
+   Blog Article Styles — Shared across all /blog/ article pages
+   AgroTech Colombia
+   ========================================================================== */
+
+/* Layout */
+.article-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.article-header {
+    padding: 160px 0 80px;
+    text-align: center;
+    background: radial-gradient(circle at center, rgba(76, 175, 80, 0.15) 0%, transparent 70%);
+}
+
+.article-meta {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: var(--spacing-md);
+    display: block;
+    font-weight: 500;
+}
+
+/* Content card */
+.article-content {
+    background: var(--dark-card);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+    line-height: 1.9;
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.article-content h2 {
+    color: var(--brand-green);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 2rem;
+}
+
+.article-content h3 {
+    color: var(--brand-orange);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.5rem;
+}
+
+.article-content p {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-secondary);
+    max-width: 100%;
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+    max-width: 100%;
+}
+
+.article-content li {
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-secondary);
+}
+
+.article-content .blog-intro {
+    font-size: 1.35rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    border-left: 4px solid var(--brand-green);
+    padding-left: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Section titles */
+.blog-section-title {
+    color: var(--brand-green);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-sm);
+    font-size: 2rem;
+}
+
+/* Two-column rows (text + image) */
+.blog-row {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.blog-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.blog-col-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.blog-col-image {
+    flex: 0 0 350px;
+}
+
+.blog-col-image img {
+    width: 100%;
+    border-radius: var(--radius-md);
+}
+
+.image-caption {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+    font-style: italic;
+}
+
+/* Full-width article image */
+.blog-full-image {
+    width: 100%;
+    border-radius: var(--radius-md);
+    margin: var(--spacing-lg) 0 var(--spacing-xs);
+}
+
+/* Outro quote block */
+.blog-outro {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-md);
+    border-left: 4px solid var(--brand-green);
+    background: rgba(76, 175, 80, 0.05);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* Related posts cards */
+.related-card {
+    text-decoration: none;
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition-normal);
+    display: block;
+}
+
+.related-card:hover {
+    transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   Share buttons
+   ========================================================================== */
+.share-section {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+}
+
+.share-section h3 {
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.2rem;
+}
+
+.share-section p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.share-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.share-btn--whatsapp { background: #25D366; color: #fff; }
+.share-btn--whatsapp:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
+
+.share-btn--facebook { background: #1877F2; color: #fff; }
+.share-btn--facebook:hover { background: #0d65d9; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4); }
+
+.share-btn--twitter { background: #000; color: #fff; }
+.share-btn--twitter:hover { background: #333; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+
+.share-btn--linkedin { background: #0A66C2; color: #fff; }
+.share-btn--linkedin:hover { background: #004182; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(10, 102, 194, 0.4); }
+
+.share-btn--copy { background: rgba(255, 255, 255, 0.1); color: var(--text-primary); border: 1px solid rgba(255, 255, 255, 0.15); }
+.share-btn--copy:hover { background: rgba(255, 255, 255, 0.18); transform: translateY(-2px); }
+.share-btn--copy.copied { background: var(--brand-green); color: #fff; border-color: var(--brand-green); }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 768px) {
+    .article-content {
+        padding: var(--spacing-md);
+        border-radius: var(--radius-md);
+    }
+
+    .article-header {
+        padding: 120px 0 40px;
+    }
+
+    .article-content h2,
+    .blog-section-title {
+        font-size: 1.75rem;
+    }
+
+    .blog-col-image {
+        flex: 0 0 100%;
+    }
+}

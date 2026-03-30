@@ -64,7 +64,7 @@ function createPostCard(post) {
             <span class="blog-date">${formatDate(post.date)}</span>
             <h3 class="blog-title">${post.title}</h3>
             <p class="blog-summary">${post.summary}</p>
-            <a href="post.html?id=${post.id}" class="blog-link">Leer más →</a>
+            <a href="blog/${post.id}.html" class="blog-link">Leer más →</a>
         </div>
     `;
 

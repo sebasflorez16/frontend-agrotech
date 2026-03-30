@@ -3,7 +3,7 @@
   <!-- Página principal -->
   <url>
     <loc>https://agrotechcolombia.com/</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,33 +11,33 @@
   <!-- Blog -->
   <url>
     <loc>https://agrotechcolombia.com/blog.html</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Artículos del Blog -->
   <url>
-    <loc>https://agrotechcolombia.com/post.html?id=tecnologia-satelital-aliado-agricultor</loc>
-    <lastmod>2026-02-04</lastmod>
+    <loc>https://agrotechcolombia.com/blog/tecnologia-satelital-aliado-agricultor.html</loc>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://agrotechcolombia.com/post.html?id=decisiones-agricolas-datos</loc>
-    <lastmod>2026-01-29</lastmod>
+    <loc>https://agrotechcolombia.com/blog/decisiones-agricolas-datos.html</loc>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://agrotechcolombia.com/post.html?id=predicciones-climaticas-2026</loc>
-    <lastmod>2026-01-28</lastmod>
+    <loc>https://agrotechcolombia.com/blog/predicciones-climaticas-2026.html</loc>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://agrotechcolombia.com/post.html?id=ndvi-guia-completa</loc>
-    <lastmod>2026-01-15</lastmod>
+    <loc>https://agrotechcolombia.com/blog/ndvi-guia-completa.html</loc>
+    <lastmod>2026-03-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

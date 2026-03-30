@@ -23,3 +23,4 @@ Allow: /css/
 Allow: /js/landing.js
 Allow: /js/blog.js
 Allow: /images/
+Allow: /blog/

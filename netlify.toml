@@ -12,6 +12,31 @@
 # REDIRECTS - ORDEN CRÍTICO
 # ========================================
 
+# 0. Redirects 301 de URLs antiguas del blog a las nuevas URLs limpias
+[[redirects]]
+  from = "/post.html?id=tecnologia-satelital-aliado-agricultor"
+  to = "/blog/tecnologia-satelital-aliado-agricultor.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/post.html?id=decisiones-agricolas-datos"
+  to = "/blog/decisiones-agricolas-datos.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/post.html?id=predicciones-climaticas-2026"
+  to = "/blog/predicciones-climaticas-2026.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/post.html?id=ndvi-guia-completa"
+  to = "/blog/ndvi-guia-completa.html"
+  status = 301
+  force = true
+
 # 1. Redirigir TODAS las peticiones de API a Railway (Backend en Producción)
 # IMPORTANTE: 
 # - force=true: Redirige ANTES de buscar archivos locales
@@ -73,3 +98,9 @@
   for = "/images/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache moderado para artículos del blog (contenido que puede cambiar)
+[[headers]]
+  for = "/blog/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
