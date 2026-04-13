@@ -1,0 +1,548 @@
+/* ============================================
+   AGROTECH DIGITAL — PREMIUM VISUAL EFFECTS
+   
+   Estrategia: NO ocultamos nada. Todo es aditivo.
+   Efectos hover, glows, gradientes, partículas,
+   shimmer, y polish visual. Nada de opacity:0.
+   ============================================ */
+
+/* Override Bootstrap & landing CSS scroll-behavior to prevent scroll lag */
+html,
+:root {
+  scroll-behavior: auto !important;
+}
+
+/* ============================================
+   SCROLL PROGRESS BAR
+   ============================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4CAF50, #66BB6A, #FF9800, #4CAF50);
+  background-size: 300% 100%;
+  animation: shimmerBar 2s linear infinite;
+  z-index: 99999;
+  pointer-events: none;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.6), 0 0 30px rgba(76, 175, 80, 0.2);
+}
+
+@keyframes shimmerBar {
+  0% { background-position: 0% 0; }
+  100% { background-position: 300% 0; }
+}
+
+/* ============================================
+   CURSOR GLOW (Desktop only)
+   ============================================ */
+.anim-cursor-glow {
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.07) 0%, rgba(76, 175, 80, 0.03) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+  mix-blend-mode: screen;
+}
+
+/* ============================================
+   FLOATING PARTICLES (Hero — desktop)
+   ============================================ */
+.anim-particles-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.anim-particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: floatParticle linear infinite;
+}
+
+.anim-particle--green {
+  background: rgba(76, 175, 80, 0.5);
+  box-shadow: 0 0 6px rgba(76, 175, 80, 0.3);
+}
+.anim-particle--gold {
+  background: rgba(255, 152, 0, 0.5);
+  box-shadow: 0 0 6px rgba(255, 152, 0, 0.3);
+}
+.anim-particle--white {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.15);
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0) translateX(0) scale(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.7;
+    transform: translateY(-15px) translateX(8px) scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: translateY(-100px) translateX(-25px) scale(0.7);
+  }
+  85% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(-250px) translateX(20px) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   HERO ENHANCEMENTS
+   ============================================ */
+
+/* Animated gradient border on hero badge */
+.anim-engine-active .hero-badge {
+  position: relative;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05));
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  overflow: hidden;
+}
+
+.anim-engine-active .hero-badge::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #4CAF50, #81C784, #FF9800, #4CAF50);
+  background-size: 300% 300%;
+  animation: gradientBorder 4s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes gradientBorder {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Hero stat values glow */
+.anim-engine-active .hero-stat-value {
+  text-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+}
+
+/* ============================================
+   SECTION BADGES — Animated pill
+   ============================================ */
+.anim-engine-active .section-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.anim-engine-active .section-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  animation: shimmerBadge 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmerBadge {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ============================================
+   CARD EFFECTS — Hover glow borders
+   ============================================ */
+
+/* Feature cards */
+.anim-engine-active .feature-card {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s ease;
+  overflow: hidden;
+}
+
+.anim-engine-active .feature-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(76, 175, 80, 0.06), transparent 40%);
+  pointer-events: none;
+}
+
+.anim-engine-active .feature-card:hover::after {
+  opacity: 1;
+}
+
+.anim-engine-active .feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(76, 175, 80, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Feature card image zoom on hover */
+.anim-engine-active .feature-card .feature-icon img {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.anim-engine-active .feature-card:hover .feature-icon img {
+  transform: scale(1.08);
+}
+
+/* Neuro cards (pricing, gallery, FAQ) */
+.anim-engine-active .neuro-card {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s ease,
+              border-color 0.4s ease;
+}
+
+.anim-engine-active #precios .neuro-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.25),
+    0 0 60px rgba(76, 175, 80, 0.08);
+}
+
+/* Gallery cards hover zoom */
+.anim-engine-active .satellite-gallery .neuro-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    0 0 30px rgba(76, 175, 80, 0.06);
+}
+
+.anim-engine-active .satellite-gallery .neuro-card img {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.anim-engine-active .satellite-gallery .neuro-card:hover img {
+  transform: scale(1.06);
+}
+
+/* Product card image */
+.anim-engine-active .product-card .product-image img {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.anim-engine-active .product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+/* Stat cards */
+.anim-engine-active .stat-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.anim-engine-active .stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(76, 175, 80, 0.05);
+}
+
+.anim-engine-active .stat-card .stat-icon img {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.anim-engine-active .stat-card:hover .stat-icon img {
+  transform: scale(1.1) rotate(3deg);
+}
+
+/* Blog cards */
+.anim-engine-active a[href*="blog/"] {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease !important;
+}
+
+.anim-engine-active a[href*="blog/"]:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(76, 175, 80, 0.12) !important;
+}
+
+/* FAQ details hover */
+.anim-engine-active details.neuro-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.anim-engine-active details.neuro-card:hover {
+  border-color: rgba(76, 175, 80, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.anim-engine-active details.neuro-card[open] {
+  border-color: rgba(76, 175, 80, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(76, 175, 80, 0.05);
+}
+
+/* FAQ smooth toggle icon */
+.anim-engine-active details.neuro-card summary {
+  position: relative;
+  list-style: none;
+  padding-right: 30px;
+}
+
+.anim-engine-active details.neuro-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.anim-engine-active details.neuro-card summary::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  color: var(--brand-green, #4CAF50);
+  font-weight: 300;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.anim-engine-active details.neuro-card[open] summary::after {
+  content: '×';
+  transform: translateY(-50%) rotate(90deg);
+}
+
+/* ============================================
+   BUTTONS — Premium effects
+   ============================================ */
+.anim-engine-active .neuro-button-primary {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.anim-engine-active .neuro-button-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: none;
+  pointer-events: none;
+}
+
+.anim-engine-active .neuro-button-primary:hover::before {
+  animation: buttonShimmer 0.6s ease forwards;
+}
+
+@keyframes buttonShimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.anim-engine-active .neuro-button-primary:hover {
+  box-shadow:
+    0 8px 25px rgba(76, 175, 80, 0.4),
+    0 0 50px rgba(76, 175, 80, 0.15);
+  transform: translateY(-2px);
+}
+
+.anim-engine-active .neuro-button-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.anim-engine-active .neuro-button-accent {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.anim-engine-active .neuro-button-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 152, 0, 0.3);
+}
+
+/* ============================================
+   NAVBAR — Glassmorphism enhanced
+   ============================================ */
+.anim-engine-active .navbar.scrolled {
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+}
+
+/* Nav links hover underline animation */
+.anim-engine-active .nav-link {
+  position: relative;
+}
+
+.anim-engine-active .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  transition: width 0.3s ease, left 0.3s ease;
+  border-radius: 1px;
+}
+
+.anim-engine-active .nav-link:hover::after {
+  width: 80%;
+  left: 10%;
+}
+
+/* ============================================
+   CTA SECTION — Glow background
+   ============================================ */
+.anim-engine-active .cta.section {
+  position: relative;
+}
+
+.anim-engine-active .cta.section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.06) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* CTA farmer image hover */
+.anim-engine-active .cta-image-wrapper img {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
+}
+
+.anim-engine-active .cta-image-wrapper:hover img {
+  transform: scale(1.05) translateY(-5px);
+  filter: drop-shadow(0 20px 40px rgba(76, 175, 80, 0.15));
+}
+
+/* ============================================
+   MAGNETIC 3D TILT (JS adds this class)
+   ============================================ */
+.magnetic-hover {
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+/* ============================================
+   ILLUSTRATION PARALLAX IMAGES
+   ============================================ */
+.anim-engine-active .parallax-satellite img,
+.anim-engine-active [style*="position: absolute"] img[alt*="Ilustración"],
+.anim-engine-active [style*="position: absolute"] img[alt*="terreno 3D"] {
+  transition: filter 0.3s ease;
+}
+
+/* ============================================
+   FOOTER — Enhanced
+   ============================================ */
+.anim-engine-active .footer-section a {
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.anim-engine-active .footer-section a:hover {
+  color: var(--brand-green, #4CAF50);
+  transform: translateX(3px);
+}
+
+.anim-engine-active .footer-social a {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.anim-engine-active .footer-social a:hover {
+  transform: translateY(-3px) scale(1.1);
+}
+
+/* ============================================
+   COUNTER ANIMATION GLOW
+   ============================================ */
+/* Keep original gradients from landing.css, just add shimmer animation */
+.anim-engine-active .stat-value,
+.anim-engine-active .hero-stat-value {
+  background-size: 200% 200%;
+  animation: textGradient 4s ease infinite;
+}
+
+@keyframes textGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ============================================
+   SECTION SEPARATOR GLOW LINES
+   ============================================ */
+.anim-engine-active .section + .section {
+  border-top: 1px solid rgba(76, 175, 80, 0.08);
+}
+
+/* ============================================
+   SCROLL TO TOP — Enhanced
+   ============================================ */
+.anim-engine-active .scroll-to-top {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.anim-engine-active .scroll-to-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress,
+  .anim-cursor-glow,
+  .anim-particles-container {
+    display: none !important;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   MOBILE — Disable heavy effects
+   ============================================ */
+@media (max-width: 768px) {
+  .anim-cursor-glow,
+  .anim-particles-container {
+    display: none !important;
+  }
+
+  .scroll-progress {
+    height: 2px;
+  }
+
+  .magnetic-hover {
+    will-change: auto;
+  }
+}

@@ -301,8 +301,12 @@ async function testAPI() {
 
 /**
  * Animate numbers when they come into view
+ * Skipped if GSAP animations engine is active (animations.js handles this)
  */
 function initCounterAnimation() {
+    // If GSAP animations engine is loaded, it handles counters with better formatting
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') return;
+
     const counters = document.querySelectorAll('.stat-value, .hero-stat-value');
     
     const counterObserver = new IntersectionObserver((entries) => {

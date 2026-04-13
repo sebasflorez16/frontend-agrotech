@@ -84,6 +84,11 @@
     <link rel="stylesheet" href="css/landing.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="css/landing.css"></noscript>
 
+    <!-- Premium Animations CSS -->
+    <link rel="preload" as="style" href="css/animations.css">
+    <link rel="stylesheet" href="css/animations.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="css/animations.css"></noscript>
+
     <!-- Preload hero background image for faster LCP -->
     <link rel="preload" as="image" type="image/webp" href="images/agrotech-satelite-1.webp">
 
@@ -284,16 +289,16 @@
                 </div>
                 <div class="hero-stats">
                     <div class="hero-stat">
-                        <span class="hero-stat-value">+500</span>
+                        <span class="hero-stat-value" data-count="3000" data-suffix="+">3.000+</span>
                         <span class="hero-stat-label">Hectáreas Analizadas</span>
                     </div>
                     <div class="hero-stat">
-                        <span class="hero-stat-value">3+</span>
-                        <span class="hero-stat-label">Años de Historial</span>
+                        <span class="hero-stat-value" data-count="3" data-suffix=" Años">3 Años</span>
+                        <span class="hero-stat-label">De Historial Satelital</span>
                     </div>
                     <div class="hero-stat">
-                        <span class="hero-stat-value">24 Horas</span>
-                        <span class="hero-stat-label">Ayuda por WhatsApp</span>
+                        <span class="hero-stat-value" data-count="98" data-suffix="%">98%</span>
+                        <span class="hero-stat-label">Precisión de Datos</span>
                     </div>
                 </div>
             </div>
@@ -663,7 +668,7 @@
                         <img src="images/illustration-3d-terrain-no-bg.webp" alt="Hectáreas analizadas con tecnología satelital"
                             style="object-fit: contain;" loading="lazy">
                     </div>
-                    <span class="stat-value">+500</span>
+                    <span class="stat-value" data-count="3000" data-suffix="+">3.000+</span>
                     <span class="stat-label">Hectáreas Analizadas</span>
                 </div>
                 <div class="stat-card reveal">
@@ -671,15 +676,15 @@
                         <img src="images/illustration-satellite-field-no-bg.webp" alt="Años de historial satelital disponibles"
                             style="object-fit: contain;" loading="lazy">
                     </div>
-                    <span class="stat-value">3+</span>
-                    <span class="stat-label">Años de Historial</span>
+                    <span class="stat-value" data-count="3" data-suffix=" Años">3 Años</span>
+                    <span class="stat-label">De Historial Satelital</span>
                 </div>
                 <div class="stat-card reveal">
                     <div class="stat-icon">
-                        <img src="images/illustration-farmer-no-bg.webp" alt="Soporte al agricultor por WhatsApp 24 horas" style="object-fit: contain;" loading="lazy">
+                        <img src="images/illustration-farmer-no-bg.webp" alt="Precisión de datos satelitales" style="object-fit: contain;" loading="lazy">
                     </div>
-                    <span class="stat-value">24 Horas</span>
-                    <span class="stat-label">Ayuda por WhatsApp</span>
+                    <span class="stat-value" data-count="98" data-suffix="%">98%</span>
+                    <span class="stat-label">Precisión de Datos</span>
                 </div>
             </div>
         </div>
@@ -1075,17 +1080,11 @@
 
     <!-- Main JavaScript -->
     <script src="js/landing.js"></script>
-    <script>
-        // Parallax Effect for Satellite Illustration
-        document.addEventListener('scroll', () => {
-            const satellite = document.querySelector('.parallax-satellite');
-            if (satellite) {
-                const scrolled = window.scrollY;
-                const rate = 0.2; // Adjust speed as needed
-                satellite.style.transform = `translateY(${scrolled * rate}px)`;
-            }
-        });
-    </script>
+
+    <!-- GSAP + ScrollTrigger (Premium Animations) -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="js/animations.js"></script>
 </body>
 
 </html>
