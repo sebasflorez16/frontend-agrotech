@@ -3,7 +3,7 @@
   <!-- Página principal -->
   <url>
     <loc>https://agrotechcolombia.com/</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,12 +11,24 @@
   <!-- Blog -->
   <url>
     <loc>https://agrotechcolombia.com/blog.html</loc>
-    <lastmod>2026-03-30</lastmod>
+    <lastmod>2026-04-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Artículos del Blog -->
+  <url>
+    <loc>https://agrotechcolombia.com/blog/error-mas-caro-agricultor-historial-productivo.html</loc>
+    <lastmod>2026-04-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://agrotechcolombia.com/blog/siembra-arroz-primer-semestre-2026.html</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <url>
     <loc>https://agrotechcolombia.com/blog/tecnologia-satelital-aliado-agricultor.html</loc>
     <lastmod>2026-03-30</lastmod>
