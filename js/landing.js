@@ -15,6 +15,9 @@ const CONFIG = {
     DEBUG: false
 };
 
+// Progressive enhancement: only hide .reveal blocks when JS is active.
+document.documentElement.classList.add('js');
+
 // ============================================
 // UTILITY FUNCTIONS
 // ============================================
