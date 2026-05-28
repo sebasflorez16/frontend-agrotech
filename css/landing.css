@@ -104,10 +104,8 @@ h6 {
 
 h1 {
   font-size: clamp(2.5rem, 5vw, 4rem);
-  background: linear-gradient(135deg, var(--brand-green), var(--brand-orange));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
+  font-weight: 800;
 }
 
 h2 {
@@ -1587,4 +1585,12 @@ html.js .reveal.active {
 .blog-link:hover {
   color: var(--brand-green);
   gap: 8px;
+}
+/* QUICK-WIN-5 — pricing bullet glyph */
+.neuro-card li .check {
+  color: var(--brand-green);
+  font-weight: 700;
+  margin-right: 0.5rem;
+  display: inline-block;
+  width: 1ch;
 }

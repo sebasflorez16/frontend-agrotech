@@ -63,7 +63,12 @@
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=3">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-    <meta name="theme-color" content="#4CAF50">
+    <meta name="theme-color" content="#1a1a1a">
+
+    <!-- Theme anti-flash -->
+    <script>
+    (function(){try{var s=localStorage.getItem('agrotech-theme');var sys=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';var t=s||sys;document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='light'?'#f7f5f0':'#1a1a1a');}catch(e){}})();
+    </script>
 
     <!-- Preload hero image (LCP) -->
     <link rel="preload" as="image" href="/images/blog/error-mas-caro-historial/agro-colombia-zonas-productivas.webp" fetchpriority="high">
@@ -94,6 +99,8 @@
         rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="../css/landing.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <script src="../js/theme-toggle.js" defer></script>
     <link rel="stylesheet" href="../css/blog-article.css">
 
     <!-- Breadcrumb Schema -->
@@ -233,6 +240,12 @@
                 </a>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="/blog.html">← Volver al Blog</a></li>
+                <li>
+                        <button type="button" class="theme-toggle" aria-label="Cambiar tema" aria-pressed="false" title="Cambiar tema">
+                            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                        </button>
+                    </li>
                 </ul>
             </nav>
         </div>

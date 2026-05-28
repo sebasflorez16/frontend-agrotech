@@ -37,6 +37,7 @@
 
   // ── Cursor Glow (desktop) ──
   function initCursorGlow() {
+    /* QUICK-WIN-2 disabled: low-purpose infinite loop — re-enable only after PRODUCT.md fija si es intencional
     if (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 769) return;
 
     var glow = document.createElement('div');
@@ -56,6 +57,7 @@
       glow.style.top = gy + 'px';
       requestAnimationFrame(loop);
     })();
+    */
   }
 
   // ── Hero Cinematic Entrance ──
@@ -104,6 +106,7 @@
 
   // ── Floating Particles (hero, desktop) ──
   function initParticles() {
+    /* QUICK-WIN-2 disabled: low-purpose infinite loop — re-enable only after PRODUCT.md fija si es intencional
     if (window.innerWidth < 769) return;
     var hero = document.querySelector('.hero');
     if (!hero) return;
@@ -125,6 +128,7 @@
       c.appendChild(p);
     }
     hero.appendChild(c);
+    */
   }
 
   // ── Counter Animation (uses data attributes) ──

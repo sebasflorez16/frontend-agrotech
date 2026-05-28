@@ -21,23 +21,25 @@ html,
   left: 0;
   width: 0;
   height: 3px;
-  background: linear-gradient(90deg, #4CAF50, #66BB6A, #FF9800, #4CAF50);
-  background-size: 300% 100%;
-  animation: shimmerBar 2s linear infinite;
+  background: var(--brand-green);
+  /* QUICK-WIN-2 disabled: low-purpose infinite loop — re-enable only after PRODUCT.md fija si es intencional */
+  /* background: linear-gradient(90deg, #4CAF50, #66BB6A, #FF9800, #4CAF50); */
+  /* background-size: 300% 100%; */
+  /* animation: shimmerBar 2s linear infinite; */
   z-index: 99999;
   pointer-events: none;
   border-radius: 0 2px 2px 0;
   box-shadow: 0 0 12px rgba(76, 175, 80, 0.6), 0 0 30px rgba(76, 175, 80, 0.2);
 }
 
+/* QUICK-WIN-2 disabled: low-purpose infinite loop — re-enable only after PRODUCT.md fija si es intencional
 @keyframes shimmerBar {
   0% { background-position: 0% 0; }
   100% { background-position: 300% 0; }
 }
+*/
 
-/* ============================================
-   CURSOR GLOW (Desktop only)
-   ============================================ */
+/* QUICK-WIN-2 disabled: low-purpose infinite loop — re-enable only after PRODUCT.md fija si es intencional
 .anim-cursor-glow {
   position: fixed;
   width: 350px;
@@ -51,9 +53,6 @@ html,
   mix-blend-mode: screen;
 }
 
-/* ============================================
-   FLOATING PARTICLES (Hero — desktop)
-   ============================================ */
 .anim-particles-container {
   position: absolute;
   inset: 0;
@@ -104,12 +103,13 @@ html,
     opacity: 0;
   }
 }
+*/
 
 /* ============================================
    HERO ENHANCEMENTS
    ============================================ */
 
-/* Animated gradient border on hero badge */
+/* QUICK-WIN-2 disabled: low-purpose infinite loop — re-enable only after PRODUCT.md fija si es intencional
 .anim-engine-active .hero-badge {
   position: relative;
   background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05));
@@ -138,15 +138,14 @@ html,
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
+*/
 
 /* Hero stat values glow */
 .anim-engine-active .hero-stat-value {
   text-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
 }
 
-/* ============================================
-   SECTION BADGES — Animated pill
-   ============================================ */
+/* QUICK-WIN-2 disabled: low-purpose infinite loop — re-enable only after PRODUCT.md fija si es intencional
 .anim-engine-active .section-badge {
   position: relative;
   overflow: hidden;
@@ -168,6 +167,7 @@ html,
   0% { left: -100%; }
   100% { left: 200%; }
 }
+*/
 
 /* ============================================
    CARD EFFECTS — Hover glow borders

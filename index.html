@@ -27,7 +27,12 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon-512x512.png?v=3">
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=3">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#4CAF50">
+    <meta name="theme-color" content="#1a1a1a">
+
+    <!-- Theme anti-flash: aplica data-theme ANTES de pintar -->
+    <script>
+    (function(){try{var s=localStorage.getItem('agrotech-theme');var sys=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';var t=s||sys;document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',t==='light'?'#f7f5f0':'#1a1a1a');}catch(e){}})();
+    </script>
 
     <!-- Meta Pixel Code -->
     <script>
@@ -72,11 +77,11 @@
         .hero-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;background-image:url('images/agrotech-satelite-1.webp');background-size:cover;background-position:center;background-repeat:no-repeat}
         .hero-bg::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(10,14,39,.92) 0%,rgba(10,14,39,.85) 40%,rgba(76,175,80,.15) 100%);z-index:1}
         .hero-content{position:relative;z-index:3;text-align:center;max-width:900px}
-        h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:700;line-height:1.1;background:linear-gradient(135deg,#4CAF50,#FF6F00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:800;line-height:1.1;color:#fff}
         .hero-description{font-size:1.3rem;color:#b0b0b0;margin-bottom:2rem;max-width:700px;margin-left:auto;margin-right:auto}
         .neuro-button{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:12px;font-weight:600;font-size:1rem;transition:all .3s;cursor:pointer;text-decoration:none;border:none}
         .neuro-button-primary{background:linear-gradient(135deg,#4CAF50,#388E3C);color:#fff;box-shadow:0 4px 15px rgba(76,175,80,.3)}
-        @media(max-width:968px){.nav-links{display:none}.nav-burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem}.nav-burger span{width:25px;height:3px;background:#fff;border-radius:2px;display:block}}
+        @media(max-width:968px){.nav-links{display:none}.nav-burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.5rem}.nav-burger span{width:25px;height:3px;background:#fff;border-radius:2px;display:block}.theme-toggle[data-mobile]{display:inline-flex !important}}
     </style>
 
     <!-- Full CSS - loaded async to avoid render blocking -->
@@ -88,6 +93,10 @@
     <link rel="preload" as="style" href="css/animations.css">
     <link rel="stylesheet" href="css/animations.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="css/animations.css"></noscript>
+
+    <!-- Theme system (light + dark) — debe cargar despues de landing.css -->
+    <link rel="stylesheet" href="css/theme.css">
+    <script src="js/theme-toggle.js" defer></script>
 
     <!-- Preload hero background image for faster LCP -->
     <link rel="preload" as="image" type="image/webp" href="images/agrotech-satelite-1.webp">
@@ -256,8 +265,18 @@
                     <li><a href="#contacto">Contacto</a></li>
                     <li><a href="#" class="neuro-button neuro-button-primary" onclick="redirectToLogin()">Ingresar</a>
                     </li>
+                    <li>
+                        <button type="button" class="theme-toggle" aria-label="Cambiar tema" aria-pressed="false" title="Cambiar tema">
+                            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                        </button>
+                    </li>
                 </ul>
-                <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+                <button type="button" class="theme-toggle" aria-label="Cambiar tema" aria-pressed="false" title="Cambiar tema" style="display:none" data-mobile="1">
+                    <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                </button>
+                <button class="nav-burger" id="navBurger" aria-label="Abrir menú">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -271,7 +290,6 @@
         <div class="hero-bg"></div>
         <div class="container">
             <div class="hero-content fade-in-up">
-                <span class="hero-badge">Historial Satelital</span>
                 <h1>Historial Satelital de su Finca</h1>
                 <p class="hero-description">
                     Le entregamos el reporte completo del pasado de su terreno.
@@ -286,20 +304,6 @@
                     <a href="templates/contact_expert.html" class="neuro-button neuro-button-accent">
                         Tengo Preguntas
                     </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <span class="hero-stat-value" data-count="3000" data-suffix="+">3.000+</span>
-                        <span class="hero-stat-label">Hectáreas Analizadas</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat-value" data-count="3" data-suffix=" Años">3 Años</span>
-                        <span class="hero-stat-label">De Historial Satelital</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat-value" data-count="98" data-suffix="%">98%</span>
-                        <span class="hero-stat-label">Precisión de Datos</span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -466,11 +470,11 @@
                     <p style="color: var(--brand-green-light); font-size: 1.05rem; font-weight: 600; margin-bottom: var(--spacing-xs);">50 – 100 hectáreas</p>
                     <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: var(--spacing-md);">1 año de historia · Entrega en 1–3 días</p>
                     <ul style="list-style: none; padding: 0; color: var(--text-secondary); text-align: left; margin-bottom: var(--spacing-lg); line-height: 2; font-size: 0.9rem;">
-                        <li>✅ Análisis NDVI (salud vegetal)</li>
-                        <li>✅ Análisis NDMI (estrés hídrico)</li>
-                        <li>✅ Análisis SAVI (cobertura del suelo)</li>
-                        <li>✅ Datos climáticos históricos</li>
-                        <li>✅ Informe completo con mapas y recomendaciones</li>
+                        <li><span class="check" aria-hidden="true">›</span> Análisis NDVI (salud vegetal)</li>
+                        <li><span class="check" aria-hidden="true">›</span> Análisis NDMI (estrés hídrico)</li>
+                        <li><span class="check" aria-hidden="true">›</span> Análisis SAVI (cobertura del suelo)</li>
+                        <li><span class="check" aria-hidden="true">›</span> Datos climáticos históricos</li>
+                        <li><span class="check" aria-hidden="true">›</span> Informe completo con mapas y recomendaciones</li>
                     </ul>
                     <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--spacing-sm);">Ejemplo: 80 ha → <strong style="color: var(--text-primary);">$560.000</strong></p>
                     <a href="https://wa.me/573223088873?text=Hola,%20me%20interesa%20el%20plan%20Esencial%20para%20mi%20lote" class="neuro-button neuro-button-primary" target="_blank" rel="noopener noreferrer" style="width: 100%;">
@@ -479,7 +483,7 @@
                 </div>
                 <!-- Plan Profesional -->
                 <div class="neuro-card reveal" style="text-align: center; position: relative; border: 2px solid var(--brand-green); transform: scale(1.03);">
-                    <span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--brand-green); color: #000; padding: 5px 20px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; white-space: nowrap;">⭐ MÁS POPULAR</span>
+                    <span style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--brand-green); color: #000; padding: 5px 20px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; white-space: nowrap;">RECOMENDADO</span>
                     <span style="display: inline-block; background: rgba(76, 175, 80, 0.15); color: var(--brand-green); padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: var(--spacing-md); margin-top: var(--spacing-sm); letter-spacing: 0.5px;">PROFESIONAL</span>
                     <div style="margin-bottom: var(--spacing-sm);">
                         <span style="font-size: 2.8rem; font-weight: 800; color: var(--text-primary);">$5.500</span>
@@ -488,11 +492,11 @@
                     <p style="color: var(--brand-green-light); font-size: 1.05rem; font-weight: 600; margin-bottom: var(--spacing-xs);">100 – 300 hectáreas</p>
                     <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: var(--spacing-md);">1 año de historia · Entrega en 1–3 días</p>
                     <ul style="list-style: none; padding: 0; color: var(--text-secondary); text-align: left; margin-bottom: var(--spacing-lg); line-height: 2; font-size: 0.9rem;">
-                        <li>✅ Todo lo del plan Esencial</li>
-                        <li>✅ Comparación temporal mes a mes</li>
-                        <li>✅ Zonificación detallada del lote</li>
-                        <li>✅ Identificación de zonas críticas</li>
-                        <li>✅ Soporte post-entrega por WhatsApp</li>
+                        <li><span class="check" aria-hidden="true">›</span> Todo lo del plan Esencial</li>
+                        <li><span class="check" aria-hidden="true">›</span> Comparación temporal mes a mes</li>
+                        <li><span class="check" aria-hidden="true">›</span> Zonificación detallada del lote</li>
+                        <li><span class="check" aria-hidden="true">›</span> Identificación de zonas críticas</li>
+                        <li><span class="check" aria-hidden="true">›</span> Soporte post-entrega por WhatsApp</li>
                     </ul>
                     <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--spacing-sm);">Ejemplo: 200 ha → <strong style="color: var(--text-primary);">$1.100.000</strong></p>
                     <a href="https://wa.me/573223088873?text=Hola,%20me%20interesa%20el%20plan%20Profesional%20para%20mi%20lote" class="neuro-button neuro-button-primary" target="_blank" rel="noopener noreferrer" style="width: 100%;">
@@ -508,11 +512,11 @@
                     <p style="color: #FF9800; font-size: 1.05rem; font-weight: 600; margin-bottom: var(--spacing-xs);">+300 hectáreas</p>
                     <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: var(--spacing-md);">Cotización personalizada y gratuita</p>
                     <ul style="list-style: none; padding: 0; color: var(--text-secondary); text-align: left; margin-bottom: var(--spacing-lg); line-height: 2; font-size: 0.9rem;">
-                        <li>✅ Todo lo del plan Profesional</li>
-                        <li>✅ Múltiples lotes en un solo informe</li>
-                        <li>✅ Historial de más de 1 año (negociable)</li>
-                        <li>✅ Entrega prioritaria</li>
-                        <li>✅ Asesoría personalizada de resultados</li>
+                        <li><span class="check" aria-hidden="true">›</span> Todo lo del plan Profesional</li>
+                        <li><span class="check" aria-hidden="true">›</span> Múltiples lotes en un solo informe</li>
+                        <li><span class="check" aria-hidden="true">›</span> Historial de más de 1 año (negociable)</li>
+                        <li><span class="check" aria-hidden="true">›</span> Entrega prioritaria</li>
+                        <li><span class="check" aria-hidden="true">›</span> Asesoría personalizada de resultados</li>
                     </ul>
                     <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--spacing-sm);">Le armamos un plan a la medida de su operación</p>
                     <a href="https://wa.me/573223088873?text=Hola,%20tengo%20más%20de%20300%20hectáreas%20y%20quisiera%20una%20cotización%20empresarial" class="neuro-button neuro-button-accent" target="_blank" rel="noopener noreferrer" style="width: 100%;">
@@ -599,7 +603,7 @@
                             alt="Análisis de cultivos en campo con tecnología" loading="lazy" width="600" height="400">
                     </div>
                     <div class="product-content">
-                        <span class="product-badge" style="background: var(--brand-green); color: #000;">✅ Disponible Ahora</span>
+                        <span class="product-badge" style="background: var(--brand-green); color: #000;">Disponible ahora</span>
                         <h3 class="product-title">Estudio Histórico del Lote</h3>
                         <p class="product-description">
                             Revisamos qué ha pasado en su finca años atrás.

@@ -70,10 +70,8 @@
 
 .article-content .blog-intro {
     font-size: 1.35rem;
-    color: var(--text-primary);
+    color: var(--text-secondary);
     font-weight: 500;
-    border-left: 4px solid var(--brand-green);
-    padding-left: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
 }
 
